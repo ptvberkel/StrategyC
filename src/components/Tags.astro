@@ -1,0 +1,11 @@
+---
+/** Tags op kaarten en cases: "Coalities" vooraan (vast), daarna de gekozen C's — één stijl, niet klikbaar (besluit 12). */
+import { VAST } from "../data/cs";
+import type { FilterLabel } from "../data/cs";
+interface Props { tags: readonly FilterLabel[]; }
+const { tags } = Astro.props;
+---
+<ul class="tags" aria-label="Labels">
+  <li class="tag">{VAST}</li>
+  {tags.map((t) => <li class="tag">{t}</li>)}
+</ul>

@@ -1,0 +1,18 @@
+---
+/** Blog — alleen via de footer bereikbaar. Artikelen volgen na keuze van Pauline (beslispunt 8). */
+import Base from "../../layouts/Base.astro";
+import Placeholder from "../../components/Placeholder.astro";
+import { getCollection } from "astro:content";
+const posts = (await getCollection("blog")).sort((a, b) => b.data.datum.localeCompare(a.data.datum));
+const datum = (iso: string) => new Date(iso).toLocaleDateString("nl-NL", { day: "numeric", month: "long", year: "numeric" });
+---
+<Base titel="Blog — strategyC" omschrijving="Artikelen van Pauline Kamphuis over samenwerking, verandering en communicatie." breadcrumbs={[{ naam: "Home", url: "/" }, { naam: "Blog" }]}>
+  <section class="sectie"><div class="container prose">
+    <h1>Blog</h1>
+    <p class="intro"><Placeholder regel>UI-TEKST: intro blogoverzicht</Placeholder></p>
+    {posts.length === 0 && <p><Placeholder regel>PAULINE: welke artikelen van de huidige site meegaan (Het frisse start-effect · De kracht van vragen stellen · Kairos is koning · twee Engelse)</Placeholder></p>}
+    <ul>
+      {posts.map((p) => <li><a href={`/blog/${p.id}/`}>{p.data.titel}</a> <span class="secundair klein">— {datum(p.data.datum)}</span></li>)}
+    </ul>
+  </div></section>
+</Base>

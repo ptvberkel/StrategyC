@@ -1,0 +1,106 @@
+---
+/**
+ * Contact (v7 §4, structuurplan §3.5): hoofdaanbod, checklistformulier, contactformulier, direct contact.
+ * Formulieren posten naar de eigen Worker (§4.6). Zonder endpoint: zichtbare markering, knop uitgeschakeld.
+ */
+import Base from "../../layouts/Base.astro";
+import Placeholder from "../../components/Placeholder.astro";
+import { site } from "../../data/site";
+
+const endpoint = site.formulierEndpoint;
+const contactAction = endpoint ? `${endpoint}/contact` : "";
+const checklistAction = endpoint ? `${endpoint}/checklist` : "";
+const turnstile = site.turnstileSiteKey;
+---
+<Base
+  titel="Contact — strategyC"
+  omschrijving="Plan een vrijblijvend oriënterend gesprek van 30 minuten, of download de checklist. Voor coalities die hun ambitie willen verwoorden, verbeelden en delen."
+  breadcrumbs={[{ naam: "Home", url: "/" }, { naam: "Contact" }]}
+>
+  <Fragment slot="head">
+    {turnstile && <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>}
+  </Fragment>
+
+  <!-- 1. Hoofdaanbod ([concept], v7 §4) -->
+  <section class="sectie" aria-labelledby="contact-kop">
+    <div class="container">
+      <div class="prose">
+        <h1 id="contact-kop">Laten we kennismaken</h1>
+        <p class="intro">Sta je aan het begin van een samenwerking en zoek je hoe je de gezamenlijke ambitie verwoordt, verbeeldt en deelt zodat er beweging ontstaat? Plan een vrijblijvend oriënterend gesprek van 30 minuten. Geen verkoopgesprek — gewoon een half uur meedenken over waar jouw coalitie staat en wat de volgende stap kan zijn.</p>
+        <p><Placeholder regel>concept-tekst ter goedkeuring Pauline; knoplabel: beslispunt 4</Placeholder></p>
+        <div class="knoppen"><a class="knop" href="#formulier">Plan een gesprek</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Checklist (tegen voornaam + e-mailadres; bevestigingsmail v7 §5.2 met PDF-bijlage) -->
+  <section class="sectie sectie--grijs" aria-labelledby="checklist-kop">
+    <div class="container twee">
+      <div class="prose">
+        <div class="sectie-kop"><span class="c-teken c-teken--rood" aria-hidden="true">©</span><h2 id="checklist-kop">Liever eerst iets lezen?</h2></div>
+        <p>Download de checklist <em>"{site.checklistTitel}"</em> <Placeholder regel>placeholder: definitieve titel en inhoud volgen</Placeholder>. Laat je e-mailadres achter en je ontvangt hem direct.</p>
+      </div>
+      <form class="formulier" method="post" action={checklistAction} data-formulier="checklist" novalidate>
+        <div class="veld">
+          <label for="cl-voornaam">Je voornaam</label>
+          <input id="cl-voornaam" name="voornaam" type="text" autocomplete="given-name" required placeholder=" " />
+          <span class="fout" data-fout>Dit veld is verplicht.</span>
+        </div>
+        <div class="veld">
+          <label for="cl-email">Je e-mailadres</label>
+          <input id="cl-email" name="email" type="email" autocomplete="email" required placeholder=" " />
+          <span class="fout" data-fout>Vul een geldig e-mailadres in.</span>
+        </div>
+        <div class="honing" aria-hidden="true"><label>Laat dit veld leeg<input name="website" type="text" tabindex="-1" autocomplete="off" /></label></div>
+        <input type="hidden" name="t" value="" data-tijd />
+        {turnstile ? <div class="cf-turnstile" data-sitekey={turnstile} data-size="flexible" data-appearance="interaction-only"></div> : <Placeholder regel>PIET: Turnstile-sitekey (Cloudflare-account Pauline)</Placeholder>}
+        <p class="klein secundair">Je gegevens gebruik ik alleen om je de checklist te sturen — zie de <a href="/privacyverklaring/">privacyverklaring</a>. <Placeholder regel>UI-TEKST ter goedkeuring; beslispunt 6</Placeholder></p>
+        <div class="knoppen"><button class="knop" type="submit" disabled={!endpoint}>Stuur mij de checklist</button></div>
+        {!endpoint && <Placeholder regel>PIET: formulierendienst nog niet gekoppeld (structuurplan §4.6)</Placeholder>}
+      </form>
+    </div>
+  </section>
+
+  <!-- 3. Formulier (v7 §4) -->
+  <section class="sectie" aria-labelledby="formulier-kop" id="formulier">
+    <div class="container twee">
+      <div class="prose">
+        <h2 id="formulier-kop">Stuur me een bericht</h2>
+        <p>Vertel kort waar jullie staan; ik neem binnen twee werkdagen contact met je op.</p>
+        <p><Placeholder regel>UI-TEKST: kop en intro van het formulier ter goedkeuring</Placeholder></p>
+        <h3 class="klein">Direct contact</h3>
+        <p>Mailen kan ook: <a href={`mailto:${site.email}`}>{site.email}</a><br />Of verbind op <a href={site.linkedin} rel="me">LinkedIn</a>.</p>
+        <p class="klein secundair">strategyC · {site.adres} · KVK {site.kvk}</p>
+      </div>
+      <form class="formulier" method="post" action={contactAction} data-formulier="contact" novalidate>
+        <div class="veld">
+          <label for="naam">Je naam</label>
+          <input id="naam" name="naam" type="text" autocomplete="name" required placeholder=" " />
+          <span class="fout" data-fout>Dit veld is verplicht.</span>
+        </div>
+        <div class="veld">
+          <label for="organisatie">Je organisatie</label>
+          <input id="organisatie" name="organisatie" type="text" autocomplete="organization" placeholder=" " />
+        </div>
+        <div class="veld">
+          <label for="email">Je e-mailadres</label>
+          <input id="email" name="email" type="email" autocomplete="email" required placeholder=" " />
+          <span class="fout" data-fout>Vul een geldig e-mailadres in.</span>
+        </div>
+        <div class="veld">
+          <label for="bericht">Je bericht</label>
+          <textarea id="bericht" name="bericht" required placeholder=" "></textarea>
+          <span class="fout" data-fout>Dit veld is verplicht.</span>
+        </div>
+        <div class="honing" aria-hidden="true"><label>Laat dit veld leeg<input name="website" type="text" tabindex="-1" autocomplete="off" /></label></div>
+        <input type="hidden" name="t" value="" data-tijd />
+        {turnstile ? <div class="cf-turnstile" data-sitekey={turnstile} data-size="flexible" data-appearance="interaction-only"></div> : <Placeholder regel>PIET: Turnstile-sitekey</Placeholder>}
+        <div class="knoppen"><button class="knop" type="submit" disabled={!endpoint}><span data-label>Verstuur</span></button></div>
+        <p class="melding" data-melding hidden>Er ging iets mis bij het versturen. Probeer het nog eens, of mail me direct op <a href={`mailto:${site.email}`}>{site.email}</a>.</p>
+        {!endpoint && <Placeholder regel>PIET: formulierendienst nog niet gekoppeld (structuurplan §4.6)</Placeholder>}
+      </form>
+    </div>
+  </section>
+
+  <script is:inline src="/js/formulier.js" defer></script>
+</Base>

@@ -1,0 +1,23 @@
+---
+import type { CollectionEntry } from "astro:content";
+import Tags from "./Tags.astro";
+import Placeholder from "./Placeholder.astro";
+interface Props { c: CollectionEntry<"cases">; lazy?: boolean; kop?: "h2" | "h3"; }
+const { c, lazy = true, kop = "h3" } = Astro.props;
+const Kop = kop;
+const d = c.data;
+const url = `/portfolio/${c.id}/`;
+---
+<article class="kaart" data-tags={d.tags.map((t) => t.toLowerCase()).join(" ")}>
+  <div class="beeld">
+    {d.hoofdbeeld
+      ? <img src={d.hoofdbeeld} alt={d.hoofdbeeldAlt ?? ""} width="800" height="600" loading={lazy ? "lazy" : "eager"} decoding="async" />
+      : <Placeholder>PAULINE: beeld — {d.titel}</Placeholder>}
+  </div>
+  <div class="inhoud">
+    <p class="klant">{d.klant}</p>
+    <Kop class="kaart-kop"><a href={url}>{d.titel}</a></Kop>
+    {d.ondertitel && <p class="klein secundair">{d.ondertitel}</p>}
+    <Tags tags={d.tags} />
+  </div>
+</article>

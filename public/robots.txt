@@ -1,0 +1,33 @@
+# robots.txt strategyc.nl — vindbaar in klassieke zoekmachines én citeerbaar door AI-antwoordmachines.
+# Zoek- en antwoordbots expliciet toegestaan. Tokens elk kwartaal nalopen (2025–2026 vaak gewijzigd).
+
+User-agent: Googlebot
+User-agent: Bingbot
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: Claude-SearchBot
+User-agent: Claude-User
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+User-agent: Meta-WebIndexer
+User-agent: Applebot
+User-agent: DuckAssistBot
+Allow: /
+
+User-agent: *
+Allow: /
+
+# --- Trainingsbots blokkeren (voorstel; BESLUIT Pauline nr. 17). Regels hieronder activeren door de # weg te halen. ---
+# User-agent: GPTBot
+# User-agent: ClaudeBot
+# User-agent: Google-Extended
+# User-agent: Applebot-Extended
+# User-agent: CCBot
+# User-agent: Bytespider
+# Disallow: /
+#
+# User-agent: *
+# Content-Signal: search=yes, ai-input=yes, ai-train=no
+# Allow: /
+
+Sitemap: https://strategyc.nl/sitemap.xml

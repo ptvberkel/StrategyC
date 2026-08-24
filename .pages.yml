@@ -1,0 +1,63 @@
+# Pages CMS (app.pagescms.org) — beheerscherm voor Pauline (structuurplan §4.3).
+# Cases en blogartikelen als formulieren; tags als keuzelijst uit de centrale C-bron (src/data/cs.ts).
+media:
+  input: public/img
+  output: /img
+
+content:
+  - name: cases
+    label: Cases
+    type: collection
+    path: src/content/cases
+    filename: "{fields.slug}.md"
+    view:
+      fields: [titel, klant, jaar, uitgelicht, volgorde]
+    fields:
+      - { name: titel, label: Titel, type: string, required: true }
+      - { name: slug, label: URL-naam (kleine letters, koppeltekens), type: string, required: true }
+      - { name: ondertitel, label: Ondertitel, type: string }
+      - { name: klant, label: Klant / coalitie, type: string, required: true }
+      - { name: jaar, label: Jaar of periode, type: string, description: "bv. 2024–2025" }
+      - name: tags
+        label: C's (meerdere mogelijk; Coalities staat er altijd bij)
+        type: select
+        list: true
+        options:
+          values: [Consultancy, Creatie, Communicatie, Cultuur, Change]
+      - { name: uitgelicht, label: Uitgelicht op Home, type: boolean, default: false }
+      - { name: volgorde, label: Volgorde (laag = eerst), type: number, default: 99 }
+      - { name: hoofdbeeld, label: Hoofdbeeld, type: image }
+      - { name: hoofdbeeldAlt, label: Beschrijving hoofdbeeld (alt-tekst), type: string }
+      - name: beelden
+        label: Beeldmateriaal
+        type: object
+        list: true
+        fields:
+          - { name: src, label: Beeld, type: image }
+          - { name: alt, label: Beschrijving (alt-tekst), type: string }
+      - name: externeLink
+        label: Externe link (optioneel)
+        type: object
+        fields:
+          - { name: label, label: Linktekst, type: string }
+          - { name: url, label: URL, type: string }
+      - { name: metaOmschrijving, label: Omschrijving voor zoekmachines (1–2 zinnen), type: string }
+      - { name: gepubliceerd, label: Gepubliceerd, type: date }
+      - { name: bijgewerkt, label: Bijgewerkt, type: date }
+      - { name: placeholder, label: Nog niet af (toont markering), type: boolean, default: false }
+      - { name: body, label: Tekst (De opgave / De aanpak / Het resultaat), type: rich-text }
+
+  - name: blog
+    label: Blog
+    type: collection
+    path: src/content/blog
+    filename: "{fields.slug}.md"
+    fields:
+      - { name: titel, label: Titel, type: string, required: true }
+      - { name: slug, label: URL-naam, type: string, required: true }
+      - { name: datum, label: Datum, type: date, required: true }
+      - { name: bijgewerkt, label: Bijgewerkt, type: date }
+      - { name: metaOmschrijving, label: Omschrijving voor zoekmachines, type: string }
+      - { name: beeld, label: Beeld (optioneel), type: image }
+      - { name: beeldAlt, label: Beschrijving beeld, type: string }
+      - { name: body, label: Tekst, type: rich-text }

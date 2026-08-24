@@ -1,0 +1,27 @@
+---
+/**
+ * Contactblok (webteksten v7 §1.7) — onderaan Home; hergebruikt onder portfolio en cases
+ * als Pauline daarmee akkoord gaat (beslispunt 13). [concept]-tekst: ter goedkeuring.
+ */
+interface Props { kort?: boolean; }
+const { kort = false } = Astro.props;
+---
+<section class="sectie sectie--grijs" aria-labelledby="contact-kop">
+  <div class="container">
+    {kort ? (
+      <div class="twee">
+        <div>
+          <h2 id="contact-kop">Benieuwd of ik iets voor jouw samenwerking kan betekenen?</h2>
+        </div>
+        <div class="knoppen"><a class="knop" href="/contact/">Plan een oriënterend gesprek</a></div>
+      </div>
+    ) : (
+      <div class="prose">
+        <h2 id="contact-kop">Staan jullie aan het begin, of is het tijd voor een nieuwe impuls?</h2>
+        <p>Of je nu net start met een coalitie en zoekt naar de juiste gezamenlijke vorm, of merkt dat de samenwerking stagneert: ik help je de ambitie weer scherp te krijgen, te verwoorden en te verbeelden zodat er beweging ontstaat.</p>
+        <p>In een vrijblijvend gesprek van een halfuur denken we samen na over de volgende stap.</p>
+        <div class="knoppen"><a class="knop" href="/contact/">Plan een oriënterend gesprek</a></div>
+      </div>
+    )}
+  </div>
+</section>

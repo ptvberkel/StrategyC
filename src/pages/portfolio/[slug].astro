@@ -1,0 +1,107 @@
+---
+/** Casepagina — vast sjabloon (briefing §6.2, structuurplan §3.3). */
+import Base from "../../layouts/Base.astro";
+import Tags from "../../components/Tags.astro";
+import CaseCard from "../../components/CaseCard.astro";
+import ContactBlok from "../../components/ContactBlok.astro";
+import Placeholder from "../../components/Placeholder.astro";
+import { getCollection, render } from "astro:content";
+import { site, ids } from "../../data/site";
+import { filterSlug } from "../../data/cs";
+
+export async function getStaticPaths() {
+  const cases = await getCollection("cases");
+  return cases.map((c) => ({ params: { slug: c.id }, props: { c } }));
+}
+const { c } = Astro.props;
+const d = c.data;
+const { Content } = await render(c);
+
+const alle = (await getCollection("cases")).sort((a, b) => a.data.volgorde - b.data.volgorde);
+// Gerelateerde cases: zelfde C, anders de overige (besluit 11); max 3.
+const anderen = alle.filter((x) => x.id !== c.id);
+const verwant = [...anderen.filter((x) => x.data.tags.some((t) => d.tags.includes(t))), ...anderen].filter((x, i, arr) => arr.indexOf(x) === i).slice(0, 3);
+
+const titel = d.metaTitel ?? `${d.titel} — Portfolio · strategyC`;
+const omschrijving = d.metaOmschrijving ?? `${d.titel}: werk van strategyC voor ${d.klant} — opgave, aanpak en resultaat. Case uit het portfolio van Pauline Kamphuis.`;
+const url = `/portfolio/${c.id}/`;
+const article = {
+  "@type": "Article",
+  headline: d.titel,
+  ...(d.hoofdbeeld ? { image: [`${site.origin}${d.hoofdbeeld}`] } : {}),
+  ...(d.gepubliceerd ? { datePublished: d.gepubliceerd } : {}),
+  ...(d.bijgewerkt ? { dateModified: d.bijgewerkt } : {}),
+  author: { "@type": "Person", "@id": ids.persoon, name: site.eigenaar, url: `${site.origin}/over/` },
+  mainEntityOfPage: `${site.origin}${url}`,
+  inLanguage: "nl",
+};
+const datum = (iso?: string) => iso ? new Date(iso).toLocaleDateString("nl-NL", { month: "long", year: "numeric" }) : "";
+---
+<Base
+  titel={titel}
+  omschrijving={omschrijving}
+  ogType="article"
+  ogImage={d.hoofdbeeld}
+  jsonld={article}
+  breadcrumbs={[{ naam: "Home", url: "/" }, { naam: "Portfolio", url: "/portfolio/" }, { naam: d.titel }]}
+>
+  <article>
+    <header class="container case-kop">
+      <a class="pijl-link klein" href="/portfolio/">← Alle cases</a>
+      <h1>{d.titel}</h1>
+      {d.ondertitel && <p class="ondertitel">{d.ondertitel}</p>}
+      <p class="case-meta">
+        <span><strong>Klant / coalitie:</strong> {d.klant}</span>
+        <span><strong>Jaar:</strong> {d.jaar ? d.jaar : <Placeholder regel>PAULINE: jaar of periode</Placeholder>}</span>
+      </p>
+      <Tags tags={d.tags} />
+    </header>
+
+    <div class="container">
+      <div class="case-beeld">
+        {d.hoofdbeeld
+          ? <img src={d.hoofdbeeld} alt={d.hoofdbeeldAlt ?? ""} width="1600" height="900" fetchpriority="high" decoding="async" />
+          : <Placeholder>PAULINE: hoofdbeeld — het werk zelf (spread, visualisatie, lanceringsbeeld) + alt-tekst</Placeholder>}
+      </div>
+
+      <div class="prose case-tekst">
+        {d.placeholder && <p class="ph">[PAULINE: deze case bestaat nog niet — tekst volgens het sjabloon (opgave, aanpak, resultaat), jaar, beeld en tags aanleveren. Tags hieronder zijn tijdelijke voorbeelden voor het filter.]</p>}
+        <Content />
+      </div>
+
+      {d.beelden.length > 0 ? (
+        <div class="galerij">
+          {d.beelden.map((b) => (
+            <figure>
+              <div class="beeld"><img src={b.src} alt={b.alt} width="800" height="600" loading="lazy" decoding="async" /></div>
+              <figcaption>{b.alt}</figcaption>
+            </figure>
+          ))}
+        </div>
+      ) : (
+        <div class="galerij">
+          <figure><div class="beeld"><Placeholder>PAULINE: beeldmateriaal van het werk (spreads, visualisaties) — elk met alt-tekst</Placeholder></div></figure>
+        </div>
+      )}
+
+      <div class="knoppen" data-doorlinken>
+        {d.externeLink && <a class="pijl-link" href={d.externeLink.url} rel="noopener">{d.externeLink.label}</a>}
+      </div>
+      <p class="knoppen">
+        {d.tags.map((t) => <a class="knop knop--secundair knop--klein" href={`/portfolio/?c=${filterSlug(t)}`}>Meer werk in {t} →</a>)}
+        <a class="knop knop--klein" href="/portfolio/">Meer werk →</a>
+      </p>
+      <p class="klein secundair">{d.bijgewerkt ? `Bijgewerkt: ${datum(d.bijgewerkt)}` : ""}</p>
+    </div>
+
+    {verwant.length > 0 && (
+      <section class="sectie" aria-labelledby="verwant-kop">
+        <div class="container">
+          <div class="sectie-kop"><span class="c-teken" aria-hidden="true">©</span><h2 id="verwant-kop">Meer werk</h2></div>
+          <div class="raster">{verwant.map((v) => <CaseCard c={v} />)}</div>
+        </div>
+      </section>
+    )}
+  </article>
+  <ContactBlok kort />
+</Base>

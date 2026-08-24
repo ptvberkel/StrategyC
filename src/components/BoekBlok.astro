@@ -1,0 +1,22 @@
+---
+/** Boekverwijzing (v7 §1.6 op Home, §3 op Over). Cover en link volgen van Pauline. */
+import { site } from "../data/site";
+import Placeholder from "./Placeholder.astro";
+interface Props { variant?: "home" | "over"; }
+const { variant = "home" } = Astro.props;
+---
+<div class="boek">
+  <div class="cover">
+    <Placeholder>PAULINE: boekcover</Placeholder>
+  </div>
+  <div class="prose">
+    <span class="kop-label">Boek</span>
+    <h2>{site.boekTitel}{variant === "over" && <span class="secundair"> ({site.boekJaar})</span>}</h2>
+    {variant === "home"
+      ? <p>In mijn boek beschrijf ik hoe verandering werkt als je de mens centraal stelt — met tien concrete stappen, gebaseerd op wetenschap en 25 jaar praktijk.</p>
+      : <p>Verandering slaagt als je de mens centraal stelt. In dit boek beschrijf ik tien stappen voor mensgerichte transformatie, gebaseerd op wetenschappelijke inzichten en 25 jaar praktijkervaring.</p>}
+    {site.boekLink
+      ? <a class="pijl-link" href={site.boekLink} rel="noopener">{variant === "home" ? "Meer over het boek →" : "Bestel het boek →"}</a>
+      : <p><span class="pijl-link">{variant === "home" ? "Meer over het boek →" : "Bestel het boek →"}</span> <Placeholder regel>PAULINE: link naar verkooppagina (beslispunt 10)</Placeholder></p>}
+  </div>
+</div>

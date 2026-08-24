@@ -1,0 +1,12 @@
+name = "formulier-strategyc"
+main = "formulier.js"
+compatibility_date = "2026-08-01"
+
+[vars]
+SITE = "https://strategyc.nl"
+NOTIFY_TO = "pauline@strategyc.nl"          # bevestigen [PAULINE]
+FROM = "Pauline Kamphuis <post@strategyc.nl>" # afzenderadres, beslispunt 14; domein eerst verifiëren in Resend
+REPLY_TO = "pauline@strategyc.nl"
+CHECKLIST_URL = "https://strategyc.nl/downloads/checklist-strategyc.pdf" # niet in sitemap; bestand volgt [PAULINE]
+
+# Geheimen zetten met:  wrangler secret put TURNSTILE_SECRET   en   wrangler secret put RESEND_API_KEY

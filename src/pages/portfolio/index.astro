@@ -1,0 +1,41 @@
+---
+/**
+ * Portfolio-overzicht (v7 §2.1). Filterrij op vijf C's, één platte rij zonder groepslabels;
+ * ?c=… in de URL (structuurplan §2.3). Alle cases staan in de HTML; het script verbergt alleen.
+ */
+import Base from "../../layouts/Base.astro";
+import CaseCard from "../../components/CaseCard.astro";
+import ContactBlok from "../../components/ContactBlok.astro";
+import { getCollection } from "astro:content";
+import { FILTERS, filterSlug } from "../../data/cs";
+
+const cases = (await getCollection("cases")).sort((a, b) => a.data.volgorde - b.data.volgorde);
+---
+<Base
+  titel="Portfolio — strategyC"
+  omschrijving="Werk voor coalities: verbindende narratieven, scenario's, publicaties en workshops. Bekijk de cases."
+  breadcrumbs={[{ naam: "Home", url: "/" }, { naam: "Portfolio" }]}
+>
+  <section class="sectie" aria-labelledby="portfolio-kop">
+    <div class="container">
+      <h1 id="portfolio-kop">Portfolio</h1>
+      <p class="intro">Hieronder vind je een selectie van mijn werk voor coalities.</p>
+
+      <ul class="filters" data-filters aria-label="Filter op expertise">
+        <li><button class="filter" type="button" aria-pressed="true" data-filter="alle">Alle</button></li>
+        {FILTERS.map((f) => (
+          <li><button class="filter" type="button" aria-pressed="false" data-filter={filterSlug(f)}>{f}</button></li>
+        ))}
+      </ul>
+
+      <div class="raster" data-cases aria-live="polite">
+        {cases.map((c, i) => <CaseCard c={c} lazy={i > 2} kop="h2" />)}
+      </div>
+      <p class="melding" data-leeg hidden>Nog geen cases met dit label. Bekijk <a href="/portfolio/">alle cases</a>.</p>
+    </div>
+  </section>
+
+  <ContactBlok kort />
+
+  <script is:inline src="/js/filter.js" defer></script>
+</Base>

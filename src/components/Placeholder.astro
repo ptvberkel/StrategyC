@@ -1,0 +1,10 @@
+---
+/**
+ * Zichtbare markering voor ontbrekende content (briefing §10.2).
+ * `regel` = inline markering in lopende tekst; anders een blok (bv. in een beeldkader).
+ * Vóór livegang: grep op "class=\"ph" moet leeg zijn.
+ */
+interface Props { regel?: boolean; }
+const { regel = false } = Astro.props;
+---
+{regel ? <mark class="ph ph--regel">[<slot />]</mark> : <div class="ph ph--blok" role="note"><span>[<slot />]</span></div>}

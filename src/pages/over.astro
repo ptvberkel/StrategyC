@@ -1,0 +1,87 @@
+---
+/** Over (v7 §3) — verhaal, alle zes C's zichtbaar, boekblok, afsluitende CTA. Entiteitspagina (ProfilePage). */
+import Base from "../layouts/Base.astro";
+import BoekBlok from "../components/BoekBlok.astro";
+import Placeholder from "../components/Placeholder.astro";
+import { site, ids } from "../data/site";
+import { C_LABELS } from "../data/cs";
+
+// Alle zes C's uit de centrale bron; de tekst hieronder (v7) noemt ze in deze rolverdeling.
+const levering = C_LABELS.filter((c) => c === "Consultancy" || c === "Creatie");
+const expertise = C_LABELS.filter((c) => c === "Communicatie" || c === "Cultuur" || c === "Change");
+
+const profiel = {
+  "@type": "ProfilePage",
+  dateModified: "2026-08-24",
+  mainEntity: {
+    "@type": "Person",
+    "@id": ids.persoon,
+    name: site.eigenaar,
+    jobTitle: site.functie,
+    description: "Pauline Kamphuis is oprichter van strategyC: strategisch en creatief advies voor coalities.",
+    address: { "@type": "PostalAddress", addressLocality: site.plaats, addressCountry: site.land },
+    sameAs: [site.linkedin],
+  },
+};
+---
+<Base
+  titel="Over Pauline Kamphuis — strategyC"
+  omschrijving="Ruim 25 jaar ervaring in communicatie, cultuur en verandering, waaronder 14 jaar bij de opbouw van Security Delta. Auteur van 'In 10 stappen succesvol transformeren'."
+  jsonld={profiel}
+  breadcrumbs={[{ naam: "Home", url: "/" }, { naam: "Over" }]}
+>
+  <section class="sectie" aria-labelledby="over-kop">
+    <div class="container persoon">
+      <div class="portret"><Placeholder>PAULINE: foto (mag dezelfde als op Home)</Placeholder></div>
+      <div class="prose">
+        <h1 id="over-kop">Even voorstellen</h1>
+        <p class="intro">Ik ben Pauline Kamphuis, oprichter van strategyC: strategisch en creatief advies voor coalities. Ik breng strategische helderheid en zoek altijd naar het grotere plaatje: waarom doet dit ertoe, wie heeft er baat bij?</p>
+        <p><Placeholder regel>PAULINE: intro aanvullen met plaats (Leiden), specialismen en de twee bewijsstukken — zie beslispunt "Over-intro" (structuurplan §3.4)</Placeholder></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sectie" aria-labelledby="afkomst-kop">
+    <div class="container twee">
+      <div><div class="sectie-kop"><span class="c-teken" aria-hidden="true">©</span><h2 id="afkomst-kop">Waar ik vandaan kom</h2></div></div>
+      <div class="prose">
+        <p>Ik werk al ruim 25 jaar op het snijvlak van strategie, communicatie en verandering. Dat deed ik als wereldwijd communicatiedirecteur bij internationale ingenieursbureaus en als strategisch communicatieadviseur in de telecom en publieke sector. En daarnaast al bijna 15 jaar lang als adviseur voor onder meer Security Delta (HSD). <Placeholder regel>BESLUIT Pauline: 14 jaar of "bijna 15 jaar" — één getal overal</Placeholder></p>
+        <p>Daar heb ik ondervonden hoe publiek-private samenwerking écht werkt. Niet op papier, maar aan tafel — waar belangen schuren, de gezamenlijke ambitie levend gehouden moet worden en de samenwerking moet meebewegen met veranderingen in de omgeving.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sectie sectie--grijs" aria-labelledby="werkwijze-kop">
+    <div class="container twee">
+      <div><div class="sectie-kop"><span class="c-teken c-teken--rood" aria-hidden="true">©</span><h2 id="werkwijze-kop">Hoe ik werk</h2></div></div>
+      <div class="prose">
+        <p>Ik begin altijd bij de essentie: waar staan de partijen sámen voor? In scherpe gesprekken en workshops ontdekken deelnemers zelf de kerningrediënten van hun verhaal, waardoor ze automatisch dichter bij elkaars perspectief komen.</p>
+        <p>Vervolgens vertaal ik dat naar taal en beeld: van een verbindend narratief, gedeelde waarden en scenario's tot publicaties. Eenvoudige vormgeving kan ik direct meenemen. Er hoeft geen apart bureau te worden gebriefd dat zich nog moet inleven, want dat inleven is precies waar mijn werk al begon.</p>
+        <p>Mijn werk laat zich vangen in <strong>C's</strong>. Voor publiek-private en publieke <strong>coalities</strong> lever ik <strong>{levering[0].toLowerCase()}</strong> én <strong>{levering[1].toLowerCase()}</strong>. Dat doe ik vanuit drie kernexpertises:</p>
+        <ul class="tags" aria-label="Kernexpertises">
+          {expertise.map((c) => <li class="tag">{c}</li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="sectie" aria-labelledby="opleiding-kop">
+    <div class="container twee">
+      <div><div class="sectie-kop"><span class="c-teken" aria-hidden="true">©</span><h2 id="opleiding-kop">Opleiding en achtergrond</h2></div></div>
+      <div class="prose">
+        <p>Ik studeerde commerciële economie en corporate communicatie, verdiepte me daarna in organisatiecultuur, <em>strategic alignment</em>, gedragspsychologie en design, en publiceerde een boek over transformatie. Die combinatie — begrip van economische en publieke waarde, strategie, reputatie en transformatie, versterkt met sterke vaardigheden in analyse, schrijven en vormgeving — bepaalt mijn unieke blik op samenwerking én geeft me een uitgebreide toolkit om die samenwerking echt vooruit te helpen.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sectie" aria-label="Boek">
+    <div class="container"><BoekBlok variant="over" /></div>
+  </section>
+
+  <section class="sectie sectie--grijs" aria-labelledby="cta-kop">
+    <div class="container twee">
+      <h2 id="cta-kop">Benieuwd of ik iets voor jouw samenwerking kan betekenen?</h2>
+      <div class="knoppen"><a class="knop" href="/contact/">Plan een oriënterend gesprek</a></div>
+    </div>
+  </section>
+</Base>

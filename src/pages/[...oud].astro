@@ -1,0 +1,28 @@
+---
+/**
+ * Redirect-stubs op oude paden (structuurplan hfst. 6; website-standards huisregel 9).
+ * Directe meta refresh = permanente redirect voor Google; canonical + noindex; JS als terugval.
+ * Niet in de sitemap (filter in astro.config.mjs).
+ */
+import { redirects } from "../data/redirects";
+import { site } from "../data/site";
+export function getStaticPaths() {
+  return redirects.map((r) => ({ params: { oud: r.oud.replace(/^\/|\/$/g, "") }, props: { nieuw: r.nieuw } }));
+}
+const { nieuw } = Astro.props;
+const doel = `${site.origin}${nieuw}`;
+---
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <title>Doorsturen…</title>
+  <link rel="canonical" href={doel}>
+  <meta http-equiv="refresh" content={`0; url=${doel}`}>
+  <meta name="robots" content="noindex">
+</head>
+<body>
+  <p>Deze pagina is verhuisd naar <a href={doel}>{doel}</a>.</p>
+  <script is:inline define:vars={{ doel }}>location.replace(doel);</script>
+</body>
+</html>

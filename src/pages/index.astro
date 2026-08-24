@@ -1,0 +1,108 @@
+---
+/** Home — zeven blokken in vaste volgorde (briefing §6.1, webteksten v7 §1). */
+import Base from "../layouts/Base.astro";
+import CaseCard from "../components/CaseCard.astro";
+import ContactBlok from "../components/ContactBlok.astro";
+import BoekBlok from "../components/BoekBlok.astro";
+import Placeholder from "../components/Placeholder.astro";
+import { getCollection } from "astro:content";
+
+const alle = (await getCollection("cases")).sort((a, b) => a.data.volgorde - b.data.volgorde);
+const uitgelicht = alle.filter((c) => c.data.uitgelicht).slice(0, 4); // selectie door Pauline (v7 §8.2)
+const bySlug = Object.fromEntries(alle.map((c) => [c.id, c]));
+
+// Klantvermelding in tekst (v7 §1.3): naam linkt naar de eigen casepagina — nooit naar de klantsite.
+const klanten: { naam: string; slug?: string }[] = [
+  { naam: "Security Delta (HSD)", slug: "security-delta" },
+  { naam: "Innovatiecoalitie cyberveilige energietransitie", slug: "cyberveilige-energietransitie" },
+  { naam: "Living Lab Scheveningen", slug: "living-lab-scheveningen" },
+  { naam: "InnovationQuarter", slug: "innovationquarter" },
+  { naam: "Impactcoalitie Smart Secure Cities", slug: "impactcoalitie-smart-secure-cities" },
+  { naam: "RoboValley", slug: "robovalley" },
+];
+---
+<Base
+  titel="strategyC — Strategie en creatie voor maatschappelijke verandering"
+  omschrijving="Ik help coalities verwoorden waar ze samen voor staan — en maak hun ambitie zichtbaar, voelbaar en deelbaar. Strategisch en creatief advies van Pauline Kamphuis."
+>
+  <!-- 1. Hero (briefing §4, definitief) -->
+  <section class="hero" aria-labelledby="hero-kop">
+    <div class="container">
+      <h1 id="hero-kop">Strategie en creatie voor maatschappelijke verandering.</h1>
+      <p class="intro">Ik help coalities verwoorden waar ze samen voor staan — en maak hun ambitie zichtbaar, voelbaar en deelbaar.</p>
+      <div class="knoppen">
+        <a class="knop" href="/contact/">Plan een oriënterend gesprek</a>
+        <a class="knop knop--secundair" href="/portfolio/">Bekijk het werk</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Introductie Pauline (v7 §1.2) -->
+  <section class="sectie" aria-labelledby="intro-kop">
+    <div class="container persoon">
+      <div class="portret">
+        <Placeholder>PAULINE: professionele foto, werkcontext</Placeholder>
+      </div>
+      <div class="prose">
+        <span class="kop-label">Pauline Kamphuis</span>
+        <h2 id="intro-kop">Verandering vraagt meer dan één organisatie</h2>
+        <p>Ik werk ruim 25 jaar op het snijvlak van strategie, communicatie en verandering — bij corporates, bij de overheid en in publiek-private samenwerkingsverbanden. Ik weet hoe lastig het is om beweging op gang te krijgen in één organisatie — laat staan in meerdere organisaties met verschillende belangen, culturen en tempo's. Toch is dat wat maatschappelijke verandering vraagt: samenwerken aan een gezamenlijke ambitie, over de grenzen van de eigen organisatie heen. Daar help ik coalities bij: verwoorden en verbeelden waar ze samen voor staan. Dat verbindt de partijen onderling, versnelt de samenwerking, en helpt ze hun eigen organisaties en doelgroepen mee te nemen — zonder hun eigen belangen tekort te doen.</p>
+        <a class="pijl-link" href="/over/">Meer over mij →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Klantvermelding in tekst, geen logo's (v7 §1.3) -->
+  <section class="sectie" aria-labelledby="klanten-kop">
+    <div class="container">
+      <div class="sectie-kop"><span class="c-teken" aria-hidden="true">©</span><h2 id="klanten-kop">Ik werk(te) onder meer voor</h2></div>
+      <p class="klanten">
+        {klanten.map((k, i) => (
+          <>
+            {k.slug && bySlug[k.slug] ? <a href={`/portfolio/${k.slug}/`}>{k.naam}</a> : k.naam}
+            {i < klanten.length - 1 ? <span>, </span> : <span>.</span>}
+          </>
+        ))}
+      </p>
+      <p class="klein secundair">Bevestigen door Pauline (v7 §8.1). Namen krijgen pas een link als de bijbehorende case bestaat.</p>
+    </div>
+  </section>
+
+  <!-- 4. Portfolio-uitlichting (v7 §1.4) -->
+  <section class="sectie" aria-labelledby="werk-kop">
+    <div class="container">
+      <div class="twee">
+        <div class="prose">
+          <h2 id="werk-kop">Van ambitie naar beweging</h2>
+          <p>Ik help coalities scherp krijgen waar ze samen voor staan en waar het mis zou kunnen gaan. Dat doe ik in gesprekken en workshops, met de partijen zelf aan tafel — en het leidt tot iets tastbaars: een verbindend narratief, een boek, artist impressions of een gedragen besluit. Hieronder een greep uit eerder werk.</p>
+        </div>
+        <div class="knoppen"><a class="knop knop--secundair" href="/portfolio/">Naar het portfolio</a></div>
+      </div>
+      <div class="raster">
+        {uitgelicht.map((c, i) => <CaseCard c={c} lazy={i > 0} />)}
+      </div>
+      <p class="klein secundair">Selectie en volgorde van de uitgelichte cases: Pauline (v7 §8.2).</p>
+    </div>
+  </section>
+
+  <!-- 5. De rode draad (v7 §1.5) -->
+  <section class="sectie sectie--grijs" aria-labelledby="rode-draad-kop">
+    <div class="container twee">
+      <div>
+        <div class="sectie-kop"><span class="c-teken c-teken--rood" aria-hidden="true">©</span><h2 id="rode-draad-kop">De rode draad in mijn werk</h2></div>
+      </div>
+      <div class="prose">
+        <p>Een coalitie houdt stand als partijen weten wat hen bindt, elkaar echt weten te vinden en er voor iedereen ruimte blijft voor eigen succes. Het geheim zit in een ambitie die groot genoeg is om alle belangen te verenigen, gecombineerd met respect voor de belangen, culturen en het tempo die de partners meebrengen.</p>
+        <p>Mijn werk speelt zich precies op dat snijvlak af. Ik voel me thuis in de vloeibare beginfase, waarin de kaders nog ontbreken en er gezocht wordt naar richting. Met oog voor de onderstroom vertaal ik wat er speelt naar taal, beeld en advies. Van een verbindend verhaal en houvast gevende waarden tot scenario's, artist impressions en vormgeving die jullie gezamenlijke ambitie direct voelbaar maken.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. Boekverwijzing (v7 §1.6) -->
+  <section class="sectie" aria-label="Boek">
+    <div class="container"><BoekBlok variant="home" /></div>
+  </section>
+
+  <!-- 7. Contactblok (v7 §1.7, [concept]) -->
+  <ContactBlok />
+</Base>
