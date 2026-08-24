@@ -29,7 +29,8 @@ jobs:
       - run: npm run build
         env:
           PREVIEW: "1"            # testomgeving: noindex, geen CNAME. Bij livegang deze twee regels weghalen.
-          PREVIEW_BASE: "/StrategyC" # project site: https://ptvberkel.github.io/StrategyC/
+          PREVIEW_BASE: "/StrategyC" # project site onder je eigen domein
+          PREVIEW_SITE: "https://www.huurofkoopcheck.nl" # redirect-stubs blijven binnen de preview
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
