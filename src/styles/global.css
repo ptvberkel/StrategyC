@@ -19,7 +19,6 @@
   --kleur-grijs: #ededed;
   --kleur-donkergrijs: #737373;
   --kleur-lijn: #dcdcdc;
-  --kleur-vlak: #fbeeed;  /* tekstvlakken: heel licht rood, afgeleid van het accent (keuze Piet 25-08, variant G2) */
 
   --font: "Barlow", "Barlow Fallback", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 
@@ -69,8 +68,9 @@ p { margin: 0 0 1em; }
 .container { width: min(100% - 2 * var(--ruimte), var(--breedte)); margin-inline: auto; }
 .sectie { padding-block: var(--sectie); }
 .sectie + .sectie { padding-top: 0; }
-/* grijze vlakken: paginabrede band, geen afronding; compacter dan de standaardsectie */
-.sectie--grijs { background: var(--kleur-vlak); padding-block: clamp(2.5rem, 6vw, 4.5rem); }
+/* grijze vlakken: paginabrede band in het lichtgrijs uit het palet, geen afronding; compacter dan de standaardsectie
+   (keuze Piet 25-08: grijs G1 — lichtrood G2 bekeken en verworpen) */
+.sectie--grijs { background: var(--kleur-grijs); padding-block: clamp(2.5rem, 6vw, 4.5rem); }
 .sectie--grijs + .sectie { padding-top: var(--sectie); }
 .sectie--grijs > .container.twee { align-items: start; }
 @media (min-width: 800px) { .sectie--grijs > .container.twee { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 3rem; } }
@@ -148,7 +148,8 @@ p { margin: 0 0 1em; }
 .hero--cirkels h1 { max-inline-size: 18ch; margin-inline: auto; }
 .hero--cirkels .intro { margin: .75rem auto 1.25rem; }
 .hero--cirkels .knoppen { justify-content: center; }
-.cirkels { position: relative; height: clamp(340px, 30vw, 360px); margin-top: .5rem; border-bottom: 2px solid var(--kleur-zwart); overflow: hidden; }
+/* De cirkelbak is een direct kind van de sectie (niet van .container): rand tot rand, inclusief de zwarte 'vloer'. */
+.cirkels { position: relative; width: 100%; height: clamp(340px, 30vw, 360px); margin-top: .5rem; border-bottom: 2px solid var(--kleur-zwart); overflow: hidden; }
 /* Cirkels: rood met radiale gradiënt (variant D1, besluit Pauline + Piet 25-08 — bewuste afwijking van briefing §8 "vlak"),
    witte tekst ≥ 19 px vet (AA grote tekst), geen slagschaduw. Tinten zijn schakeringen van het accentrood. */
 .cirkel { position: absolute; left: 0; top: 0; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #ea746a, var(--kleur-rood) 55%, #b8473e 100%); color: var(--kleur-wit); display: grid; place-items: center; text-align: center; font-weight: 700; line-height: 1.05; letter-spacing: -.01em; cursor: grab; user-select: none; touch-action: none; will-change: transform; }
@@ -158,11 +159,11 @@ p { margin: 0 0 1em; }
 .cirkel:focus-visible { outline: 3px solid var(--kleur-zwart); outline-offset: 3px; }
 /* mobiel: ballen op de voorgrond — direct onder de kop, vóór zin en knoppen */
 @media (max-width: 640px) {
-  .hero--cirkels .container { display: flex; flex-direction: column; }
-  .hero--cirkels h1 { order: 1; }
+  .hero--cirkels { display: flex; flex-direction: column; }
+  .hero--cirkels .hero-kop { order: 1; }
   .hero--cirkels .cirkels { order: 2; height: 300px; margin: .25rem 0 1.25rem; }
-  .hero--cirkels .intro { order: 3; }
-  .hero--cirkels .knoppen { order: 4; margin-bottom: .5rem; }
+  .hero--cirkels .hero-tekst { order: 3; }
+  .hero--cirkels .knoppen { margin-bottom: .5rem; }
 }
 .cirkel--vast { background: radial-gradient(circle at 35% 30%, #ea746a, var(--kleur-rood) 55%, #b8473e 100%); }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
@@ -212,15 +213,22 @@ p { margin: 0 0 1em; }
 .honing { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 .melding { border-left: 3px solid var(--kleur-rood); padding: .75rem 1rem; background: var(--kleur-grijs); border-radius: 0 10px 10px 0; }
 
-/* ---------- footer ---------- */
-.site-footer { border-top: 1px solid var(--kleur-lijn); padding-block: 3rem 2.5rem; font-size: .95rem; color: var(--kleur-donkergrijs); }
-.site-footer .container { display: grid; gap: 1.5rem; }
-@media (min-width: 760px) { .site-footer .container { grid-template-columns: 1fr 1fr 1fr; } }
-.site-footer p { margin: 0 0 .35rem; }
+/* ---------- footer ----------
+   Drie lagen op één raster: (1) logo + tagline, (2) drie kolommen met kopje en regels op dezelfde hoogte,
+   (3) onderregel met © en KVK. Alles op één kleur voor tekst en één voor links; geen markeringen. */
+.site-footer { border-top: 1px solid var(--kleur-lijn); padding-block: 3rem 2rem; font-size: .95rem; line-height: 1.6; color: var(--kleur-donkergrijs); }
 .site-footer a { color: var(--kleur-zwart); text-decoration: none; }
 .site-footer a:hover { text-decoration: underline; color: var(--kleur-rood); }
-.site-footer .logo svg { height: 18px; }
-.site-footer ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .5rem 1.25rem; }
+.site-footer p, .site-footer address { margin: 0; font-style: normal; }
+.site-footer ul { list-style: none; margin: 0; padding: 0; }
+.footer-boven { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .75rem 2rem; padding-bottom: 2rem; }
+.footer-boven .logo svg { height: 20px; }
+.footer-tagline { font-size: .95rem; }
+.footer-kolommen { display: grid; gap: 2rem; }
+@media (min-width: 640px) { .footer-kolommen { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem 3rem; } }
+.footer-kop { font-size: .75rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--kleur-zwart); margin-bottom: .6rem; }
+.footer-kolommen li + li { margin-top: .2rem; }
+.footer-onder { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .25rem 2rem; margin-top: 2.5rem; padding-top: 1.25rem; border-top: 1px solid var(--kleur-lijn); font-size: .85rem; }
 
 /* ---------- placeholders: zichtbaar, tijdelijk, vóór livegang aantoonbaar weg ---------- */
 .ph { background: #fff3b0; border: 1.5px dashed #b8860b; color: #3b2f00; border-radius: 8px; padding: .35em .6em; font-size: .9em; line-height: 1.35; font-weight: 600; }

@@ -6,7 +6,6 @@
 import "../styles/global.css";
 import { site, ids } from "../data/site";
 import Logo from "../components/Logo.astro";
-import Placeholder from "../components/Placeholder.astro";
 
 interface Props {
   titel: string;             // volledige <title>, sitenaam één keer aan het eind
@@ -136,25 +135,39 @@ const csp = [
       <slot />
     </main>
 
+    {/* Footer: logo + tagline, drie uitgelijnde kolommen (adres, contact, meer), onderregel met wettelijke gegevens.
+        Telefoon en btw-id verschijnen alleen als ze in src/data/site.ts zijn ingevuld (geen markering in de footer; Piet 25-08). */}
     <footer class="site-footer">
       <div class="container">
-        <div>
-          <a href="/" class="logo" aria-label="strategyC"><Logo /></a>
-          <p class="klein">© {jaar} strategyC — {site.eigenaar}</p>
-          <p class="klein">{site.adres}</p>
-          <p class="klein">KVK {site.kvk} · btw-id {site.btw ? site.btw : <Placeholder regel>PAULINE: btw-id</Placeholder>}</p>
+        <div class="footer-boven">
+          <a href="/" class="logo" aria-label="strategyC — naar de homepage"><Logo /></a>
+          <p class="footer-tagline">Strategisch en creatief advies voor coalities</p>
         </div>
-        <div>
-          <p><a href={`mailto:${site.email}`}>{site.email}</a></p>
-          <p>{site.telefoon ? <a href={`tel:${site.telefoon.replace(/\s|\(0\)/g, "")}`}>{site.telefoon}</a> : <Placeholder regel>PAULINE: telefoonnummer (beslispunt 7)</Placeholder>}</p>
-          <p><a href={site.linkedin} rel="me">LinkedIn</a></p>
+        <div class="footer-kolommen">
+          <div>
+            <p class="footer-kop">Adres</p>
+            <address>{site.adres.split(", ").map((r, i, a) => <>{r}{i < a.length - 1 && <br />}</>)}</address>
+          </div>
+          <div>
+            <p class="footer-kop">Contact</p>
+            <ul>
+              <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
+              {site.telefoon && <li><a href={`tel:${site.telefoon.replace(/\s|\(0\)/g, "")}`}>{site.telefoon}</a></li>}
+              <li><a href={site.linkedin} rel="me">LinkedIn</a></li>
+            </ul>
+          </div>
+          <div>
+            <p class="footer-kop">Meer</p>
+            <ul>
+              <li><a href="/privacyverklaring/">Privacyverklaring</a></li>
+              <li><a href="/algemene-voorwaarden/">Algemene voorwaarden</a></li>
+              <li><a href="/blog/">Blog</a></li>
+            </ul>
+          </div>
         </div>
-        <div>
-          <ul>
-            <li><a href="/privacyverklaring/">Privacyverklaring</a></li>
-            <li><a href="/algemene-voorwaarden/">Algemene voorwaarden</a></li>
-            <li><a href="/blog/">Blog</a></li>
-          </ul>
+        <div class="footer-onder">
+          <p>© {jaar} strategyC — {site.eigenaar}</p>
+          <p>KVK {site.kvk}{site.btw && <> · btw-id {site.btw}</>}</p>
         </div>
       </div>
     </footer>

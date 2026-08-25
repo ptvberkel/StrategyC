@@ -15,7 +15,8 @@
   var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
   var W, H, balls = [], raf = null, idle = 0, drag = null;
 
-  function schaal() { var w = pit.clientWidth; return Math.max(0.5, Math.min(1, w / 900)); }
+  // Schaal loopt mee met de breedte van de bak (die is nu paginabreed): op brede schermen grotere ballen, zodat ze niet verloren liggen.
+  function schaal() { var w = pit.clientWidth; return Math.max(0.5, Math.min(1.35, w / 1000)); }
   function opbouw() {
     W = pit.clientWidth; H = pit.clientHeight; pit.innerHTML = ""; balls = [];
     var s = schaal();
@@ -66,6 +67,12 @@
         }
       }
     }
+    // Na het uit elkaar duwen opnieuw binnen de bak klemmen: anders kan een bal half buiten de rand blijven liggen (smalle schermen).
+    balls.forEach(function (b) {
+      if (b.held) return;
+      if (b.x - b.r < 0) b.x = b.r; else if (b.x + b.r > W) b.x = W - b.r;
+      if (b.y + b.r > H) b.y = H - b.r;
+    });
   }
   function teken() { balls.forEach(function (b) { b.el.style.transform = "translate(" + (b.x - b.r) + "px," + (b.y - b.r) + "px)"; }); }
   function loop() {

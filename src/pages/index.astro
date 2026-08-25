@@ -29,17 +29,20 @@ const klanten: { naam: string; slug?: string }[] = [
 >
   <!-- 1. Hero (briefing §4, definitief) — met de zes C's als vallende cirkels over de volle breedte (besluit Pauline + Piet, 24-08) -->
   <section class="hero hero--cirkels" aria-labelledby="hero-kop">
-    <div class="container">
+    <div class="container hero-kop">
       <h1 id="hero-kop">Strategie en creatie voor maatschappelijke verandering.</h1>
+    </div>
+    <div class="container hero-tekst">
       <p class="intro">Ik help coalities verwoorden waar ze samen voor staan — en maak hun ambitie zichtbaar, voelbaar en deelbaar.</p>
       <div class="knoppen">
         <a class="knop" href="/contact/">Plan een oriënterend gesprek</a>
         <a class="knop knop--secundair" href="/portfolio/">Bekijk het werk</a>
       </div>
-      <nav class="cirkels" id="cirkels" data-labels={C_LABELS.join("|")} data-vast={VAST} aria-label="De zes C's — klik voor het bijbehorende werk">
-        <ul class="sr-only">{C_LABELS.map((c) => <li><a href={c === VAST ? "/portfolio/" : `/portfolio/?c=${c.toLowerCase()}`}>{c}</a></li>)}</ul>
-      </nav>
     </div>
+    <!-- De cirkelbak staat bewust buiten .container: ballen en zwarte 'vloer' lopen van rand tot rand (Piet 25-08) -->
+    <nav class="cirkels" id="cirkels" data-labels={C_LABELS.join("|")} data-vast={VAST} aria-label="De zes C's — klik voor het bijbehorende werk">
+      <ul class="sr-only">{C_LABELS.map((c) => <li><a href={c === VAST ? "/portfolio/" : `/portfolio/?c=${c.toLowerCase()}`}>{c}</a></li>)}</ul>
+    </nav>
   </section>
 
   <!-- 2. Introductie Pauline (v7 §1.2) -->
