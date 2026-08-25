@@ -13,9 +13,11 @@ User-agent: Meta-WebIndexer
 User-agent: Applebot
 User-agent: DuckAssistBot
 Allow: /
+Disallow: /downloads/
 
 User-agent: *
 Allow: /
+Disallow: /downloads/
 
 # --- Trainingsbots blokkeren (voorstel; BESLUIT Pauline nr. 17). Regels hieronder activeren door de # weg te halen. ---
 # User-agent: GPTBot

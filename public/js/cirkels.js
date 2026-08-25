@@ -1,4 +1,5 @@
-// Vallende C-cirkels in de hero (besluit Pauline + Piet, 24-08). Eigen mini-physics: geen externe bibliotheek,
+// Vallende C-cirkels in de hero (besluit Pauline + Piet, 24-08). De bak clipt niet en ligt boven de rest van de pagina:
+// omhoog gegooide ballen gaan vóór kop, tekst en menubalk langs en vallen terug (Piet 25-08). Eigen mini-physics: geen externe bibliotheek,
 // geen verzoek naar derden. Respecteert prefers-reduced-motion (cirkels liggen dan meteen stil).
 // Labels komen uit data-labels op #cirkels (gevuld vanuit src/data/cs.ts — één bron voor de zes C's).
 (function () {
@@ -52,7 +53,7 @@
       if (b.y + b.r > H) { b.y = H - b.r; b.vy = -b.vy * rest; b.vx *= 0.9; }
       if (b.x - b.r < 0) { b.x = b.r; b.vx = -b.vx * rest; }
       if (b.x + b.r > W) { b.x = W - b.r; b.vx = -b.vx * rest; }
-      if (b.y - b.r < -H * 2) { b.y = -H * 2 + b.r; b.vy = 0; }
+      if (b.y - b.r < -H * 3) { b.y = -H * 3 + b.r; b.vy = 0; } // plafond ver boven de bak: gooien mag, wegvliegen niet
     });
     for (var k = 0; k < 3; k++) for (var i = 0; i < balls.length; i++) for (var j = i + 1; j < balls.length; j++) {
       var a = balls[i], c = balls[j], dx = c.x - a.x, dy = c.y - a.y, d = Math.sqrt(dx * dx + dy * dy) || 0.001, min = a.r + c.r;
@@ -89,7 +90,7 @@
     b.vx = (e.clientX - drag.lx) / dt * 600; b.vy = (e.clientY - drag.ly) / dt * 600;
     drag.lx = e.clientX; drag.ly = e.clientY; drag.t = now;
     b.x = Math.max(b.r, Math.min(rect.width - b.r, e.clientX - rect.left));
-    b.y = Math.max(b.r, Math.min(rect.height - b.r, e.clientY - rect.top));
+    b.y = Math.max(-H * 3 + b.r, Math.min(rect.height - b.r, e.clientY - rect.top)); // omhoog slepen mag tot boven de bak; de vloer niet door
   });
   function los() {
     if (!drag) return;

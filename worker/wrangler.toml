@@ -2,11 +2,32 @@ name = "formulier-strategyc"
 main = "formulier.js"
 compatibility_date = "2026-08-01"
 
+# ---------------------------------------------------------------------------
+# Productie (wrangler deploy) — pas gebruiken als strategyc.nl in Resend is geverifieerd
+# ---------------------------------------------------------------------------
 [vars]
 SITE = "https://strategyc.nl"
+# Sites waar het formulier vandaan mag komen; de bezoeker gaat na verzenden terug naar de site van herkomst
+ORIGINS = "https://strategyc.nl,https://www.huurofkoopcheck.nl"
 NOTIFY_TO = "pauline@strategyc.nl"          # bevestigen [PAULINE]
 FROM = "Pauline Kamphuis <post@strategyc.nl>" # afzenderadres, beslispunt 14; domein eerst verifiëren in Resend
 REPLY_TO = "pauline@strategyc.nl"
 CHECKLIST_URL = "https://strategyc.nl/downloads/checklist-strategyc.pdf" # niet in sitemap; bestand volgt [PAULINE]
 
-# Geheimen zetten met:  wrangler secret put TURNSTILE_SECRET   en   wrangler secret put RESEND_API_KEY
+# ---------------------------------------------------------------------------
+# Test (wrangler deploy --env test) — eigen Worker "formulier-strategyc-test", mails naar Piet
+# Afzender onboarding@resend.dev werkt zonder domeinverificatie, maar alléén naar het e-mailadres van het Resend-account.
+# ---------------------------------------------------------------------------
+[env.test]
+name = "formulier-strategyc-test"
+[env.test.vars]
+SITE = "https://www.huurofkoopcheck.nl/StrategyC"
+ORIGINS = "https://www.huurofkoopcheck.nl,http://localhost:4321"
+NOTIFY_TO = "pieterb2252@gmail.com"
+FROM = "strategyC test <onboarding@resend.dev>"
+REPLY_TO = "pieterb2252@gmail.com"
+CHECKLIST_URL = "https://www.huurofkoopcheck.nl/StrategyC/downloads/checklist-strategyc.pdf"
+
+# Geheimen (per omgeving!):
+#   wrangler secret put TURNSTILE_SECRET --env test      wrangler secret put RESEND_API_KEY --env test
+#   wrangler secret put TURNSTILE_SECRET                 wrangler secret put RESEND_API_KEY
