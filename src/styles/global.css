@@ -134,6 +134,19 @@ p { margin: 0 0 1em; }
 .hero h1 { max-inline-size: 16ch; }
 .hero .intro { margin: 1rem 0 2rem; }
 
+/* hero met vallende C-cirkels over de volle breedte (opzet huidige site, in het nieuwe palet) */
+.hero--cirkels { padding-block: clamp(2rem, 4vw, 3rem) 0; text-align: center; }
+.hero--cirkels h1 { max-inline-size: 18ch; margin-inline: auto; }
+.hero--cirkels .intro { margin: .75rem auto 1.25rem; }
+.hero--cirkels .knoppen { justify-content: center; }
+.cirkels { position: relative; height: clamp(340px, 30vw, 360px); margin-top: .5rem; border-bottom: 2px solid var(--kleur-zwart); overflow: hidden; }
+/* Cirkels: rood met radiale gradiënt (variant D1, besluit Pauline + Piet 25-08 — bewuste afwijking van briefing §8 "vlak"),
+   witte tekst ≥ 19 px vet (AA grote tekst), geen slagschaduw. Tinten zijn schakeringen van het accentrood. */
+.cirkel { position: absolute; left: 0; top: 0; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #ea746a, var(--kleur-rood) 55%, #b8473e 100%); color: var(--kleur-wit); display: grid; place-items: center; text-align: center; font-weight: 700; line-height: 1.05; letter-spacing: -.01em; cursor: grab; user-select: none; touch-action: none; will-change: transform; }
+.cirkel:active { cursor: grabbing; }
+.cirkel--vast { background: radial-gradient(circle at 35% 30%, #ea746a, var(--kleur-rood) 55%, #b8473e 100%); }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
 /* introductie met foto in cirkel (©-motief) */
 .persoon { display: grid; gap: 2rem; align-items: center; grid-template-columns: 1fr; }
 @media (min-width: 760px) { .persoon { grid-template-columns: 280px 1fr; gap: 3rem; } }
