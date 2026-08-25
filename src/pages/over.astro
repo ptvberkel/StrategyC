@@ -1,6 +1,7 @@
 ---
 /** Over (v7 §3) — verhaal, alle zes C's zichtbaar, boekblok, afsluitende CTA. Entiteitspagina (ProfilePage). */
 import Base from "../layouts/Base.astro";
+import CTeken from "../components/CTeken.astro";
 import BoekBlok from "../components/BoekBlok.astro";
 import Placeholder from "../components/Placeholder.astro";
 import { site, ids } from "../data/site";
@@ -43,7 +44,7 @@ const profiel = {
 
   <section class="sectie" aria-labelledby="afkomst-kop">
     <div class="container twee">
-      <div><div class="sectie-kop"><span class="c-teken" aria-hidden="true">©</span><h2 id="afkomst-kop">Waar ik vandaan kom</h2></div></div>
+      <div><h2 class="kop-c" id="afkomst-kop"><CTeken /> Waar ik vandaan kom</h2></div>
       <div class="prose">
         <p>Ik werk al ruim 25 jaar op het snijvlak van strategie, communicatie en verandering. Dat deed ik als wereldwijd communicatiedirecteur bij internationale ingenieursbureaus en als strategisch communicatieadviseur in de telecom en publieke sector. En daarnaast al bijna 15 jaar lang als adviseur voor onder meer Security Delta (HSD). <Placeholder regel>BESLUIT Pauline: 14 jaar of "bijna 15 jaar" — één getal overal</Placeholder></p>
         <p>Daar heb ik ondervonden hoe publiek-private samenwerking écht werkt. Niet op papier, maar aan tafel — waar belangen schuren, de gezamenlijke ambitie levend gehouden moet worden en de samenwerking moet meebewegen met veranderingen in de omgeving.</p>
@@ -53,7 +54,7 @@ const profiel = {
 
   <section class="sectie sectie--grijs" aria-labelledby="werkwijze-kop">
     <div class="container twee">
-      <div><div class="sectie-kop"><span class="c-teken c-teken--rood" aria-hidden="true">©</span><h2 id="werkwijze-kop">Hoe ik werk</h2></div></div>
+      <div><h2 class="kop-c" id="werkwijze-kop"><CTeken rood /> Hoe ik werk</h2></div>
       <div class="prose">
         <p>Ik begin altijd bij de essentie: waar staan de partijen sámen voor? In scherpe gesprekken en workshops ontdekken deelnemers zelf de kerningrediënten van hun verhaal, waardoor ze automatisch dichter bij elkaars perspectief komen.</p>
         <p>Vervolgens vertaal ik dat naar taal en beeld: van een verbindend narratief, gedeelde waarden en scenario's tot publicaties. Eenvoudige vormgeving kan ik direct meenemen. Er hoeft geen apart bureau te worden gebriefd dat zich nog moet inleven, want dat inleven is precies waar mijn werk al begon.</p>
@@ -67,7 +68,7 @@ const profiel = {
 
   <section class="sectie" aria-labelledby="opleiding-kop">
     <div class="container twee">
-      <div><div class="sectie-kop"><span class="c-teken" aria-hidden="true">©</span><h2 id="opleiding-kop">Opleiding en achtergrond</h2></div></div>
+      <div><h2 class="kop-c" id="opleiding-kop"><CTeken /> Opleiding en achtergrond</h2></div>
       <div class="prose">
         <p>Ik studeerde commerciële economie en corporate communicatie, verdiepte me daarna in organisatiecultuur, <em>strategic alignment</em>, gedragspsychologie en design, en publiceerde een boek over transformatie. Die combinatie — begrip van economische en publieke waarde, strategie, reputatie en transformatie, versterkt met sterke vaardigheden in analyse, schrijven en vormgeving — bepaalt mijn unieke blik op samenwerking én geeft me een uitgebreide toolkit om die samenwerking echt vooruit te helpen.</p>
       </div>

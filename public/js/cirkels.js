@@ -6,6 +6,10 @@
   if (!pit) return;
   var labels = (pit.getAttribute("data-labels") || "").split("|").filter(Boolean);
   var vast = pit.getAttribute("data-vast") || "";
+  // Doel per C: portfolio gefilterd op die C; het vaste label "Coalities" → hele portfolio.
+  // Relatief aan de huidige pagina (Home eindigt op "/"), zodat het ook onder een basispad (preview) werkt.
+  var basis = location.pathname.replace(/[^/]*$/, "");
+  function doel(l) { return l === vast ? basis + "portfolio/" : basis + "portfolio/?c=" + l.toLowerCase(); }
   // straal per label: langere woorden grotere cirkel; het vaste label iets groter
   function straal(l) { return Math.round(Math.max(56, 30 + l.length * 5.2)); }
   var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -19,7 +23,9 @@
       var r = Math.round(straal(l) * s);
       var fs = Math.max(19, Math.round(r * 0.27)); // ≥ 19 px vet: AA voor grote tekst op rood
       r = Math.max(r, Math.ceil(fs * 0.56 * l.length / 2) + 8); // woord moet in de cirkel passen
-      var el = document.createElement("div");
+      var el = document.createElement("a");
+      el.href = doel(l);
+      el.setAttribute("aria-label", l === vast ? "Naar het hele portfolio" : "Portfolio: werk in " + l);
       el.className = "cirkel" + (l === vast ? " cirkel--vast" : "");
       el.style.width = el.style.height = r * 2 + "px";
       el.style.fontSize = fs + "px";
@@ -28,9 +34,12 @@
       var b = { el: el, r: r, x: W * (0.08 + 0.84 * (i + 0.5) / labels.length), y: -r - i * (r * 1.6 + 24), vx: (Math.random() - 0.5) * 40, vy: 0, m: r * r, held: false };
       balls.push(b);
       el.addEventListener("pointerdown", function (e) {
+        if (e.button && e.button !== 0) return;
         e.preventDefault(); el.setPointerCapture(e.pointerId);
-        drag = { b: b, lx: e.clientX, ly: e.clientY, t: performance.now() }; b.held = true; b.vx = b.vy = 0; start();
+        drag = { b: b, lx: e.clientX, ly: e.clientY, sx: e.clientX, sy: e.clientY, t: performance.now(), moved: false }; b.held = true; b.vx = b.vy = 0; start();
       });
+      // Klik = navigeren (native), tenzij er gesleept is.
+      el.addEventListener("click", function (e) { if (b.gesleept) { e.preventDefault(); b.gesleept = false; } });
     });
     if (reduce) { for (var i = 0; i < 900; i++) stap(1 / 60); teken(); } else { start(); }
   }
@@ -69,6 +78,7 @@
   window.addEventListener("pointermove", function (e) {
     if (!drag) return;
     var b = drag.b, rect = pit.getBoundingClientRect(), now = performance.now(), dt = Math.max(now - drag.t, 1);
+    if (Math.abs(e.clientX - drag.sx) > 6 || Math.abs(e.clientY - drag.sy) > 6) { drag.moved = true; b.gesleept = true; }
     b.vx = (e.clientX - drag.lx) / dt * 600; b.vy = (e.clientY - drag.ly) / dt * 600;
     drag.lx = e.clientX; drag.ly = e.clientY; drag.t = now;
     b.x = Math.max(b.r, Math.min(rect.width - b.r, e.clientX - rect.left));

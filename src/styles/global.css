@@ -68,13 +68,21 @@ p { margin: 0 0 1em; }
 .container { width: min(100% - 2 * var(--ruimte), var(--breedte)); margin-inline: auto; }
 .sectie { padding-block: var(--sectie); }
 .sectie + .sectie { padding-top: 0; }
-.sectie--grijs { background: var(--kleur-grijs); }
-.sectie--grijs .secundair, .sectie--grijs .kop-label { color: #5b5b5b; } /* 4,5:1 op grijs */
+/* grijze vlakken: paginabrede band, geen afronding; compacter dan de standaardsectie */
+.sectie--grijs { background: var(--kleur-grijs); padding-block: clamp(2.5rem, 6vw, 4.5rem); }
 .sectie--grijs + .sectie { padding-top: var(--sectie); }
+.sectie--grijs > .container.twee { align-items: start; }
+@media (min-width: 800px) { .sectie--grijs > .container.twee { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 3rem; } }
+.sectie--grijs .secundair, .sectie--grijs .kop-label { color: #5b5b5b; } /* 4,5:1 op grijs */
+.sectie--grijs .kop-c { margin-bottom: 0; }
+.sectie--grijs .prose > :last-child { margin-bottom: 0; }
+.sectie--grijs .tag { background: var(--kleur-wit); }
 .sectie-kop { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
 
 /* ©-motief: cirkel als sectiemarkering, spaarzaam */
-.c-teken { flex: 0 0 auto; width: 2.25rem; height: 2.25rem; border: 2px solid currentColor; border-radius: 50%; display: inline-grid; place-items: center; font-weight: 700; font-size: .95rem; line-height: 1; }
+.c-teken { display: inline-block; width: 1.05em; height: 1.05em; vertical-align: -0.16em; margin-right: .35em; color: var(--kleur-zwart); }
+.c-teken svg { width: 100%; height: 100%; display: block; }
+.kop-c { margin-bottom: 1.25rem; }
 .c-teken--rood { color: var(--kleur-rood); }
 
 /* ---------- header ---------- */
@@ -144,6 +152,17 @@ p { margin: 0 0 1em; }
    witte tekst ≥ 19 px vet (AA grote tekst), geen slagschaduw. Tinten zijn schakeringen van het accentrood. */
 .cirkel { position: absolute; left: 0; top: 0; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #ea746a, var(--kleur-rood) 55%, #b8473e 100%); color: var(--kleur-wit); display: grid; place-items: center; text-align: center; font-weight: 700; line-height: 1.05; letter-spacing: -.01em; cursor: grab; user-select: none; touch-action: none; will-change: transform; }
 .cirkel:active { cursor: grabbing; }
+.cirkel { text-decoration: none; }
+.cirkel:hover { color: var(--kleur-wit); filter: brightness(1.06); }
+.cirkel:focus-visible { outline: 3px solid var(--kleur-zwart); outline-offset: 3px; }
+/* mobiel: ballen op de voorgrond — direct onder de kop, vóór zin en knoppen */
+@media (max-width: 640px) {
+  .hero--cirkels .container { display: flex; flex-direction: column; }
+  .hero--cirkels h1 { order: 1; }
+  .hero--cirkels .cirkels { order: 2; height: 300px; margin: .25rem 0 1.25rem; }
+  .hero--cirkels .intro { order: 3; }
+  .hero--cirkels .knoppen { order: 4; margin-bottom: .5rem; }
+}
 .cirkel--vast { background: radial-gradient(circle at 35% 30%, #ea746a, var(--kleur-rood) 55%, #b8473e 100%); }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 

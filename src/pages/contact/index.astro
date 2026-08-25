@@ -4,6 +4,7 @@
  * Formulieren posten naar de eigen Worker (§4.6). Zonder endpoint: zichtbare markering, knop uitgeschakeld.
  */
 import Base from "../../layouts/Base.astro";
+import CTeken from "../../components/CTeken.astro";
 import Placeholder from "../../components/Placeholder.astro";
 import { site } from "../../data/site";
 
@@ -37,7 +38,7 @@ const turnstile = site.turnstileSiteKey;
   <section class="sectie sectie--grijs" aria-labelledby="checklist-kop">
     <div class="container twee">
       <div class="prose">
-        <div class="sectie-kop"><span class="c-teken c-teken--rood" aria-hidden="true">©</span><h2 id="checklist-kop">Liever eerst iets lezen?</h2></div>
+        <h2 class="kop-c" id="checklist-kop"><CTeken rood /> Liever eerst iets lezen?</h2>
         <p>Download de checklist <em>"{site.checklistTitel}"</em> <Placeholder regel>placeholder: definitieve titel en inhoud volgen</Placeholder>. Laat je e-mailadres achter en je ontvangt hem direct.</p>
       </div>
       <form class="formulier" method="post" action={checklistAction} data-formulier="checklist" novalidate>
