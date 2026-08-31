@@ -128,7 +128,6 @@ const turnstile = site.turnstileSiteKey;
         <div class="contactkaart">
           <span class="kop-label">Adres</span>
           <address class="groot">{site.adres.split(", ").map((r, i, a) => <>{r}{i < a.length - 1 && <br />}</>)}</address>
-          <p class="klein secundair">KVK {site.kvk}</p>
         </div>
       </div>
     </div>
