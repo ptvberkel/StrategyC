@@ -22,7 +22,7 @@ export const site = {
   ogImage: "/img/og-strategyc.png", // [Claude Design: deelbeeld 1200×630 uit foto Pauline]
 
   /** Formulierendienst (structuurplan §4.6). Leeg = formulier toont een markering en post nergens heen. */
-  formulierEndpoint: "", // bv. https://formulier.strategyc.workers.dev
+  formulierEndpoint: "https://formulier-strategyc-test.strategyc.workers.dev", // TESTOMGEVING — bij livegang vervangen door de productie-Worker (zonder -test)
   turnstileSiteKey: "0x4AAAAAAEjFmU9KaGLX-1EE", // openbaar; widget "strategyC formulieren", Cloudflare-account Piet (later Pauline)
   /** Cloudflare Web Analytics-token; leeg = script niet laden. */
   analyticsToken: "",
