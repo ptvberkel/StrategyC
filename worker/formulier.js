@@ -83,7 +83,9 @@ export default {
 };
 
 async function turnstileOk(token, ip, env) {
-  if (!env.TURNSTILE_SECRET) return true; // testomgeving zonder Turnstile
+  // Zonder secret geen controle: handig zolang de Worker nog niet volledig is ingericht, maar dan staat
+  // het formulier wél open voor bots. Zichtbaar maken in de Worker-logs, zodat dit niet stil blijft staan.
+  if (!env.TURNSTILE_SECRET) { console.warn("TURNSTILE_SECRET ontbreekt — spamcontrole staat uit"); return true; }
   if (!token) return false;
   const r = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
     method: "POST",
