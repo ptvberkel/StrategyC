@@ -104,10 +104,6 @@ p { margin: 0 0 1em; }
   .hoofdmenu { display: none; position: absolute; left: 0; right: 0; top: 100%; background: var(--kleur-wit); border-bottom: 1px solid var(--kleur-lijn); flex-direction: column; gap: 0; padding: .5rem var(--ruimte) 1rem; }
   .hoofdmenu a { padding: .75rem 0; font-size: 1.15rem; }
   .site-header.open .hoofdmenu { display: flex; }
-  /* Het uitgeklapte menu moet boven de cirkels liggen (z-index 60): anders schuiven weggegooide
-     ballen er overheen. Alleen zolang het menu open staat — dichtgeklapt blijven de ballen vooraan. */
-  .site-header.open { z-index: 70; }
-  .no-js .site-header { z-index: 70; }
   /* zonder JavaScript blijft het menu gewoon zichtbaar */
   .no-js .hoofdmenu { display: flex; position: static; border: 0; padding: 0; flex-direction: row; flex-wrap: wrap; gap: .75rem; }
   .no-js .menuknop { display: none; }
@@ -188,9 +184,10 @@ p { margin: 0 0 1em; }
   .kop-donker .hoofdmenu { background: var(--kleur-zwart); border-bottom-color: #2a2a2a; }
 }
 /* De cirkelbak is een direct kind van de sectie (niet van .container): rand tot rand, inclusief de zwarte 'vloer'.
-   Geen overflow-clip en een z-index boven de header: de ballen liggen altijd op de voorgrond — omhoog gegooid gaan ze
-   vóór kop, tekst, knoppen en menubalk langs (Piet 25-08). */
-.cirkels { position: relative; z-index: 60; width: 100%; height: clamp(340px, 30vw, 360px); margin-top: .5rem; border-bottom: 2px solid var(--kleur-zwart); overflow: visible; }
+   Geen overflow-clip, zodat omhoog gegooide ballen vóór kop, tekst en knoppen langs gaan. Maar wél ónder de
+   menubalk: die staat op z-index 50 en blijft altijd vooraan (besluit Piet 31-08 — vervangt de keuze van 25-08
+   om de ballen over de header heen te laten gaan). De balk is halfdoorzichtig, dus je ziet ze er doorheen. */
+.cirkels { position: relative; z-index: 1; width: 100%; height: clamp(340px, 30vw, 360px); margin-top: .5rem; border-bottom: 2px solid var(--kleur-zwart); overflow: visible; }
 /* Cirkels: rood met radiale gradiënt (variant D1, besluit Pauline + Piet 25-08 — bewuste afwijking van briefing §8 "vlak"),
    witte tekst ≥ 19 px vet (AA grote tekst), geen slagschaduw. Tinten zijn schakeringen van het accentrood. */
 .cirkel { position: absolute; left: 0; top: 0; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #ea746a, var(--kleur-rood) 55%, #b8473e 100%); color: var(--kleur-wit); display: grid; place-items: center; text-align: center; font-weight: 700; line-height: 1.05; letter-spacing: -.01em; cursor: grab; user-select: none; touch-action: none; will-change: transform; }
