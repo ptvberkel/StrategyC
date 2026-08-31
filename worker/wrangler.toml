@@ -16,7 +16,8 @@ CHECKLIST_URL = "https://strategyc.nl/downloads/checklist-strategyc.pdf" # niet 
 
 # ---------------------------------------------------------------------------
 # Test (wrangler deploy --env test) — eigen Worker "formulier-strategyc-test", mails naar Piet
-# Afzender onboarding@resend.dev werkt zonder domeinverificatie, maar alléén naar het e-mailadres van het Resend-account.
+# Afzender onder huurofkoopcheck.nl: dat domein is geverifieerd in Resend (31-08), dus versturen naar elk
+# adres kan. Het postvak hoeft niet te bestaan; Resend accepteert elk adres onder een geverifieerd domein.
 # ---------------------------------------------------------------------------
 [env.test]
 name = "formulier-strategyc-test"
@@ -24,7 +25,7 @@ name = "formulier-strategyc-test"
 SITE = "https://www.huurofkoopcheck.nl/StrategyC"
 ORIGINS = "https://www.huurofkoopcheck.nl,http://localhost:4321"
 NOTIFY_TO = "pieterb2252@gmail.com"
-FROM = "strategyC test <onboarding@resend.dev>"
+FROM = "strategyC test <formulier@huurofkoopcheck.nl>"
 REPLY_TO = "pieterb2252@gmail.com"
 CHECKLIST_URL = "https://www.huurofkoopcheck.nl/StrategyC/downloads/checklist-strategyc.pdf"
 
