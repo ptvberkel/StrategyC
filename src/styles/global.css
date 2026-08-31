@@ -16,6 +16,7 @@
   --kleur-wit: #fcfcfc;
   --kleur-zwart: #090909;
   --kleur-rood: #db4545;
+  --kleur-rood-donker: #c03d37;  /* rood als tekst op wit: #db4545 haalt 4,5:1 niet */
   --kleur-grijs: #ededed;
   --kleur-donkergrijs: #737373;
   --kleur-lijn: #dcdcdc;
@@ -264,9 +265,15 @@ p { margin: 0 0 1em; }
 /* Direct contact: drie gelijke blokken onder het formulier. */
 .contactkaarten { display: grid; gap: 1.25rem; grid-template-columns: 1fr; margin-top: 2rem; }
 @media (min-width: 700px) { .contactkaarten { grid-template-columns: repeat(3, 1fr); } }
-.contactkaart { border: 1px solid var(--kleur-lijn); border-radius: 14px; padding: 1.25rem 1.35rem; background: var(--kleur-wit); display: grid; gap: .35rem; align-content: start; }
-.contactkaart .kop-label { margin-bottom: .25rem; }
+.contactkaart { position: relative; overflow: hidden; border: 1px solid var(--kleur-lijn); border-radius: 14px; padding: 1.6rem 1.35rem 1.4rem; background: var(--kleur-wit); display: grid; gap: .35rem; align-content: start; }
+/* Rode kaplijn: het accent van de site als herkenningspunt, zonder dat het vlak zelf rood wordt. */
+.contactkaart::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 4px; background: var(--kleur-rood); }
+.contactkaart .kop-label { color: var(--kleur-rood-donker); margin-bottom: .35rem; }
 .contactkaart p, .contactkaart address { margin: 0; font-style: normal; }
+.contactkaart .groot { font-size: 1.05rem; font-weight: 600; }
+.contactkaart .groot a { text-decoration: none; border-bottom: 2px solid color-mix(in srgb, var(--kleur-rood) 40%, transparent); }
+.contactkaart .groot a:hover { color: var(--kleur-rood-donker); border-bottom-color: var(--kleur-rood); }
+.contactkaart:hover, .contactkaart:focus-within { border-color: var(--kleur-rood); }
 .honing { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 .melding { border-left: 3px solid var(--kleur-rood); padding: .75rem 1rem; background: var(--kleur-grijs); border-radius: 0 10px 10px 0; }
 

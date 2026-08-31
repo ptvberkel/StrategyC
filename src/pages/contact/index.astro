@@ -113,21 +113,21 @@ const turnstile = site.turnstileSiteKey;
   <!-- 4. Direct contact — losse blokken in plaats van een voetnoot onder het formulier -->
   <section class="sectie sectie--grijs" aria-labelledby="direct-kop">
     <div class="container">
-      <h2 class="kop-c" id="direct-kop"><CTeken /> Liever direct contact</h2>
+      <h2 class="kop-c" id="direct-kop"><CTeken rood /> Liever direct contact</h2>
       <div class="contactkaarten">
         <div class="contactkaart">
           <span class="kop-label">E-mail</span>
-          <p><a href={`mailto:${site.email}`}>{site.email}</a></p>
+          <p class="groot"><a href={`mailto:${site.email}`}>{site.email}</a></p>
           <p class="klein secundair">Reactie binnen twee werkdagen.</p>
         </div>
         <div class="contactkaart">
           <span class="kop-label">LinkedIn</span>
-          <p><a href={site.linkedin} rel="me">Pauline Kamphuis</a></p>
+          <p class="groot"><a href={site.linkedin} rel="me">Pauline Kamphuis</a></p>
           <p class="klein secundair">Voor een korte vraag of een introductie.</p>
         </div>
         <div class="contactkaart">
           <span class="kop-label">Adres</span>
-          <address>{site.adres.split(", ").map((r, i, a) => <>{r}{i < a.length - 1 && <br />}</>)}</address>
+          <address class="groot">{site.adres.split(", ").map((r, i, a) => <>{r}{i < a.length - 1 && <br />}</>)}</address>
           <p class="klein secundair">KVK {site.kvk}</p>
         </div>
       </div>
