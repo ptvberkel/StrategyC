@@ -8,7 +8,6 @@ import ContactBlok from "../../components/ContactBlok.astro";
 import Placeholder from "../../components/Placeholder.astro";
 import { getCollection, render } from "astro:content";
 import { site, ids } from "../../data/site";
-import { filterSlug } from "../../data/cs";
 
 export async function getStaticPaths() {
   const cases = await getCollection("cases");
@@ -88,20 +87,21 @@ const datum = (iso?: string) => iso ? new Date(iso).toLocaleDateString("nl-NL", 
       <div class="knoppen" data-doorlinken>
         {d.externeLink && <a class="pijl-link" href={d.externeLink.url} rel="noopener">{d.externeLink.label}</a>}
       </div>
-      <p class="knoppen">
-        {d.tags.map((t) => <a class="knop knop--secundair knop--klein" href={`/portfolio/?c=${filterSlug(t)}`}>Meer werk in {t} →</a>)}
-        <a class="knop knop--klein" href="/portfolio/">Meer werk →</a>
-      </p>
       <p class="klein secundair">{d.bijgewerkt ? `Bijgewerkt: ${datum(d.bijgewerkt)}` : ""}</p>
     </div>
 
-    {verwant.length > 0 && (
+    {verwant.length > 0 ? (
       <section class="sectie" aria-labelledby="verwant-kop">
         <div class="container">
-          <h2 class="kop-c" id="verwant-kop"><CTeken /> Meer werk</h2>
+          <h2 class="kop-c" id="verwant-kop"><CTeken /> Gerelateerde cases</h2>
           <div class="raster">{verwant.map((v) => <CaseCard c={v} />)}</div>
+          <p class="knoppen knoppen--na-raster"><a class="knop" href="/portfolio/">Meer werk →</a></p>
         </div>
       </section>
+    ) : (
+      <div class="container">
+        <p class="knoppen knoppen--na-raster"><a class="knop" href="/portfolio/">Meer werk →</a></p>
+      </div>
     )}
   </article>
   <ContactBlok kort />

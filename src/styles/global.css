@@ -72,6 +72,9 @@ p { margin: 0 0 1em; }
    (keuze Piet 25-08: grijs G1 — lichtrood G2 bekeken en verworpen) */
 .sectie--grijs { background: var(--kleur-grijs); padding-block: clamp(2.5rem, 6vw, 4.5rem); }
 .sectie--grijs + .sectie { padding-top: var(--sectie); }
+/* .sectie + .sectie zet padding-top op 0; voor een grijze band mag dat niet — dan plakt de kop
+   tegen de bovenrand van het vlak (gemeld Piet 31-08). */
+.sectie + .sectie--grijs { padding-top: clamp(2.5rem, 6vw, 4.5rem); }
 .sectie--grijs > .container.twee { align-items: start; }
 @media (min-width: 800px) { .sectie--grijs > .container.twee { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 3rem; } }
 .sectie--grijs .secundair, .sectie--grijs .kop-label { color: #5b5b5b; } /* ≥ 4,5:1 op het vlak */
@@ -87,7 +90,7 @@ p { margin: 0 0 1em; }
 .c-teken--rood { color: var(--kleur-rood); }
 
 /* ---------- header ---------- */
-.site-header { position: sticky; top: 0; z-index: 50; background: color-mix(in srgb, var(--kleur-wit) 92%, transparent); backdrop-filter: blur(6px); border-bottom: 1px solid var(--kleur-lijn); }
+.site-header { position: sticky; top: 0; z-index: 50; background: color-mix(in srgb, var(--kleur-wit) 78%, transparent); backdrop-filter: blur(10px) saturate(1.2); border-bottom: 1px solid var(--kleur-lijn); }
 .site-header .container { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; min-height: 60px; }
 .logo { display: inline-flex; align-items: center; color: var(--kleur-zwart); }
 .logo svg { height: 22px; width: auto; }
@@ -96,13 +99,21 @@ p { margin: 0 0 1em; }
 .hoofdmenu a[aria-current="page"] { text-decoration: underline; text-decoration-color: var(--kleur-rood); text-decoration-thickness: 2px; text-underline-offset: .35em; }
 .menuknop { display: none; }
 @media (max-width: 640px) {
-  .menuknop { display: inline-flex; align-items: center; gap: .5rem; background: none; border: 1.5px solid var(--kleur-zwart); border-radius: var(--radius-pill); padding: .45rem .9rem; font: inherit; font-weight: 600; cursor: pointer; }
+  /* color expliciet: een <button> zonder kleur pakt op iOS Safari de systeemblauwe knoptekst. */
+  .menuknop { display: inline-flex; align-items: center; gap: .5rem; background: none; border: 1.5px solid var(--kleur-rood); border-radius: var(--radius-pill); padding: .45rem .9rem; font: inherit; font-weight: 600; color: var(--kleur-rood); cursor: pointer; }
   .hoofdmenu { display: none; position: absolute; left: 0; right: 0; top: 100%; background: var(--kleur-wit); border-bottom: 1px solid var(--kleur-lijn); flex-direction: column; gap: 0; padding: .5rem var(--ruimte) 1rem; }
   .hoofdmenu a { padding: .75rem 0; font-size: 1.15rem; }
   .site-header.open .hoofdmenu { display: flex; }
+  /* Het uitgeklapte menu moet boven de cirkels liggen (z-index 60): anders schuiven weggegooide
+     ballen er overheen. Alleen zolang het menu open staat — dichtgeklapt blijven de ballen vooraan. */
+  .site-header.open { z-index: 70; }
+  .no-js .site-header { z-index: 70; }
   /* zonder JavaScript blijft het menu gewoon zichtbaar */
   .no-js .hoofdmenu { display: flex; position: static; border: 0; padding: 0; flex-direction: row; flex-wrap: wrap; gap: .75rem; }
   .no-js .menuknop { display: none; }
+  /* De <nav> is op mobiel een lege flex-cel; met space-between duwde die de knop naar het midden.
+     De knop als laatste in de rij zetten: hij staat weer tegen de rechterrand. */
+  .site-header .menuknop { order: 3; }
 }
 
 /* ---------- knoppen (optie C) ---------- */
@@ -112,6 +123,8 @@ p { margin: 0 0 1em; }
 .knop--secundair:hover { background: var(--kleur-rood); color: var(--kleur-wit); }
 .knop--klein { padding: .6rem 1.1rem; font-size: .95rem; min-height: 36px; }
 .knoppen { display: flex; flex-wrap: wrap; gap: .75rem; align-items: flex-start; }
+/* enkele knop onder een kaartenraster of galerij: eigen lucht, botst niet met het blok erboven */
+.knoppen--na-raster { margin-top: 2rem; }
 .twee > .knoppen { align-self: center; }
 .pijl-link { font-weight: 600; text-decoration: none; }
 .pijl-link:hover { text-decoration: underline; }
@@ -148,6 +161,32 @@ p { margin: 0 0 1em; }
 .hero--cirkels h1 { max-inline-size: 18ch; margin-inline: auto; }
 .hero--cirkels .intro { margin: .75rem auto 1.25rem; }
 .hero--cirkels .knoppen { justify-content: center; }
+
+/* ---------- donkere hero (variant, ter beoordeling Piet 25-08) ----------
+   Zwarte band achter kop, tekst en cirkels, zoals de huidige strategyc.nl. Alleen de hero verandert:
+   header, secties en footer blijven licht. Aanzetten met bodyClass="hero-donker" op de pagina. */
+.hero-donker .hero--cirkels { background: var(--kleur-zwart); color: var(--kleur-wit); }
+.hero-donker .hero--cirkels .intro,
+.hero-donker .hero--cirkels .secundair { color: #d6d6d6; }          /* ≥ 4,5:1 op zwart */
+.hero-donker .hero--cirkels .knop { background: var(--kleur-wit); border-color: var(--kleur-wit); color: var(--kleur-zwart); }
+.hero-donker .hero--cirkels .knop:hover { background: var(--kleur-rood); border-color: var(--kleur-rood); color: var(--kleur-wit); }
+.hero-donker .hero--cirkels .knop--secundair { background: transparent; color: var(--kleur-wit); border-color: var(--kleur-rood); }
+.hero-donker .hero--cirkels .knop--secundair:hover { background: var(--kleur-rood); border-color: var(--kleur-rood); color: var(--kleur-wit); }
+.hero-donker .hero--cirkels :focus-visible { outline-color: var(--kleur-wit); }
+/* Geen zichtbare 'vloer' op zwart: een witte lijn snijdt de band doormidden (op mobiel staat de
+   cirkelbak bovenin). De onderrand van de zwarte band is zelf de scheiding — net als op de huidige site. */
+.hero-donker .cirkels { border-bottom-color: transparent; }
+
+/* Optioneel: ook de menubalk donker (dichter bij de huidige site). Aanzetten met bodyClass="hero-donker kop-donker".
+   Let op: de balk is sticky, dus hij blijft donker terwijl je langs de lichte secties scrolt. */
+.kop-donker .site-header { background: color-mix(in srgb, var(--kleur-zwart) 78%, transparent); border-bottom-color: transparent; color: var(--kleur-wit); }
+.kop-donker .site-header a { color: var(--kleur-wit); }
+.kop-donker .site-header a:hover { color: var(--kleur-rood); }
+.kop-donker .menuknop { color: var(--kleur-wit); border-color: var(--kleur-wit); }
+.kop-donker .site-header :focus-visible { outline-color: var(--kleur-wit); }
+@media (max-width: 640px) {
+  .kop-donker .hoofdmenu { background: var(--kleur-zwart); border-bottom-color: #2a2a2a; }
+}
 /* De cirkelbak is een direct kind van de sectie (niet van .container): rand tot rand, inclusief de zwarte 'vloer'.
    Geen overflow-clip en een z-index boven de header: de ballen liggen altijd op de voorgrond — omhoog gegooid gaan ze
    vóór kop, tekst, knoppen en menubalk langs (Piet 25-08). */
@@ -204,14 +243,33 @@ p { margin: 0 0 1em; }
 .galerij figcaption { font-size: .9rem; color: var(--kleur-donkergrijs); margin-top: .5rem; }
 
 /* ---------- formulieren ---------- */
-.formulier { display: grid; gap: 1.1rem; max-inline-size: 36rem; }
-.veld { display: grid; gap: .35rem; }
-.veld label { font-weight: 600; }
-.veld input, .veld textarea { font: inherit; padding: .8rem 1rem; border: 1.5px solid var(--kleur-zwart); border-radius: 10px; background: var(--kleur-wit); color: var(--kleur-zwart); width: 100%; }
-.veld textarea { min-height: 9rem; resize: vertical; }
+.formulier { display: grid; gap: 1.35rem; max-inline-size: 36rem; }
+/* Formulier als eigen paneel: wit vlak met rand, zodat het invulgedeelte zichtbaar iets anders is dan
+   de omringende tekst — ook binnen de grijze band. */
+.formulier--kaart { background: var(--kleur-wit); border: 1px solid var(--kleur-lijn); border-radius: 14px; padding: clamp(1.5rem, 3vw, 2.25rem); }
+.formulier-kop { margin: 0; font-size: 1.1rem; }
+.veld { display: grid; gap: .45rem; }
+.veld label { font-weight: 600; font-size: .95rem; }
+.veld .optioneel { font-weight: 400; color: var(--kleur-donkergrijs); }
+.veld input, .veld textarea { font: inherit; padding: .85rem 1rem; border: 1.5px solid var(--kleur-lijn); border-radius: 8px; background: var(--kleur-wit); color: var(--kleur-zwart); width: 100%; }
+.veld input:hover, .veld textarea:hover { border-color: #b0b0b0; }
+.veld input:focus, .veld textarea:focus { border-color: var(--kleur-zwart); }
+.veld textarea { min-height: 10rem; resize: vertical; }
 .veld input:invalid:not(:placeholder-shown), .veld textarea:invalid:not(:placeholder-shown) { border-color: var(--kleur-rood); }
 .veld .fout { color: var(--kleur-rood); font-size: .9rem; display: none; }
 .veld.ongeldig .fout { display: block; }
+/* Twee korte velden naast elkaar zodra er ruimte is; daaronder blijven ze onder elkaar. */
+.veld-rij { display: grid; gap: 1.35rem; }
+@media (min-width: 560px) { .veld-rij { grid-template-columns: 1fr 1fr; } }
+.formulier .knoppen .knop { width: 100%; justify-content: center; }
+@media (min-width: 560px) { .formulier .knoppen .knop { width: auto; } }
+.formulier-voet { display: grid; gap: .75rem; margin: 0; }
+/* Direct contact: drie gelijke blokken onder het formulier. */
+.contactkaarten { display: grid; gap: 1.25rem; grid-template-columns: 1fr; margin-top: 2rem; }
+@media (min-width: 700px) { .contactkaarten { grid-template-columns: repeat(3, 1fr); } }
+.contactkaart { border: 1px solid var(--kleur-lijn); border-radius: 14px; padding: 1.25rem 1.35rem; background: var(--kleur-wit); display: grid; gap: .35rem; align-content: start; }
+.contactkaart .kop-label { margin-bottom: .25rem; }
+.contactkaart p, .contactkaart address { margin: 0; font-style: normal; }
 .honing { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 .melding { border-left: 3px solid var(--kleur-rood); padding: .75rem 1rem; background: var(--kleur-grijs); border-radius: 0 10px 10px 0; }
 
