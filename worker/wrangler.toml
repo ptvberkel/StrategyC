@@ -8,7 +8,7 @@ compatibility_date = "2026-08-01"
 [vars]
 SITE = "https://strategyc.nl"
 # Sites waar het formulier vandaan mag komen; de bezoeker gaat na verzenden terug naar de site van herkomst
-ORIGINS = "https://strategyc.nl,https://www.huurofkoopcheck.nl"
+ORIGINS = "https://strategyc.nl,https://www.huurofkoopcheck.nl/StrategyC"
 NOTIFY_TO = "pauline@strategyc.nl"          # bevestigen [PAULINE]
 FROM = "Pauline Kamphuis <post@strategyc.nl>" # afzenderadres, beslispunt 14; domein eerst verifiëren in Resend
 REPLY_TO = "pauline@strategyc.nl"
@@ -23,7 +23,7 @@ CHECKLIST_URL = "https://strategyc.nl/downloads/checklist-strategyc.pdf" # niet 
 name = "formulier-strategyc-test"
 [env.test.vars]
 SITE = "https://www.huurofkoopcheck.nl/StrategyC"
-ORIGINS = "https://www.huurofkoopcheck.nl,http://localhost:4321"
+ORIGINS = "https://www.huurofkoopcheck.nl/StrategyC,http://localhost:4321"
 NOTIFY_TO = "pieterb2252@gmail.com"
 FROM = "strategyC test <formulier@huurofkoopcheck.nl>"
 REPLY_TO = "pieterb2252@gmail.com"

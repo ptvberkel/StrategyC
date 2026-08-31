@@ -108,12 +108,18 @@ async function stuur(env, mail) {
 function corsHeaders(origin) {
   return { "Access-Control-Allow-Origin": origin, "Access-Control-Allow-Methods": "POST, OPTIONS", "Access-Control-Allow-Headers": "content-type" };
 }
-/** Basis-URL om naar terug te sturen: de site van het formulier (Referer) als die is toegestaan, anders SITE. Nooit een vreemde URL. */
+/** Basis-URL om naar terug te sturen: de site van het formulier als die in ORIGINS staat, anders SITE. Nooit een vreemde URL.
+ *  Let op: het basispad komt uit ORIGINS, niet uit de Referer. Browsers sturen bij een verzoek naar een ander domein
+ *  standaard alleen de origin mee (Referrer-Policy strict-origin-when-cross-origin), dus het pad /StrategyC ontbreekt daar.
+ *  ORIGINS bevat daarom volledige basis-URL's inclusief pad; er wordt op origin vergeleken. */
 function terugBasis(request, env) {
-  const toegestaan = String(env.ORIGINS || env.SITE).split(",").map((o) => o.trim()).filter(Boolean);
+  const bases = String(env.ORIGINS || env.SITE).split(",").map((o) => o.trim()).filter(Boolean);
   try {
     const ref = new URL(request.headers.get("Referer") || request.headers.get("Origin") || "");
-    if (toegestaan.includes(ref.origin)) return ref.origin + ref.pathname.replace(/\/contact\/.*$/, "").replace(/\/$/, "");
+    for (const b of bases) {
+      const u = new URL(b);
+      if (u.origin === ref.origin) return (u.origin + u.pathname).replace(/\/$/, "");
+    }
   } catch (e) { /* geen of ongeldige Referer */ }
   return env.SITE.replace(/\/$/, "");
 }
