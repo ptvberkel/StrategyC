@@ -87,7 +87,7 @@ p { margin: 0 0 1em; }
 .sectie--grijs > .container.twee { align-items: start; }
 @media (min-width: 800px) { .sectie--grijs > .container.twee { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 3rem; } }
 .sectie--grijs .secundair, .sectie--grijs .kop-label { color: #5b5b5b; } /* ≥ 4,5:1 op het vlak */
-.sectie--grijs .kop-c { margin-bottom: 0; }
+.sectie--grijs .twee > div > .kop-c:only-child { margin-bottom: 0; }
 .sectie--grijs .prose > :last-child { margin-bottom: 0; }
 .sectie--grijs .tag { background: var(--kleur-wit); }
 .sectie-kop { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
@@ -128,6 +128,13 @@ p { margin: 0 0 1em; }
 .knoppen { display: flex; flex-wrap: wrap; gap: .75rem; align-items: flex-start; }
 /* enkele knop onder een kaartenraster of galerij: eigen lucht, botst niet met het blok erboven */
 .knoppen--na-raster { margin-top: 2rem; }
+/* verticale ritme: knoppen, rasters en notities nooit tegen de buurman aan */
+.knoppen + p, .knoppen + .klein { margin-top: 1.25rem; }
+* + .knoppen { margin-top: 1.5rem; }
+.prose > .knoppen:not(:first-child), .prose > p + .knoppen { margin-top: 1.5rem; }
+.twee + .raster, .prose + .raster { margin-top: 2.5rem; }
+.raster + p, .raster + .klein { margin-top: 1.25rem; }
+@media (max-width: 799px) { .twee > .knoppen { margin-top: 0; } }
 .twee > .knoppen { align-self: center; }
 .pijl-link { font-weight: 600; text-decoration: none; }
 
@@ -217,8 +224,8 @@ p { margin: 0 0 1em; }
 .portret img { width: 100%; height: 100%; object-fit: cover; }
 
 /* klantvermelding in tekst */
-.klanten { font-size: clamp(1.15rem, 1rem + .8vw, 1.5rem); line-height: 1.5; max-inline-size: 60ch; }
-.klanten a { font-weight: 600; }
+.klanten { font-size: clamp(1.125rem, 1rem + .7vw, 1.45rem); line-height: 1.65; max-inline-size: 60ch; margin-bottom: 1.25rem; }
+.klanten a { font-weight: 600; text-decoration-thickness: 1px; text-underline-offset: .22em; text-decoration-color: color-mix(in srgb, currentColor 40%, transparent); }
 .klanten span { color: var(--kleur-donkergrijs); }
 
 /* boekblok */
