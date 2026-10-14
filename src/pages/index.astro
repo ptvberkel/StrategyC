@@ -99,17 +99,17 @@ const klanten: { naam: string; slug?: string }[] = [
         <h2 class="kop-c" id="bellen-kop"><CTeken /> Hiervoor kun je me bellen</h2>
         <p class="intro">Coalities en publiek-private samenwerkingen schakelen me meestal in op een van deze momenten.</p>
       </div>
-      <ol class="aanleidingen" role="list">
-        {aanleidingen.map((a, i) => (
+      <ul class="aanleidingen" role="list">
+        {aanleidingen.map((a) => (
           <li class="aanleiding">
-            <h3><span class="nr" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span> {a.kop}</h3>
+            <h3>{a.kop}</h3>
             <p>{a.tekst}</p>
             {a.voorbeelden.length > 0 && (
               <div class="voorbeeld">
                 <span class="kop-label">{a.label}</span>
                 {a.voorbeelden.map((v, j) => (
                   <>
-                    {caseUrl(v.slug) ? <a href={caseUrl(v.slug)}>{v.tekst} →</a> : <span>{v.tekst}</span>}
+                    {caseUrl(v.slug) ? <a href={caseUrl(v.slug)}>{v.tekst}<span aria-hidden="true"> →</span></a> : <span>{v.tekst}</span>}
                     {j < a.voorbeelden.length - 1 && <span class="secundair"> · </span>}
                   </>
                 ))}
@@ -117,7 +117,7 @@ const klanten: { naam: string; slug?: string }[] = [
             )}
           </li>
         ))}
-      </ol>
+      </ul>
       <div class="aanleidingen-cta">
         <p>Herken je jouw situatie?</p>
         <a class="knop" href="/contact/">Plan een oriënterend gesprek</a>
