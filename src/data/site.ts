@@ -26,7 +26,7 @@ export const site = {
   ],
   portret: "/img/pauline-kamphuis.jpg",
   checklistTitel: "Van ambitie op papier naar maatschappelijke verandering", // [placeholder: werktitel]
-  ogImage: "/img/og-strategyc.png", // [Claude Design: deelbeeld 1200×630 uit foto Pauline]
+  ogImage: "/img/og-strategyc.jpg", // deelbeeld 1200×630, gemaakt met scripts/og-beeld.mjs
 
   /** Formulierendienst (structuurplan §4.6). Leeg = formulier toont een markering en post nergens heen. */
   formulierEndpoint: "https://formulier-strategyc-test.strategyc.workers.dev", // TESTOMGEVING — bij livegang vervangen door de productie-Worker (zonder -test)
