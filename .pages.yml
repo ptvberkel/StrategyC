@@ -73,7 +73,9 @@ content:
         type: object
         list: true
         fields:
-          - { name: naam, label: Naam, type: string, required: true }
+          - { name: naam, label: Naam (leeg = alleen functie tonen), type: string }
           - { name: functie, label: Functie, type: string }
-          - { name: tekst, label: Recensie (letterlijk), type: text }
+          - { name: kop, label: Eerste regel (vet), type: string, required: true }
+          - { name: tekst, label: Vervolg (optioneel), type: text }
+          - { name: organisatie, label: Afzender is een organisatie, type: boolean, default: false }
           - { name: uitgelicht, label: Grote quote bovenaan (maximaal één), type: boolean, default: false }

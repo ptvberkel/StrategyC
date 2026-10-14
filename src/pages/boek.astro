@@ -11,11 +11,13 @@ import ContactBlok from "../components/ContactBlok.astro";
 import { site, ids } from "../data/site";
 import data from "../data/recensies.json";
 
-type Recensie = { naam: string; functie: string; tekst: string; uitgelicht?: boolean };
+type Recensie = { naam: string; functie: string; kop: string; tekst: string; organisatie?: boolean; uitgelicht?: boolean };
 const alle = data.recensies as Recensie[];
 const groot = alle.find((r) => r.uitgelicht);
 const overige = alle.filter((r) => r !== groot);
-const metTekst = alle.filter((r) => r.tekst.trim());
+const metTekst = alle.filter((r) => r.kop.trim());
+const body = (r: Recensie) => [r.kop, r.tekst].filter(Boolean).join(" ");
+const afzender = (r: Recensie) => r.naam || r.functie;
 
 const boek = {
   "@type": "Book",
@@ -30,8 +32,10 @@ const boek = {
     ? {
         review: metTekst.map((r) => ({
           "@type": "Review",
-          reviewBody: r.tekst,
-          author: { "@type": "Person", name: r.naam, jobTitle: r.functie },
+          reviewBody: body(r),
+          author: r.organisatie || !r.naam
+            ? { "@type": "Organization", name: r.naam || r.functie }
+            : { "@type": "Person", name: r.naam, jobTitle: r.functie },
         })),
       }
     : {}),
@@ -81,15 +85,18 @@ const boek = {
       <h2 class="kop-c" id="recensies-kop"><CTeken /> Wat lezers zeggen</h2>
       {groot && (
         <figure class="quote-groot">
-          <blockquote>{groot.tekst ? <p>{groot.tekst}</p> : <Placeholder regel>PIET: recensietekst {groot.naam} plakken in src/data/recensies.json</Placeholder>}</blockquote>
-          <figcaption><strong>{groot.naam}</strong><span class="secundair">{groot.functie}</span></figcaption>
+          <blockquote><p>{groot.kop}</p>{groot.tekst && <p class="vervolg">{groot.tekst}</p>}</blockquote>
+          <figcaption>{groot.naam && <strong>{groot.naam}</strong>}<span class={groot.naam ? "secundair" : ""}>{groot.functie}</span></figcaption>
         </figure>
       )}
       <div class="recensies">
         {overige.map((r) => (
           <figure class="recensie">
-            <blockquote>{r.tekst ? <p>{r.tekst}</p> : <Placeholder regel>PIET: recensietekst plakken</Placeholder>}</blockquote>
-            <figcaption><strong>{r.naam}</strong><span class="secundair">{r.functie}</span></figcaption>
+            <blockquote>
+              <p class="recensie-kop">{r.kop}</p>
+              {r.tekst && <p>{r.tekst}</p>}
+            </blockquote>
+            <figcaption>{r.naam && <strong>{r.naam}</strong>}<span class={r.naam ? "secundair" : ""}>{r.functie}</span></figcaption>
           </figure>
         ))}
       </div>
