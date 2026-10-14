@@ -1,10 +1,11 @@
 ---
 /**
- * Contactblok (webteksten v7 §1.7) — onderaan Home; hergebruikt onder portfolio en cases
- * als Pauline daarmee akkoord gaat (beslispunt 13). [concept]-tekst: ter goedkeuring.
+ * Contactblok (webteksten v9 §1.7) — onderaan Home. Variant `kort` onder portfolio en cases.
  */
+import { site } from "../data/site";
 interface Props { kort?: boolean; }
 const { kort = false } = Astro.props;
+const tel = site.telefoon.replace(/\s|\(0\)/g, "");
 ---
 <section class="sectie sectie--grijs" aria-labelledby="contact-kop">
   <div class="container">
@@ -17,10 +18,10 @@ const { kort = false } = Astro.props;
       </div>
     ) : (
       <div class="prose">
-        <h2 id="contact-kop">Staan jullie aan het begin, of is het tijd voor een nieuwe impuls?</h2>
-        <p>Of je nu net start met een coalitie en zoekt naar de juiste gezamenlijke vorm, of merkt dat de samenwerking stagneert: ik help je de ambitie weer scherp te krijgen, te verwoorden en te verbeelden zodat er beweging ontstaat.</p>
-        <p>In een vrijblijvend gesprek van een halfuur denken we samen na over de volgende stap.</p>
+        <h2 id="contact-kop">Herken je een van deze situaties?</h2>
+        <p>In een halfuur hoor ik waar jullie staan en vertel ik hoe ik het zou aanpakken. Ben ik niet de juiste persoon, dan zeg ik dat ook.</p>
         <div class="knoppen"><a class="knop" href="/contact/">Plan een oriënterend gesprek</a></div>
+        {site.telefoon && <p>Of bel direct: <a href={`tel:${tel}`}>{site.telefoon}</a></p>}
       </div>
     )}
   </div>

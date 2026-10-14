@@ -13,7 +13,7 @@ export const redirects: Redirect[] = [
   { oud: "/about/communication-for-culture-transformation/", nieuw: "/over/", opmerking: "voorbeeld uit briefing §9.2" },
   { oud: "/communication-for-culture-transformation/", nieuw: "/over/" },
   { oud: "/strategisch-en-creatief-advies-voor-coalities-en-organisaties-in-transitie-strategyc-cultuur-communicatie-coalitievorming-transformatie/", nieuw: "/over/" },
-  { oud: "/extra/", nieuw: "/over/", opmerking: "BESLUIT Pauline: boek-extra's → boekcase of Over" },
+  { oud: "/extra/", nieuw: "/boek/", opmerking: "boek-extra's → boekpagina (14-10)" },
 
   // Portfolio-categorieën (NL + EN varianten)
   { oud: "/portfolio-category/publiek-private-samenwerking-coalities/", nieuw: "/portfolio/" },
@@ -33,7 +33,7 @@ export const redirects: Redirect[] = [
   { oud: "/portfolio/10-years-of-cyber-security-summer-school/", nieuw: "/portfolio/", opmerking: "Security Delta — case volgt" },
   { oud: "/portfolio/jubileumstrategie-jubileumboek/", nieuw: "/portfolio/", opmerking: "Security Delta — case volgt" },
   { oud: "/portfolio/smart-city-innovatie/", nieuw: "/portfolio/" },
-  { oud: "/portfolio/handboek-succesvol-mensgericht-transformeren/", nieuw: "/portfolio/", opmerking: "→ boekcase zodra die bestaat" },
+  { oud: "/portfolio/handboek-succesvol-mensgericht-transformeren/", nieuw: "/boek/" },
   { oud: "/portfolio/mensgerichte-transformatie-online-cursus/", nieuw: "/portfolio/" },
   { oud: "/portfolio/transforming-successfully-10-steps-podcast/", nieuw: "/portfolio/" },
   { oud: "/portfolio/sustainable-transformation/", nieuw: "/portfolio/" },

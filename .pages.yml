@@ -61,3 +61,19 @@ content:
       - { name: beeld, label: Beeld (optioneel), type: image }
       - { name: beeldAlt, label: Beschrijving beeld, type: string }
       - { name: body, label: Tekst, type: rich-text }
+
+  - name: recensies
+    label: Boekrecensies
+    type: file
+    path: src/data/recensies.json
+    format: json
+    fields:
+      - name: recensies
+        label: Recensies
+        type: object
+        list: true
+        fields:
+          - { name: naam, label: Naam, type: string, required: true }
+          - { name: functie, label: Functie, type: string }
+          - { name: tekst, label: Recensie (letterlijk), type: text }
+          - { name: uitgelicht, label: Grote quote bovenaan (maximaal één), type: boolean, default: false }

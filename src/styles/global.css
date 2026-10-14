@@ -221,7 +221,8 @@ p { margin: 0 0 1em; }
 /* boekblok */
 .boek { display: grid; gap: 2rem; align-items: center; grid-template-columns: 1fr; }
 @media (min-width: 700px) { .boek { grid-template-columns: 200px 1fr; gap: 3rem; } }
-.boek .cover { aspect-ratio: 2 / 3; width: 200px; border-radius: 6px; background: var(--kleur-grijs); overflow: hidden; }
+.boek .cover { display: block; aspect-ratio: 1; width: 200px; background: transparent; }
+.boek .cover img { width: 100%; height: 100%; object-fit: contain; }
 
 /* twee kolommen */
 .twee { display: grid; gap: 2rem; grid-template-columns: 1fr; }
@@ -264,7 +265,8 @@ p { margin: 0 0 1em; }
 .formulier-voet { display: grid; gap: .75rem; margin: 0; }
 /* Direct contact: drie gelijke blokken onder het formulier. */
 .contactkaarten { display: grid; gap: 1.25rem; grid-template-columns: 1fr; margin-top: 2rem; }
-@media (min-width: 700px) { .contactkaarten { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 700px) { .contactkaarten { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1100px) { .contactkaarten { grid-template-columns: repeat(4, 1fr); } }
 .contactkaart { position: relative; overflow: hidden; border: 1px solid var(--kleur-lijn); border-radius: 14px; padding: 1.6rem 1.35rem 1.4rem; background: var(--kleur-wit); display: grid; gap: .35rem; align-content: start; }
 /* Rode kaplijn: het accent van de site als herkenningspunt, zonder dat het vlak zelf rood wordt. */
 .contactkaart::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 4px; background: var(--kleur-rood); }
@@ -305,3 +307,42 @@ p { margin: 0 0 1em; }
   .knop, .filter, .kaart { transition: background-color .15s ease, border-color .15s ease, color .15s ease; }
 }
 @media print { .site-header, .site-footer, .skip-link, .ph { display: none !important; } }
+
+/* ---------- v9: aanleidingen (Home §1.2) ---------- */
+.aanleidingen { display: grid; gap: 1px; grid-template-columns: 1fr; background: var(--kleur-lijn); border-block: 1px solid var(--kleur-lijn); margin-top: 2rem; }
+@media (min-width: 760px) { .aanleidingen { grid-template-columns: 1fr 1fr; } .aanleiding:last-child:nth-child(odd) { grid-column: 1 / -1; } }
+.aanleiding { background: var(--kleur-wit); padding: clamp(1.25rem, 3vw, 2rem) clamp(1rem, 2.5vw, 1.75rem); display: flex; flex-direction: column; gap: .75rem; }
+.aanleiding h3 { margin: 0; display: flex; gap: .6rem; align-items: baseline; }
+.aanleiding .nr { flex: none; font-size: .8rem; font-weight: 700; color: var(--kleur-rood-donker); letter-spacing: .04em; font-variant-numeric: tabular-nums; }
+.aanleiding p { margin: 0; }
+.aanleiding .voorbeeld { margin-top: auto; padding-top: .5rem; border-top: 2px solid var(--kleur-rood); font-size: .92rem; }
+.aanleiding .voorbeeld .kop-label { margin-bottom: .35rem; color: var(--kleur-rood-donker); }
+.aanleidingen-cta { margin-top: 2rem; display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.5rem; }
+.aanleidingen-cta p { margin: 0; font-weight: 600; font-size: 1.1rem; }
+
+/* ---------- v9: boekpagina ---------- */
+.boek-kop { display: grid; gap: 2.5rem; align-items: center; grid-template-columns: 1fr; }
+@media (min-width: 760px) { .boek-kop { grid-template-columns: minmax(220px, 360px) 1fr; gap: 4rem; } }
+.boek-kop .cover-groot { width: min(100%, 360px); aspect-ratio: 1; }
+.boek-kop .cover-groot img { width: 100%; height: 100%; object-fit: contain; }
+.bestel { display: grid; gap: 1rem; grid-template-columns: 1fr; margin-top: 1.5rem; }
+@media (min-width: 760px) { .bestel { grid-template-columns: repeat(3, 1fr); } }
+.bestel-kaart { display: flex; flex-direction: column; gap: .35rem; padding: 1.25rem 1.25rem 1.1rem; background: var(--kleur-wit); border: 1px solid var(--kleur-lijn); border-top: 3px solid var(--kleur-rood); text-decoration: none; color: var(--kleur-zwart); min-height: 44px; }
+.bestel-kaart:hover { border-color: var(--kleur-zwart); border-top-color: var(--kleur-rood); color: var(--kleur-zwart); }
+.bestel-kaart strong { font-size: 1.05rem; }
+.bestel-kaart .pijl { margin-top: auto; padding-top: .5rem; color: var(--kleur-rood-donker); font-weight: 700; }
+.bestel-kaart--hoofd { background: var(--kleur-zwart); border-color: var(--kleur-zwart); color: var(--kleur-wit); }
+.bestel-kaart--hoofd:hover { background: var(--kleur-rood); border-color: var(--kleur-rood); color: var(--kleur-wit); }
+.bestel-kaart--hoofd .secundair, .bestel-kaart--hoofd .pijl { color: var(--kleur-wit); }
+.quote-groot { margin: 0; max-inline-size: 46rem; }
+.quote-groot p { font-size: clamp(1.35rem, 2.6vw, 1.9rem); line-height: 1.35; font-weight: 600; margin: 0 0 1rem; }
+.quote-groot p::before { content: "\201C"; color: var(--kleur-rood); margin-right: .1em; }
+.quote-groot p::after { content: "\201D"; color: var(--kleur-rood); margin-left: .05em; }
+.recensies { columns: 1; column-gap: 1.25rem; margin-top: 2rem; }
+@media (min-width: 640px) { .recensies { columns: 2; } }
+@media (min-width: 1000px) { .recensies { columns: 3; } }
+.recensie { break-inside: avoid; margin: 0 0 1.25rem; padding: 1.25rem 1.25rem 1.1rem; background: var(--kleur-wit); border: 1px solid var(--kleur-lijn); display: flex; flex-direction: column; gap: .9rem; }
+.recensie blockquote { margin: 0; }
+.recensie blockquote p { margin: 0; }
+.recensie figcaption, .quote-groot figcaption { display: flex; flex-direction: column; gap: .1rem; font-size: .92rem; padding-left: .75rem; border-left: 2px solid var(--kleur-rood); }
+.recensie figcaption strong, .quote-groot figcaption strong { font-weight: 700; }

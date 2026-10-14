@@ -1,0 +1,19 @@
+{
+  "_uitleg": "Recensies van het boek, getoond op /boek/. Namen en functies komen van de huidige boekpagina (strategyc.nl/portfolio/handboek-succesvol-mensgericht-transformeren/). Plak per persoon de letterlijke tekst in 'tekst'; een lege tekst toont een gele markering. 'uitgelicht: true' = grote quote bovenaan (maximaal één).",
+  "recensies": [
+    { "naam": "Frank Ruigrok", "functie": "VP Project Delivery", "tekst": "", "uitgelicht": true },
+    { "naam": "Tom van Dael", "functie": "CFO", "tekst": "" },
+    { "naam": "Dr. G. Behrens", "functie": "Assistant Professor Corporate Communication", "tekst": "" },
+    { "naam": "T. Melissen", "functie": "Organisatie-adviseur", "tekst": "" },
+    { "naam": "Fiona van der Graaf", "functie": "CTO / CIO / CDO", "tekst": "" },
+    { "naam": "Kees van Velzen", "functie": "Creatief ondernemer, Learning & Development", "tekst": "" },
+    { "naam": "Margot Fokke-Glaser", "functie": "Employee Experience Specialist en HR Manager", "tekst": "" },
+    { "naam": "Nienke Ruis", "functie": "Change Manager", "tekst": "" },
+    { "naam": "Karlijn van Driel", "functie": "Sr. Communicatieadviseur", "tekst": "" },
+    { "naam": "Thijs de Lange", "functie": "Projectmanager en productontwikkelaar", "tekst": "" },
+    { "naam": "Megan Clavelle", "functie": "Director Communications & Brand", "tekst": "" },
+    { "naam": "Beatrijs van Selm", "functie": "Sr. Business Development Advisor", "tekst": "" },
+    { "naam": "Ina Dijstelbloem", "functie": "Antropoloog en communicatiespecialist", "tekst": "" },
+    { "naam": "Chloe Petit", "functie": "Change Manager", "tekst": "" }
+  ]
+}

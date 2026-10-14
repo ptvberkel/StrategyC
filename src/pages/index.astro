@@ -1,118 +1,184 @@
 ---
-/** Home — zeven blokken in vaste volgorde (briefing §6.1, webteksten v7 §1). */
+/** Home — zeven blokken in vaste volgorde (webteksten v9 §1: hero · aanleidingen · klanten · portfolio · publiek-privaat · boek · contact). */
 import Base from "../layouts/Base.astro";
 import CTeken from "../components/CTeken.astro";
 import CaseCard from "../components/CaseCard.astro";
 import ContactBlok from "../components/ContactBlok.astro";
 import BoekBlok from "../components/BoekBlok.astro";
-import Placeholder from "../components/Placeholder.astro";
 import { getCollection } from "astro:content";
 import { C_LABELS, VAST } from "../data/cs";
+import { site } from "../data/site";
+import Placeholder from "../components/Placeholder.astro";
 
 const alle = (await getCollection("cases")).sort((a, b) => a.data.volgorde - b.data.volgorde);
-const uitgelicht = alle.filter((c) => c.data.uitgelicht).slice(0, 4); // selectie door Pauline (v7 §8.2)
+const uitgelicht = alle.filter((c) => c.data.uitgelicht).slice(0, 4); // selectie door Pauline (v9 §8)
 const bySlug = Object.fromEntries(alle.map((c) => [c.id, c]));
+const caseUrl = (slug?: string) => (slug && bySlug[slug] ? `/portfolio/${slug}/` : undefined);
 
-// Klantvermelding in tekst (v7 §1.3): naam linkt naar de eigen casepagina — nooit naar de klantsite.
+// v9 §1.2 — vijf aanleidingen. Een voorbeeld linkt alleen als de bijbehorende portfoliopagina bestaat.
+type Vb = { tekst: string; slug?: string };
+const aanleidingen: { kop: string; tekst: string; label: string; voorbeelden: Vb[] }[] = [
+  {
+    kop: "Jullie coalitie gaat van start",
+    tekst: "Er zijn initiatiefnemers en een ambitie, maar nog geen verhaal dat alle partners kunnen vertellen. Na gesprekken met de initiatiefnemers leid ik een workshop waarin wij samen de kern bepalen. Daarna schrijf ik het narratief in verschillende lengtes. Voor de lancering maak ik een persbericht en teksten die partners op hun eigen kanalen plaatsen, zodat het verhaal onder ieders logo hetzelfde klinkt. Zo nodig ontwerp ik een eenvoudige beeldstijl of logo.",
+    label: "Voorbeeld",
+    voorbeelden: [{ tekst: "Innovatiecoalitie Cyberveilige Energietransitie, elf initiatiefnemers, lancering opgepikt door regionale en vakmedia", slug: "cyberveilige-energietransitie" }],
+  },
+  {
+    kop: "Jullie initiatief heeft een naam nodig",
+    tekst: "Een werknaam beschrijft vaak het probleem, of blijkt al door een ander gebruikt te worden. Samen stellen we criteria op. Ik werk kandidaten uit en doe verkennend onderzoek naar merkregistraties en beschikbare domeinnamen. De stuurgroep krijgt een onderbouwde shortlist om over te besluiten, met een naam die van alle partners is.",
+    label: "Voorbeeld",
+    voorbeelden: [{ tekst: "de naam Cyberveilige Energietransitie, op eigen initiatief voorgesteld en aangenomen", slug: "cyberveilige-energietransitie" }],
+  },
+  {
+    kop: "Partners moeten samen keuzes maken",
+    tekst: "In een coalitie nemen veel mensen, in wisselende groepen, besluiten over afzonderlijke onderdelen. Elk besluit kan vanuit één partner logisch zijn. Voor de buitenwereld telt de optelsom: al die besluiten samen bepalen welke kant de coalitie op gaat. Ik werk scenario's uit, bijvoorbeeld voor een locatie of een programma, en zet per scenario de bepalende keuzes in één overzicht. Zo dragen afzonderlijke besluiten bij aan dezelfde ambitie. Met artist impressions zien bestuurders waarover ze beslissen.",
+    label: "",
+    voorbeelden: [],
+  },
+  {
+    kop: "Jullie willen laten zien wat de samenwerking heeft opgeleverd",
+    tekst: "Een proeftuin loopt af of er komt een jubileum aan. Ik interview de betrokkenen en maak er een whitepaper, magazine of jubileumboek van, inclusief de vormgeving. Bij een jubileum maak ik ook een jaarprogramma met media- en podiummomenten en uitingen waarin partners zelf aan het woord komen.",
+    label: "Voorbeelden",
+    voorbeelden: [
+      { tekst: "whitepaper over vijf jaar Living Lab Scheveningen (gemeente Den Haag)", slug: "living-lab-scheveningen" },
+      { tekst: "jubileummagazine tien jaar ICSSS met ruim dertig partners", slug: "impactcoalitie-smart-secure-cities" },
+      { tekst: "jubileumstrategie en -boek tien jaar Security Delta (HSD)", slug: "security-delta" },
+    ],
+  },
+  {
+    kop: "De samenwerking krijgt een fysieke plek",
+    tekst: "Een campus of een gedeeld kantoor. Ik denk mee over wat de plek moet uitstralen en waar mensen elkaar tegenkomen. Ik help bij de marktintroductie en de opening, en vertaal de identiteit van de samenwerking naar vormgeving in het gebouw.",
+    label: "Voorbeelden",
+    voorbeelden: [
+      { tekst: "HSD Campus, van marktintroductie en openingsceremonie tot branding in het gebouw" }, // [PAULINE: case HSD Campus]
+      { tekst: "participatietraject over inrichting en interne branding van een nieuw kantoor bij een beursgenoteerd bedrijf" },
+    ],
+  },
+];
+
+// v9 §1.3 — klantvermelding in tekst. Naam linkt naar de eigen casepagina, nooit naar de klantsite.
+// InnovationQuarter, HCSS en HSD Campus hebben (nog) geen eigen case: zonder link.
 const klanten: { naam: string; slug?: string }[] = [
   { naam: "Security Delta (HSD)", slug: "security-delta" },
-  { naam: "Innovatiecoalitie cyberveilige energietransitie", slug: "cyberveilige-energietransitie" },
+  { naam: "HSD Campus" },
+  { naam: "InnovationQuarter" },
+  { naam: "HCSS" },
+  { naam: "Innovatiecoalitie Cyberveilige Energietransitie", slug: "cyberveilige-energietransitie" },
   { naam: "Living Lab Scheveningen", slug: "living-lab-scheveningen" },
-  { naam: "InnovationQuarter", slug: "innovationquarter" },
   { naam: "Impactcoalitie Smart Secure Cities", slug: "impactcoalitie-smart-secure-cities" },
   { naam: "RoboValley", slug: "robovalley" },
 ];
 ---
 <Base
-  titel="strategyC — Strategie en creatie voor maatschappelijke verandering"
-  omschrijving="Ik help coalities verwoorden waar ze samen voor staan — en maak hun ambitie zichtbaar, voelbaar en deelbaar. Strategisch en creatief advies van Pauline Kamphuis."
+  titel="strategyC | Strategie en creatie voor coalities"
+  omschrijving="Strategisch en creatief advies voor publiek-private samenwerking: naam en narratief bij de start, scenario's voor besluiten, whitepapers en jubileumuitgaven."
   bodyClass="hero-donker"
 >
-  <!-- 1. Hero (briefing §4, definitief) — met de zes C's als vallende cirkels over de volle breedte (besluit Pauline + Piet, 24-08) -->
+  <!-- 1.1 Hero (v9) — met de zes C's als vallende cirkels over de volle breedte -->
   <section class="hero hero--cirkels" aria-labelledby="hero-kop">
     <div class="container hero-kop">
-      <h1 id="hero-kop">Strategie en creatie voor maatschappelijke verandering.</h1>
+      <h1 id="hero-kop">Strategie en creatie voor coalities</h1>
     </div>
     <div class="container hero-tekst">
-      <p class="intro">Ik help coalities verwoorden waar ze samen voor staan — en maak hun ambitie zichtbaar, voelbaar en deelbaar.</p>
+      <p class="intro">Werk je in een publiek-private samenwerking aan een maatschappelijke opgave? Ik schrijf het verhaal waar alle partners achter staan en ontwikkel wat nodig is om het uit te dragen: een naam, een narratief, een lancering, een whitepaper, een magazine of scenario's voor een besluit.</p>
       <div class="knoppen">
         <a class="knop" href="/contact/">Plan een oriënterend gesprek</a>
         <a class="knop knop--secundair" href="/portfolio/">Bekijk het werk</a>
       </div>
     </div>
-    <!-- De cirkelbak staat bewust buiten .container: ballen en zwarte 'vloer' lopen van rand tot rand (Piet 25-08) -->
     <nav class="cirkels" id="cirkels" data-labels={C_LABELS.join("|")} data-vast={VAST} aria-label="De zes C's — klik voor het bijbehorende werk">
       <ul class="sr-only">{C_LABELS.map((c) => <li><a href={c === VAST ? "/portfolio/" : `/portfolio/?c=${c.toLowerCase()}`}>{c}</a></li>)}</ul>
     </nav>
   </section>
 
-  <!-- 2. Introductie Pauline (v7 §1.2) -->
-  <section class="sectie" aria-labelledby="intro-kop">
-    <div class="container persoon">
-      <div class="portret">
-        <Placeholder>PAULINE: professionele foto, werkcontext</Placeholder>
-      </div>
+  <!-- 1.2 Hiervoor kun je me bellen (v9) -->
+  <section class="sectie" aria-labelledby="bellen-kop">
+    <div class="container">
       <div class="prose">
-        <span class="kop-label">Pauline Kamphuis</span>
-        <h2 id="intro-kop">Verandering vraagt meer dan één organisatie</h2>
-        <p>Ik werk ruim 25 jaar op het snijvlak van strategie, communicatie en verandering — bij corporates, bij de overheid en in publiek-private samenwerkingsverbanden. Ik weet hoe lastig het is om beweging op gang te krijgen in één organisatie — laat staan in meerdere organisaties met verschillende belangen, culturen en tempo's. Toch is dat wat maatschappelijke verandering vraagt: samenwerken aan een gezamenlijke ambitie, over de grenzen van de eigen organisatie heen. Daar help ik coalities bij: verwoorden en verbeelden waar ze samen voor staan. Dat verbindt de partijen onderling, versnelt de samenwerking, en helpt ze hun eigen organisaties en doelgroepen mee te nemen — zonder hun eigen belangen tekort te doen.</p>
-        <a class="pijl-link" href="/over/">Meer over mij →</a>
+        <h2 class="kop-c" id="bellen-kop"><CTeken /> Hiervoor kun je me bellen</h2>
+        <p class="intro">Coalities en publiek-private samenwerkingen schakelen me meestal in op een van deze momenten.</p>
+      </div>
+      <ol class="aanleidingen" role="list">
+        {aanleidingen.map((a, i) => (
+          <li class="aanleiding">
+            <h3><span class="nr" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span> {a.kop}</h3>
+            <p>{a.tekst}</p>
+            {a.voorbeelden.length > 0 && (
+              <div class="voorbeeld">
+                <span class="kop-label">{a.label}</span>
+                {a.voorbeelden.map((v, j) => (
+                  <>
+                    {caseUrl(v.slug) ? <a href={caseUrl(v.slug)}>{v.tekst} →</a> : <span>{v.tekst}</span>}
+                    {j < a.voorbeelden.length - 1 && <span class="secundair"> · </span>}
+                  </>
+                ))}
+              </div>
+            )}
+          </li>
+        ))}
+      </ol>
+      <div class="aanleidingen-cta">
+        <p>Herken je jouw situatie?</p>
+        <a class="knop" href="/contact/">Plan een oriënterend gesprek</a>
       </div>
     </div>
   </section>
 
-  <!-- 3. Klantvermelding in tekst, geen logo's (v7 §1.3) -->
-  <section class="sectie" aria-labelledby="klanten-kop">
+  <!-- 1.3 Klantvermelding in tekst, geen logo's (v9) -->
+  <section class="sectie sectie--grijs" aria-labelledby="klanten-kop">
     <div class="container">
-      <h2 class="kop-c" id="klanten-kop"><CTeken /> Ik werk(te) onder meer voor</h2>
+      <h2 class="kop-c" id="klanten-kop"><CTeken rood /> Ik werk(te) onder meer voor</h2>
       <p class="klanten">
         {klanten.map((k, i) => (
           <>
-            {k.slug && bySlug[k.slug] ? <a href={`/portfolio/${k.slug}/`}>{k.naam}</a> : k.naam}
+            {caseUrl(k.slug) ? <a href={caseUrl(k.slug)}>{k.naam}</a> : k.naam}
             {i < klanten.length - 1 ? <span>, </span> : <span>.</span>}
           </>
         ))}
       </p>
-      <p class="klein secundair">Bevestigen door Pauline (v7 §8.1). Namen krijgen pas een link als de bijbehorende case bestaat.</p>
+      <p class="klein"><Placeholder regel>PAULINE: korte cases voor InnovationQuarter, HCSS en HSD Campus aanleveren, of akkoord om deze namen zonder link te tonen (v9 §1.3)</Placeholder></p>
     </div>
   </section>
 
-  <!-- 4. Portfolio-uitlichting (v7 §1.4) -->
+  <!-- 1.4 Portfolio-uitlichting (v9) -->
   <section class="sectie" aria-labelledby="werk-kop">
     <div class="container">
       <div class="twee">
         <div class="prose">
           <h2 id="werk-kop">Van ambitie naar beweging</h2>
-          <p>Ik help coalities scherp krijgen waar ze samen voor staan en waar het mis zou kunnen gaan. Dat doe ik in gesprekken en workshops, met de partijen zelf aan tafel — en het leidt tot iets tastbaars: een verbindend narratief, een boek, artist impressions of een gedragen besluit. Hieronder een greep uit eerder werk.</p>
+          <p>Ik help coalities scherp krijgen waar ze samen voor staan en waar het mis zou kunnen gaan. Dat doe ik in gesprekken en workshops, met de partijen zelf aan tafel. Het resultaat is tastbaar: een verbindend narratief, een boek, artist impressions of een gedragen besluit. Hieronder een greep uit eerder werk.</p>
         </div>
         <div class="knoppen"><a class="knop knop--secundair" href="/portfolio/">Naar het portfolio</a></div>
       </div>
       <div class="raster">
         {uitgelicht.map((c, i) => <CaseCard c={c} lazy={i > 0} />)}
       </div>
-      <p class="klein secundair">Selectie en volgorde van de uitgelichte cases: Pauline (v7 §8.2).</p>
+      <p class="klein"><Placeholder regel>PAULINE: selectie van 3–4 uitgelichte cases (v9 §1.4)</Placeholder></p>
     </div>
   </section>
 
-  <!-- 5. De rode draad (v7 §1.5) -->
-  <section class="sectie sectie--grijs" aria-labelledby="rode-draad-kop">
-    <div class="container twee">
-      <div>
-        <h2 class="kop-c" id="rode-draad-kop"><CTeken rood /> De rode draad in mijn werk</h2>
+  <!-- 1.5 Publiek-privaat werkt anders (v9) -->
+  <section class="sectie sectie--grijs" aria-labelledby="pps-kop">
+    <div class="container persoon">
+      <div class="portret">
+        <img src={site.portret} alt="Pauline Kamphuis, oprichter van strategyC" width="800" height="800" loading="lazy" decoding="async" />
       </div>
       <div class="prose">
-        <p>Een coalitie houdt stand als partijen weten wat hen bindt, elkaar echt weten te vinden en er voor iedereen ruimte blijft voor eigen succes. Het geheim zit in een ambitie die groot genoeg is om alle belangen te verenigen, gecombineerd met respect voor de belangen, culturen en het tempo die de partners meebrengen.</p>
-        <p>Mijn werk speelt zich precies op dat snijvlak af. Ik voel me thuis in de vloeibare beginfase, waarin de kaders nog ontbreken en er gezocht wordt naar richting. Met oog voor de onderstroom vertaal ik wat er speelt naar taal, beeld en advies. Van een verbindend verhaal en houvast gevende waarden tot scenario's, artist impressions en vormgeving die jullie gezamenlijke ambitie direct voelbaar maken.</p>
+        <h2 id="pps-kop">Publiek-privaat werkt anders</h2>
+        <p>In een publiek-private samenwerking legt elke partner verantwoording af aan een eigen achterban: een wethouder aan de gemeenteraad, een directeur aan de aandeelhouders. Besluiten volgen verschillende ritmes, en het gezamenlijke verhaal moet werken onder ieders logo. De communicatie ligt meestal bij een klein programmabureau zonder groot budget.</p>
+        <p>Ik ken beide kanten. Ik was communicatiedirecteur bij internationale ingenieursbureaus. Met mijn vorige bureau, Alignment Factory, maakte ik de communicatiestrategie voor het net opgerichte InnovationQuarter en voor HCSS, en verzorgde ik voor de gemeente Den Haag de marktintroductie en de openingsceremonie van de HSD Campus. Security Delta (HSD) adviseer ik sinds de voorbereidingen van de oprichting in 2012.</p>
+        <a class="pijl-link" href="/over/">Meer over mij →</a>
       </div>
     </div>
   </section>
 
-  <!-- 6. Boekverwijzing (v7 §1.6) -->
+  <!-- 1.6 Boekverwijzing (v9) -->
   <section class="sectie" aria-label="Boek">
     <div class="container"><BoekBlok variant="home" /></div>
   </section>
 
-  <!-- 7. Contactblok (v7 §1.7, [concept]) -->
+  <!-- 1.7 Contactblok (v9) -->
   <ContactBlok />
 
   <script is:inline src="/js/cirkels.js" defer></script>

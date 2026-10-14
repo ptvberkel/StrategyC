@@ -16,31 +16,32 @@ const checklistAction = endpoint ? `${endpoint}/checklist` : "";
 const turnstile = site.turnstileSiteKey;
 ---
 <Base
-  titel="Contact — strategyC"
-  omschrijving="Plan een vrijblijvend oriënterend gesprek van 30 minuten, of download de checklist. Voor coalities die hun ambitie willen verwoorden, verbeelden en delen."
+  titel="Contact | strategyC"
+  omschrijving="Plan een vrijblijvend oriënterend gesprek van 30 minuten. Voor coalities die hun gezamenlijke verhaal willen ontwikkelen en delen."
   breadcrumbs={[{ naam: "Home", url: "/" }, { naam: "Contact" }]}
 >
   <Fragment slot="head">
     {turnstile && <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>}
   </Fragment>
 
-  <!-- 1. Hoofdaanbod ([concept], v7 §4) -->
+  <!-- 1. Hoofdaanbod (v9 §4) -->
   <section class="sectie" aria-labelledby="contact-kop">
     <div class="container">
       <div class="prose">
         <h1 id="contact-kop">Laten we kennismaken</h1>
-        <p class="intro">Sta je aan het begin van een samenwerking en zoek je hoe je de gezamenlijke ambitie verwoordt, verbeeldt en deelt zodat er beweging ontstaat? Plan een vrijblijvend oriënterend gesprek van 30 minuten. Geen verkoopgesprek — gewoon een half uur meedenken over waar jouw coalitie staat en wat de volgende stap kan zijn.</p>
-        <p><Placeholder regel>concept-tekst ter goedkeuring Pauline; knoplabel: beslispunt 4</Placeholder></p>
+        <p class="intro">Herken je jullie situatie in een van de <a href="/#bellen-kop">aanleidingen op de homepage</a>, of speelt er iets anders? Plan een oriënterend gesprek van 30 minuten. Jij vertelt waar jullie staan, ik vertel hoe ik het zou aanpakken en wat dat ongeveer vraagt aan tijd en budget.</p>
+        <p><Placeholder regel>PAULINE: akkoord met de zin over tijd en budget? (v9 §4, voorstel)</Placeholder></p>
         <div class="knoppen"><a class="knop" href="#formulier">Plan een gesprek</a></div>
       </div>
     </div>
   </section>
 
-  <!-- 2. Checklist (tegen voornaam + e-mailadres; bevestigingsmail v7 §5.2 met PDF-bijlage) -->
+  <!-- 2. Checklist — niet in v9; blijft staan tot Pauline besluit (zie takenlijst). (tegen voornaam + e-mailadres; bevestigingsmail v7 §5.2 met PDF-bijlage) -->
   <section class="sectie sectie--grijs" aria-labelledby="checklist-kop">
     <div class="container twee">
       <div class="prose">
         <h2 class="kop-c" id="checklist-kop"><CTeken rood /> Liever eerst iets lezen?</h2>
+        <p><Placeholder regel>PAULINE: checklist staat niet in v9. Behouden of weghalen?</Placeholder></p>
         <p>Download de checklist <em>"{site.checklistTitel}"</em> <Placeholder regel>placeholder: definitieve titel en inhoud volgen</Placeholder>. Laat je e-mailadres achter en je ontvangt hem direct.</p>
       </div>
       <form class="formulier formulier--kaart" method="post" action={checklistAction} data-formulier="checklist" novalidate>
@@ -120,6 +121,13 @@ const turnstile = site.turnstileSiteKey;
           <p class="groot"><a href={`mailto:${site.email}`}>{site.email}</a></p>
           <p class="klein secundair">Reactie binnen twee werkdagen.</p>
         </div>
+        {site.telefoon && (
+          <div class="contactkaart">
+            <span class="kop-label">Bellen</span>
+            <p class="groot"><a href={`tel:${site.telefoon.replace(/\s|\(0\)/g, "")}`}>{site.telefoon}</a></p>
+            <p class="klein secundair">Direct even overleggen.</p>
+          </div>
+        )}
         <div class="contactkaart">
           <span class="kop-label">LinkedIn</span>
           <p class="groot"><a href={site.linkedin} rel="me">Pauline Kamphuis</a></p>

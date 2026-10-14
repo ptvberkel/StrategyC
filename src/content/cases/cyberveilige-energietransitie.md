@@ -11,7 +11,7 @@ externeLink:
   url: "https://securitydelta.nl/nl/programma-s/cyberweerbaarheid/cyberveilige-energietransitie"
 metaOmschrijving: "Elf initiatiefnemers, één verhaal: hoe strategyC de visie, de naam en de lancering van de Innovatiecoalitie Cyberveilige Energietransitie vormgaf."
 gepubliceerd: "2026-08-24"
-bijgewerkt: "2026-08-24"
+bijgewerkt: "2026-10-14"
 ---
 
 ## De opgave
@@ -20,7 +20,7 @@ In de Innovatiecoalitie Cyberveilige Energietransitie bundelen netbeheerders, in
 
 ## De aanpak
 
-Ik werkte aan de visie en de lancering van de coalitie. Op basis van gesprekken, beleidsnotities en eigen onderzoek schreef ik het verbindend narratief. De kern: cyberveiligheid hoort vanaf het ontwerp in het energiesysteem te zitten — secure by design. De energieketen telt inmiddels zoveel verschillende spelers dat de zwakte van één de zwakte van de hele keten wordt. Veiligheid is daarmee geen zaak van afzonderlijke partijen, maar van de keten als geheel — en dus een gedeelde opgave.
+Ik werkte aan de visie en de lancering van de coalitie. Op basis van gesprekken, beleidsnotities, een workshop en eigen onderzoek schreef ik het verbindend narratief. De kern: cyberveiligheid hoort vanaf het ontwerp in het energiesysteem te zitten — secure by design. De energieketen telt inmiddels zoveel verschillende spelers dat de zwakte van één de zwakte van de hele keten wordt. Veiligheid is daarmee geen zaak van afzonderlijke partijen, maar van de keten als geheel — en dus een gedeelde opgave.
 
 Op eigen initiatief stelde ik ook een nieuwe naam voor. De werknaam was lang en vanuit het probleem geformuleerd, wat in de praktijk onhandig zou worden voor communicatie-uitingen. Mijn voorstel had de oplossing in de naam, zodat elke uiting de ambitie in twee woorden herhaalt: cyberveilige energietransitie. Zo draagt de naam zelf de boodschap, telkens opnieuw.
 

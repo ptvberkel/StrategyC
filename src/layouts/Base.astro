@@ -51,7 +51,7 @@ const organisatie = {
   name: site.naam,
   url: `${site.origin}/`,
   founder: { "@id": ids.persoon },
-  address: { "@type": "PostalAddress", streetAddress: "Kanaalpark 157", addressLocality: site.plaats, addressCountry: site.land },
+  address: { "@type": "PostalAddress", streetAddress: "Kanaalpark 157", postalCode: "2321 JW", addressLocality: site.plaats, addressCountry: site.land },
 };
 const crumbs = breadcrumbs
   ? {
@@ -159,6 +159,7 @@ const csp = [
           <div>
             <p class="footer-kop">Meer</p>
             <ul>
+              <li><a href="/boek/">Boek</a></li>
               <li><a href="/privacyverklaring/">Privacyverklaring</a></li>
               <li><a href="/algemene-voorwaarden/">Algemene voorwaarden</a></li>
               <li><a href="/blog/">Blog</a></li>
@@ -166,7 +167,7 @@ const csp = [
           </div>
         </div>
         <div class="footer-onder">
-          <p>© {jaar} strategyC — {site.eigenaar}</p>
+          <p>© {jaar} strategyC · {site.eigenaar}</p>
           <p>KVK {site.kvk}{site.btw && <> · btw-id {site.btw}</>}</p>
         </div>
       </div>
