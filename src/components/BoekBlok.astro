@@ -9,7 +9,6 @@ const { variant = "home" } = Astro.props;
     <img src={site.boekCover} alt="" width="300" height="300" loading="lazy" decoding="async" />
   </a>
   <div class="prose">
-    <span class="kop-label">Boek</span>
     <h2>{site.boekTitel}{variant === "over" && <span class="secundair"> ({site.boekJaar})</span>}</h2>
     {variant === "home"
       ? <p>In mijn boek beschrijf ik in tien concrete stappen hoe verandering werkt als je de mens centraal stelt, gebaseerd op wetenschap en 25 jaar praktijk.</p>

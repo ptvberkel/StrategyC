@@ -38,6 +38,8 @@ html { color-scheme: light; scroll-behavior: auto; -webkit-tap-highlight-color: 
 a, button, [role="button"], .knop, .filter { touch-action: manipulation; }
 .knop, .filter, .menuknop, .cirkel { -webkit-user-select: none; user-select: none; }
 input, textarea, select { font-size: max(16px, 1rem); }
+html { scrollbar-color: #b9b9b9 transparent; }
+input, textarea { caret-color: var(--kleur-rood); }
 ::selection { background: color-mix(in srgb, var(--kleur-rood) 25%, transparent); }
 body {
   margin: 0;
@@ -53,7 +55,10 @@ a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: .15em
 :focus-visible { outline: 3px solid var(--kleur-rood); outline-offset: 3px; border-radius: 4px; }
 [id] { scroll-margin-top: 5rem; }
 
-h1, h2, h3, h4 { line-height: 1.12; letter-spacing: -0.015em; font-weight: 700; margin: 0 0 .5em; text-wrap: balance; }
+h1, h2, h3, h4 { line-height: 1.12; letter-spacing: -0.01em; font-weight: 700; margin: 0 0 .5em; text-wrap: balance; }
+h1 { line-height: 1.04; letter-spacing: -0.028em; }
+h2 { line-height: 1.1; letter-spacing: -0.02em; }
+h4 { letter-spacing: 0; }
 h1 { font-size: clamp(2.25rem, 1.4rem + 3.6vw, 4rem); }
 h2 { font-size: clamp(1.6rem, 1.15rem + 1.8vw, 2.4rem); }
 h3 { font-size: clamp(1.2rem, 1.05rem + .6vw, 1.5rem); }
@@ -325,6 +330,7 @@ p { margin: 0 0 1em; }
 .boek-kop { display: grid; gap: 2.5rem; align-items: center; grid-template-columns: 1fr; }
 @media (min-width: 760px) { .boek-kop { grid-template-columns: minmax(220px, 360px) 1fr; gap: 4rem; } }
 .boek-kop .cover-groot { width: min(100%, 360px); aspect-ratio: 1; }
+.boek-meta { margin: -.25rem 0 1.25rem; font-weight: 600; color: var(--kleur-donkergrijs); }
 .boek-kop .cover-groot img { width: 100%; height: 100%; object-fit: contain; mix-blend-mode: multiply; }
 .bestel { display: grid; gap: 1rem; grid-template-columns: 1fr; margin-top: 1.5rem; }
 @media (min-width: 760px) { .bestel { grid-template-columns: repeat(3, 1fr); } }
@@ -347,7 +353,7 @@ p { margin: 0 0 1em; }
 .recensie blockquote p + p { margin-top: .5rem; }
 .recensie .recensie-kop { font-weight: 600; font-size: 1.05rem; line-height: 1.4; }
 .quote-groot .vervolg { margin: 0 0 1rem; }
-.recensie figcaption, .quote-groot figcaption { display: flex; flex-direction: column; gap: .1rem; font-size: .92rem; padding-left: .75rem; border-left: 2px solid var(--kleur-rood); }
+.recensie figcaption, .quote-groot figcaption { display: flex; flex-direction: column; gap: .1rem; font-size: .95rem; padding-top: .75rem; border-top: 1px solid var(--kleur-lijn); }
 .recensie figcaption strong, .quote-groot figcaption strong { font-weight: 700; }
 
 
@@ -375,3 +381,14 @@ p { margin: 0 0 1em; }
 .knop:active, .filter:active, .menuknop:active { transform: scale(.97); }
 .kaart:active, .bestel-kaart:active { border-color: var(--kleur-zwart); }
 @media (prefers-reduced-motion: reduce) { .knop:active, .filter:active, .menuknop:active { transform: none; } }
+
+/* ---------- systeemvoorkeuren: minder transparantie, meer contrast ---------- */
+@media (prefers-reduced-transparency: reduce) {
+  .site-header { background: var(--kleur-wit); backdrop-filter: none; }
+  .kop-donker .site-header { background: var(--kleur-zwart); }
+}
+@media (prefers-contrast: more) {
+  .site-header { background: var(--kleur-wit); backdrop-filter: none; border-bottom-color: var(--kleur-zwart); }
+  .secundair, .kop-label, .site-footer { color: #3f3f3f; }
+  .kaart, .recensie, .bestel-kaart, .aanleidingen, .aanleiding { border-color: var(--kleur-zwart); }
+}
