@@ -21,11 +21,9 @@ export const site = {
   boekCover: "/img/boek-in-10-stappen.png",
   boekKopen: [
     { label: "Koop het boek bij mij", url: "https://strategyc.kennis.shop/pay/boek-in-10-stappen-succesvol-transformeren", toelichting: "Rechtstreeks van de auteur" },
-    { label: "Koop bij Managementboek.nl", url: "https://www.managementboek.nl/boek/9789493277304/in-10-stappen-succesvol-transformeren-pauline-kamphuis", toelichting: "ISBN 9789493277304" },
     { label: "Leen bij de bibliotheek", url: "https://www.bibliotheek.nl/catalogus/titel.436808625.html/in-10-stappen-succesvol-transformeren/", toelichting: "Via bibliotheek.nl" },
   ],
   portret: "/img/pauline-kamphuis.jpg",
-  checklistTitel: "Van ambitie op papier naar maatschappelijke verandering", // [placeholder: werktitel]
   ogImage: "/img/og-strategyc.jpg", // deelbeeld 1200×630, gemaakt met scripts/og-beeld.mjs
 
   /** Formulierendienst (structuurplan §4.6). Leeg = formulier toont een markering en post nergens heen. */

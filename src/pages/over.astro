@@ -12,7 +12,7 @@ const expertise = (["Communicatie", "Cultuur", "Change"] as const).filter((c) =>
 
 const profiel = {
   "@type": "ProfilePage",
-  dateModified: "2026-10-14",
+  dateModified: "2026-10-19",
   
   mainEntity: {
     "@type": "Person",
@@ -37,7 +37,7 @@ const profiel = {
       <div class="portret"><img src={site.portret} alt="Pauline Kamphuis, oprichter van strategyC" width="800" height="800" fetchpriority="high" decoding="async" /></div>
       <div class="prose">
         <h1 id="over-kop">Even voorstellen</h1>
-        <p class="intro">Ik ben Pauline Kamphuis, oprichter van strategyC: strategisch en creatief advies voor coalities. Ik breng strategische helderheid en zoek altijd naar het grotere plaatje: waarom doet dit ertoe, wie heeft er baat bij?</p>
+        <p class="intro">Ik ben Pauline Kamphuis, oprichter van strategyC: strategisch en creatief advies voor coalities. Ik breng strategische helderheid en zoek altijd naar het grotere plaatje: waarom doet dit ertoe, wie heeft er baat bij, welke belangen komen hier samen?</p>
       </div>
     </div>
   </section>
@@ -46,7 +46,7 @@ const profiel = {
     <div class="container twee">
       <div><h2 class="kop-c" id="afkomst-kop"><CTeken /> Waar ik vandaan kom</h2></div>
       <div class="prose">
-        <p>Ik werk ruim 25 jaar aan strategie en communicatie. Ik was wereldwijd communicatiedirecteur bij internationale ingenieursbureaus en communicatiemanager in de telecom. Met mijn vorige bureau, Alignment Factory, werkte ik aan publiek-private samenwerking in de regio Den Haag toen die nog in de kinderschoenen stond. Ik maakte de communicatiestrategie voor het net opgerichte InnovationQuarter en voor HCSS, en verzorgde voor de gemeente Den Haag de marktintroductie en opening van de HSD Campus. Security Delta (HSD) adviseer ik sinds de voorbereidingen van de oprichting in 2012. Namens HSD werk ik nu ook mee aan de voorbereidingen van een nieuwe samenwerking op cybergebied.</p>
+        <p>Ik werk ruim 25 jaar aan strategie en communicatie. Ik was wereldwijd communicatiedirecteur bij internationale ingenieursbureaus en communicatiemanager in de telecom. Met mijn vorige bureau, Alignment Factory, werkte ik aan publiek-private samenwerking in de regio Den Haag toen die nog in de kinderschoenen stond. Ik maakte de communicatiestrategie voor het net opgerichte InnovationQuarter en voor HCSS, en verzorgde voor de gemeente Den Haag de marktintroductie en opening van de HSD Campus. Security Delta (HSD) adviseer ik sinds de voorbereidingen van de oprichting in 2012. Namens HSD werk ik nu ook mee aan de voorbereidingen van het toekomstige House of Cyber.</p>
       </div>
     </div>
   </section>
@@ -55,8 +55,8 @@ const profiel = {
     <div class="container twee">
       <div><h2 class="kop-c" id="rode-draad-kop"><CTeken rood /> De rode draad</h2></div>
       <div class="prose">
-        <p>Een coalitie houdt stand als partijen weten wat hen bindt, elkaar echt weten te vinden en er voor iedereen ruimte blijft voor eigen succes. Het geheim zit in een ambitie die groot genoeg is om alle belangen te verenigen, gecombineerd met respect voor de belangen, culturen en het tempo die de partners meebrengen.</p>
-        <p>Mijn werk speelt zich precies op dat snijvlak af. Ik voel me thuis in de vloeibare beginfase, waarin de kaders nog ontbreken en er gezocht wordt naar richting. Met oog voor de onderstroom vertaal ik wat er speelt naar taal, beeld en advies. Van een verbindend verhaal en houvast gevende waarden tot scenario's, artist impressions en vormgeving die jullie gezamenlijke ambitie direct voelbaar maken.</p>
+        <p>Mijn werk speelt zich af op het snijvlak van strategie en verbeeldingskracht. Ik hou van de prille fase: wanneer de kaders nog ontbreken en partijen samen zoeken naar richting. Met oog voor de onderstroom vertaal ik wat er speelt naar taal, beeld, advies en actie. Van een verbindend verhaal en houvast gevende waarden tot scenario's, artist impressions en vormgeving die de gezamenlijke ambitie meteen voelbaar maken.</p>
+        <p>Want een coalitie houdt stand als partijen weten wat hen bindt, elkaar echt weten te vinden en er voor iedereen ruimte blijft voor de eigen inbreng en belangen. Dat vraagt om een ambitie die groot genoeg is om iedereen te verenigen, met respect voor de belangen, culturen en het tempo die elke partner meebrengt. Precies daar ligt mijn kracht.</p>
       </div>
     </div>
   </section>
@@ -66,8 +66,8 @@ const profiel = {
       <div><h2 class="kop-c" id="werkwijze-kop"><CTeken /> Hoe ik werk</h2></div>
       <div class="prose">
         <p>Ik begin altijd bij de essentie: waar staan de partijen sámen voor? In scherpe gesprekken en workshops ontdekken deelnemers zelf de kerningrediënten van hun verhaal, waardoor ze automatisch dichter bij elkaars perspectief komen.</p>
-        <p>Vervolgens vertaal ik dat naar taal en beeld: van een verbindend narratief, gedeelde waarden en scenario's tot publicaties. Eenvoudige vormgeving kan ik direct meenemen. Er hoeft geen apart bureau te worden gebriefd dat zich nog moet inleven, want dat inleven is precies waar mijn werk al begon.</p>
-        <p>Mijn werk laat zich vangen in <strong>C's</strong>. Voor publiek-private en publieke <strong>coalities</strong> lever ik <strong>{levering[0].toLowerCase()}</strong> én <strong>{levering[1].toLowerCase()}</strong>. Dat doe ik vanuit drie kernexpertises:</p>
+        <p>Vervolgens vertaal ik dat naar taal en beeld: van een verbindend narratief, gedeelde waarden en scenario's tot publicaties. Eenvoudige vormgeving kan ik direct meenemen. Er hoeft geen apart bureau te worden gebriefd dat zich nog moet inleven, omdat ik vanaf de prille start al betrokken ben.</p>
+        <p>Mijn werk laat zich vangen in <strong>C's</strong>. Voor publiek-private en publieke <strong>coalities</strong> lever ik <strong>{levering[0].toLowerCase()}</strong>, én <strong>{levering[1].toLowerCase()}</strong>. Dat doe ik vanuit drie kernexpertises:</p>
         <ul class="tags" aria-label="Kernexpertises">
           {expertise.map((c) => <li class="tag">{c}</li>)}
         </ul>
@@ -79,7 +79,7 @@ const profiel = {
     <div class="container twee">
       <div><h2 class="kop-c" id="opleiding-kop"><CTeken rood /> Opleiding en achtergrond</h2></div>
       <div class="prose">
-        <p>Ik studeerde commerciële economie en corporate communicatie, verdiepte me daarna in organisatiecultuur, <em>strategic alignment</em>, gedragspsychologie en design, en publiceerde een boek over transformatie. Die combinatie — begrip van economische en publieke waarde, strategie, reputatie en transformatie, versterkt met sterke vaardigheden in analyse, schrijven en vormgeving — bepaalt mijn unieke blik op samenwerking én geeft me een uitgebreide toolkit om die samenwerking echt vooruit te helpen.</p>
+        <p>Ik studeerde commerciële economie en corporate communicatie, specialiseerde me in organisatiecultuur, <em>strategic alignment</em> en design, en publiceerde een boek over transformatie. Die combinatie — begrip van economische en publieke waarde, strategie, reputatie en transformatie, versterkt met sterke vaardigheden in analyse, schrijven en ontwerpen — bepaalt mijn unieke blik op samenwerking én geeft me een uitgebreide toolkit om die samenwerking echt vooruit te helpen.</p>
       </div>
     </div>
   </section>

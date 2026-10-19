@@ -2,7 +2,10 @@
 titel: "Cyberveilige energietransitie"
 ondertitel: "Visie, positionering en lancering voor de Innovatiecoalitie Cyberveilige Energietransitie"
 klant: "Innovatiecoalitie Cyberveilige Energietransitie"
-jaar: ""
+jaar: "2025"
+hoofdbeeld: "/img/cases/cyberveilige-energietransitie.jpg"
+hoofdbeeldAlt: "Zonnepanelen en een windmolen in een groen landschap"
+beeldBron: "Foto: Canva"
 tags: ["Communicatie", "Consultancy", "Creatie"]
 uitgelicht: true
 volgorde: 1
@@ -11,7 +14,7 @@ externeLink:
   url: "https://securitydelta.nl/nl/programma-s/cyberweerbaarheid/cyberveilige-energietransitie"
 metaOmschrijving: "Elf initiatiefnemers, één verhaal: hoe strategyC de visie, de naam en de lancering van de Innovatiecoalitie Cyberveilige Energietransitie vormgaf."
 gepubliceerd: "2026-08-24"
-bijgewerkt: "2026-10-14"
+bijgewerkt: "2026-10-19"
 ---
 
 ## De opgave

@@ -1,5 +1,5 @@
 # Pages CMS (app.pagescms.org) — beheerscherm voor Pauline (structuurplan §4.3).
-# Cases en blogartikelen als formulieren; tags als keuzelijst uit de centrale C-bron (src/data/cs.ts).
+# Cases en boekrecensies als formulieren (blog vervallen 19-10); tags als keuzelijst uit de centrale C-bron (src/data/cs.ts).
 media:
   input: public/img
   output: /img
@@ -26,8 +26,9 @@ content:
           values: [Consultancy, Creatie, Communicatie, Cultuur, Change]
       - { name: uitgelicht, label: Uitgelicht op Home, type: boolean, default: false }
       - { name: volgorde, label: Volgorde (laag = eerst), type: number, default: 99 }
-      - { name: hoofdbeeld, label: Hoofdbeeld, type: image }
+      - { name: hoofdbeeld, label: Beeld (onder de tekst en op de kaart), type: image }
       - { name: hoofdbeeldAlt, label: Beschrijving hoofdbeeld (alt-tekst), type: string }
+      - { name: beeldBron, label: Fotocredit onder het beeld (optioneel), type: string, description: "bv. Foto: Canva" }
       - name: beelden
         label: Beeldmateriaal
         type: object
@@ -46,21 +47,6 @@ content:
       - { name: bijgewerkt, label: Bijgewerkt, type: date }
       - { name: placeholder, label: Nog niet af (toont markering), type: boolean, default: false }
       - { name: body, label: Tekst (De opgave / De aanpak / Het resultaat), type: rich-text }
-
-  - name: blog
-    label: Blog
-    type: collection
-    path: src/content/blog
-    filename: "{fields.slug}.md"
-    fields:
-      - { name: titel, label: Titel, type: string, required: true }
-      - { name: slug, label: URL-naam, type: string, required: true }
-      - { name: datum, label: Datum, type: date, required: true }
-      - { name: bijgewerkt, label: Bijgewerkt, type: date }
-      - { name: metaOmschrijving, label: Omschrijving voor zoekmachines, type: string }
-      - { name: beeld, label: Beeld (optioneel), type: image }
-      - { name: beeldAlt, label: Beschrijving beeld, type: string }
-      - { name: body, label: Tekst, type: rich-text }
 
   - name: recensies
     label: Boekrecensies

@@ -18,6 +18,7 @@ const cases = defineCollection({
     volgorde: z.number().default(99),
     hoofdbeeld: z.string().optional(), // pad onder /img/
     hoofdbeeldAlt: z.string().optional(),
+    beeldBron: z.string().optional(), // fotocredit onder het beeld, bv. "Foto: Canva"
     beelden: z.array(z.object({ src: z.string(), alt: z.string() })).default([]),
     externeLink: z.object({ label: z.string(), url: z.string().url() }).optional(),
     metaTitel: z.string().optional(),
@@ -28,16 +29,4 @@ const cases = defineCollection({
   }),
 });
 
-const blog = defineCollection({
-  loader: glob({ pattern: "**/*.md", base: "./src/content/blog" }),
-  schema: z.object({
-    titel: z.string(),
-    datum: z.string(),
-    bijgewerkt: z.string().optional(),
-    metaOmschrijving: z.string().optional(),
-    beeld: z.string().optional(),
-    beeldAlt: z.string().optional(),
-  }),
-});
-
-export const collections = { cases, blog };
+export const collections = { cases }; // blog vervallen (19-10): voorlopig geen artikelen

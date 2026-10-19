@@ -1,18 +1,17 @@
 ---
 /**
- * Contact (v7 §4, structuurplan §3.5): hoofdaanbod, checklistformulier, contactformulier, direct contact.
+ * Contact (v10): hoofdaanbod en contactformulier. Checklist en "Liever direct contact" weg (19-10, Pauline);
+ * e-mail, telefoon, LinkedIn en adres staan in de footer.
  * Formulieren posten naar de eigen Worker (§4.6). Zonder endpoint: zichtbare markering, knop uitgeschakeld.
  * 31-08: indeling herzien (Piet) — vier duidelijk gescheiden secties, formulieren als eigen paneel,
  * meer lucht rond de velden en "Direct contact" als losse blokken in plaats van een voetnoot.
  */
 import Base from "../../layouts/Base.astro";
-import CTeken from "../../components/CTeken.astro";
 import Placeholder from "../../components/Placeholder.astro";
 import { site } from "../../data/site";
 
 const endpoint = site.formulierEndpoint;
 const contactAction = endpoint ? `${endpoint}/contact` : "";
-const checklistAction = endpoint ? `${endpoint}/checklist` : "";
 const turnstile = site.turnstileSiteKey;
 ---
 <Base
@@ -29,72 +28,39 @@ const turnstile = site.turnstileSiteKey;
     <div class="container">
       <div class="prose">
         <h1 id="contact-kop">Laten we kennismaken</h1>
-        <p class="intro">Herken je jullie situatie in een van de <a href="/#bellen-kop">aanleidingen op de homepage</a>, of speelt er iets anders? Plan een oriënterend gesprek van 30 minuten. Jij vertelt waar jullie staan, ik vertel hoe ik het zou aanpakken en wat dat ongeveer vraagt aan tijd en budget.</p>
-        <p><Placeholder regel>PAULINE: akkoord met de zin over tijd en budget? (v9 §4, voorstel)</Placeholder></p>
+        <p class="intro">Herken je jullie situatie in een van de <a href="/#bellen-kop">aanleidingen op de homepage</a>, of speelt er iets anders? Plan een oriënterend gesprek van 30 minuten. Jij vertelt waar jullie staan, ik vertel hoe ik het zou aanpakken.</p>
         <div class="knoppen"><a class="knop" href="#formulier">Plan een gesprek</a></div>
       </div>
     </div>
   </section>
 
-  <!-- 2. Checklist — niet in v9; blijft staan tot Pauline besluit (zie takenlijst). (tegen voornaam + e-mailadres; bevestigingsmail v7 §5.2 met PDF-bijlage) -->
-  <section class="sectie sectie--grijs" aria-labelledby="checklist-kop">
-    <div class="container twee">
-      <div class="prose">
-        <h2 class="kop-c" id="checklist-kop"><CTeken rood /> Liever eerst iets lezen?</h2>
-        <p><Placeholder regel>PAULINE: checklist staat niet in v9. Behouden of weghalen?</Placeholder></p>
-        <p>Download de checklist <em>"{site.checklistTitel}"</em> <Placeholder regel>placeholder: definitieve titel en inhoud volgen</Placeholder>. Laat je e-mailadres achter en je ontvangt hem direct.</p>
-      </div>
-      <form class="formulier formulier--kaart" method="post" action={checklistAction} data-formulier="checklist" novalidate>
-        <p class="formulier-kop"><strong>De checklist in je inbox</strong></p>
-        <div class="veld">
-          <label for="cl-voornaam">Je voornaam</label>
-          <input id="cl-voornaam" name="voornaam" type="text" autocomplete="given-name" required placeholder=" " />
-          <span class="fout" data-fout>Dit veld is verplicht.</span>
-        </div>
-        <div class="veld">
-          <label for="cl-email">Je e-mailadres</label>
-          <input id="cl-email" name="email" type="email" autocomplete="email" required placeholder=" " />
-          <span class="fout" data-fout>Vul een geldig e-mailadres in.</span>
-        </div>
-        <div class="honing" aria-hidden="true"><label>Laat dit veld leeg<input name="website" type="text" tabindex="-1" autocomplete="off" /></label></div>
-        <input type="hidden" name="t" value="" data-tijd />
-        {turnstile ? <div class="cf-turnstile" data-sitekey={turnstile} data-size="flexible" data-appearance="interaction-only"></div> : <Placeholder regel>PIET: Turnstile-sitekey (Cloudflare-account Pauline)</Placeholder>}
-        <div class="knoppen"><button class="knop" type="submit" disabled={!endpoint}>Stuur mij de checklist</button></div>
-        <div class="formulier-voet">
-          <p class="klein secundair">Je gegevens gebruik ik alleen om je de checklist te sturen — zie de <a href="/privacyverklaring/">privacyverklaring</a>. <Placeholder regel>UI-TEKST ter goedkeuring; beslispunt 6</Placeholder></p>
-          {!endpoint && <p><Placeholder regel>PIET: formulierendienst nog niet gekoppeld (structuurplan §4.6)</Placeholder></p>}
-        </div>
-      </form>
-    </div>
-  </section>
-
-  <!-- 3. Formulier (v7 §4) -->
+  <!-- 2. Formulier -->
   <section class="sectie" aria-labelledby="formulier-kop" id="formulier">
     <div class="container twee">
       <div class="prose">
         <h2 id="formulier-kop">Stuur me een bericht</h2>
         <p>Vertel kort waar jullie staan; ik neem binnen twee werkdagen contact met je op.</p>
-        <p><Placeholder regel>UI-TEKST: kop en intro van het formulier ter goedkeuring</Placeholder></p>
       </div>
       <form class="formulier formulier--kaart" method="post" action={contactAction} data-formulier="contact" novalidate>
         <div class="veld-rij">
           <div class="veld">
-            <label for="naam">Je naam</label>
+            <label for="naam">Naam</label>
             <input id="naam" name="naam" type="text" autocomplete="name" required placeholder=" " />
             <span class="fout" data-fout>Dit veld is verplicht.</span>
           </div>
           <div class="veld">
-            <label for="organisatie">Je organisatie <span class="optioneel">(optioneel)</span></label>
-            <input id="organisatie" name="organisatie" type="text" autocomplete="organization" placeholder=" " />
+            <label for="organisatie">Organisatie</label>
+            <input id="organisatie" name="organisatie" type="text" autocomplete="organization" required placeholder=" " />
+            <span class="fout" data-fout>Dit veld is verplicht.</span>
           </div>
         </div>
         <div class="veld">
-          <label for="email">Je e-mailadres</label>
+          <label for="email">E-mailadres</label>
           <input id="email" name="email" type="email" autocomplete="email" required placeholder=" " />
           <span class="fout" data-fout>Vul een geldig e-mailadres in.</span>
         </div>
         <div class="veld">
-          <label for="bericht">Je bericht</label>
+          <label for="bericht">Bericht</label>
           <textarea id="bericht" name="bericht" required placeholder=" "></textarea>
           <span class="fout" data-fout>Dit veld is verplicht.</span>
         </div>
@@ -108,36 +74,6 @@ const turnstile = site.turnstileSiteKey;
           {!endpoint && <p><Placeholder regel>PIET: formulierendienst nog niet gekoppeld (structuurplan §4.6)</Placeholder></p>}
         </div>
       </form>
-    </div>
-  </section>
-
-  <!-- 4. Direct contact — losse blokken in plaats van een voetnoot onder het formulier -->
-  <section class="sectie sectie--grijs" aria-labelledby="direct-kop">
-    <div class="container">
-      <h2 class="kop-c" id="direct-kop"><CTeken rood /> Liever direct contact</h2>
-      <div class="contactkaarten">
-        <div class="contactkaart">
-          <span class="kop-label">E-mail</span>
-          <p class="groot"><a href={`mailto:${site.email}`}>{site.email}</a></p>
-          <p class="klein secundair">Reactie binnen twee werkdagen.</p>
-        </div>
-        {site.telefoon && (
-          <div class="contactkaart">
-            <span class="kop-label">Bellen</span>
-            <p class="groot"><a href={`tel:${site.telefoon.replace(/\s|\(0\)/g, "")}`}>{site.telefoon}</a></p>
-            <p class="klein secundair">Direct even overleggen.</p>
-          </div>
-        )}
-        <div class="contactkaart">
-          <span class="kop-label">LinkedIn</span>
-          <p class="groot"><a href={site.linkedin} rel="me">Pauline Kamphuis</a></p>
-          <p class="klein secundair">Voor een korte vraag of een introductie.</p>
-        </div>
-        <div class="contactkaart">
-          <span class="kop-label">Adres</span>
-          <address class="groot">{site.adres.split(", ").map((r, i, a) => <>{r}{i < a.length - 1 && <br />}</>)}</address>
-        </div>
-      </div>
     </div>
   </section>
 

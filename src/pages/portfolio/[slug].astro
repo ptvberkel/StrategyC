@@ -8,6 +8,7 @@ import ContactBlok from "../../components/ContactBlok.astro";
 import Placeholder from "../../components/Placeholder.astro";
 import { getCollection, render } from "astro:content";
 import { site, ids } from "../../data/site";
+import { beeldMaat } from "../../data/beeldmaat";
 
 export async function getStaticPaths() {
   const cases = await getCollection("cases");
@@ -35,6 +36,7 @@ const article = {
   mainEntityOfPage: `${site.origin}${url}`,
   inLanguage: "nl",
 };
+const maat = d.hoofdbeeld ? await beeldMaat(d.hoofdbeeld) : undefined;
 const datum = (iso?: string) => iso ? new Date(iso).toLocaleDateString("nl-NL", { month: "long", year: "numeric" }) : "";
 ---
 <Base
@@ -58,18 +60,20 @@ const datum = (iso?: string) => iso ? new Date(iso).toLocaleDateString("nl-NL", 
     </header>
 
     <div class="container">
-      <div class="case-beeld">
-        {d.hoofdbeeld
-          ? <img src={d.hoofdbeeld} alt={d.hoofdbeeldAlt ?? ""} width="1600" height="900" fetchpriority="high" decoding="async" />
-          : <Placeholder>PAULINE: hoofdbeeld — het werk zelf (spread, visualisatie, lanceringsbeeld) + alt-tekst</Placeholder>}
-      </div>
-
       <div class="prose case-tekst">
         {d.placeholder && <p class="ph">[PAULINE: deze case bestaat nog niet — tekst volgens het sjabloon (opgave, aanpak, resultaat), jaar, beeld en tags aanleveren. Tags hieronder zijn tijdelijke voorbeelden voor het filter.]</p>}
         <Content />
       </div>
 
-      {d.beelden.length > 0 ? (
+      {/* 19-10 (v10): geen groot openingsbeeld meer; het beeld staat onder de tekst, in de eigen verhouding. */}
+      {d.hoofdbeeld && maat && (
+        <figure class="case-beeld">
+          <img src={d.hoofdbeeld} alt={d.hoofdbeeldAlt ?? ""} width={maat.breedte} height={maat.hoogte} loading="lazy" decoding="async" />
+          {d.beeldBron && <figcaption>{d.beeldBron}</figcaption>}
+        </figure>
+      )}
+
+      {d.beelden.length > 0 && (
         <div class="galerij">
           {d.beelden.map((b) => (
             <figure>
@@ -77,10 +81,6 @@ const datum = (iso?: string) => iso ? new Date(iso).toLocaleDateString("nl-NL", 
               <figcaption>{b.alt}</figcaption>
             </figure>
           ))}
-        </div>
-      ) : (
-        <div class="galerij">
-          <figure><div class="beeld"><Placeholder>PAULINE: beeldmateriaal van het werk (spreads, visualisaties) — elk met alt-tekst</Placeholder></div></figure>
         </div>
       )}
 

@@ -6,7 +6,6 @@
  */
 import Base from "../layouts/Base.astro";
 import CTeken from "../components/CTeken.astro";
-import Placeholder from "../components/Placeholder.astro";
 import ContactBlok from "../components/ContactBlok.astro";
 import { site, ids } from "../data/site";
 import data from "../data/recensies.json";
@@ -50,13 +49,12 @@ const boek = {
   <section class="sectie" aria-labelledby="boek-kop">
     <div class="container boek-kop">
       <div class="cover-groot">
-        <img src={site.boekCover} alt="Cover van het boek In 10 stappen succesvol transformeren van Pauline Kamphuis" width="300" height="300" fetchpriority="high" decoding="async" />
+        <img src={site.boekCover} alt="Cover van het boek In 10 stappen succesvol transformeren van Pauline Kamphuis" width="720" height="720" fetchpriority="high" decoding="async" />
       </div>
       <div class="prose">
         <h1 id="boek-kop">{site.boekTitel}</h1>
         <p class="boek-meta">{site.eigenaar} · {site.boekJaar}</p>
         <p class="intro">Verandering slaagt als je de mens centraal stelt. In dit boek beschrijf ik tien stappen voor mensgerichte transformatie, gebaseerd op wetenschappelijke inzichten en 25 jaar praktijkervaring.</p>
-        <p><Placeholder regel>PAULINE: optioneel 2–3 zinnen extra: voor wie is het boek, wat vind je erin (modellen, checklists, voorbeelden)?</Placeholder></p>
         <div class="knoppen">
           <a class="knop" href="#bestellen">Bestel of leen het boek</a>
           <a class="knop knop--secundair" href="#recensies">Wat lezers zeggen</a>

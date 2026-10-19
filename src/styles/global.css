@@ -85,7 +85,7 @@ p { margin: 0 0 1em; }
    tegen de bovenrand van het vlak (gemeld Piet 31-08). */
 .sectie + .sectie--grijs { padding-top: clamp(2.5rem, 6vw, 4.5rem); }
 .sectie--grijs > .container.twee { align-items: start; }
-@media (min-width: 800px) { .sectie--grijs > .container.twee { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 3rem; } }
+/* 19-10: geen afwijkende kolomverdeling meer op grijze vlakken — tekstkolommen lijnen uit met de witte secties (feedback Pauline v10). */
 .sectie--grijs .secundair, .sectie--grijs .kop-label { color: #5b5b5b; } /* ≥ 4,5:1 op het vlak */
 .sectie--grijs .twee > div > .kop-c:only-child { margin-bottom: 0; }
 .sectie--grijs .prose > :last-child { margin-bottom: 0; }
@@ -148,8 +148,8 @@ p { margin: 0 0 1em; }
 /* ---------- kaarten ---------- */
 .raster { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); }
 .kaart { position: relative; display: flex; flex-direction: column; border: 1px solid var(--kleur-lijn); border-radius: var(--radius-kaart); overflow: hidden; background: var(--kleur-wit); }
-.kaart .beeld { aspect-ratio: 4 / 3; background: var(--kleur-grijs); }
-.kaart .beeld img { width: 100%; height: 100%; object-fit: cover; }
+.kaart .beeld { position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: var(--kleur-grijs); }
+.kaart .beeld img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top; }
 .kaart .inhoud { padding: 1.1rem 1.25rem 1.35rem; display: flex; flex-direction: column; gap: .5rem; }
 .kaart .kaart-kop { margin: 0; font-size: 1.25rem; }
 .kaart .kaart-kop a { text-decoration: none; }
@@ -242,8 +242,9 @@ p { margin: 0 0 1em; }
 .case-kop { display: grid; gap: .75rem; padding-block: clamp(2.5rem, 6vw, 4.5rem) 2rem; }
 .case-kop .ondertitel { font-size: clamp(1.1rem, 1rem + .5vw, 1.3rem); color: var(--kleur-donkergrijs); font-style: italic; max-inline-size: 60ch; }
 .case-meta { display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; font-size: .95rem; color: var(--kleur-donkergrijs); }
-.case-beeld { border-radius: var(--radius-kaart); overflow: hidden; background: var(--kleur-grijs); aspect-ratio: 16 / 9; margin-bottom: var(--sectie); }
-.case-beeld img { width: 100%; height: 100%; object-fit: cover; }
+.case-beeld { margin: 2.5rem 0 0; max-inline-size: min(100%, 720px); }
+.case-beeld img { width: auto; max-width: 100%; max-height: 80vh; border-radius: var(--radius-kaart); }
+.case-beeld figcaption { font-size: .875rem; color: var(--kleur-donkergrijs); margin-top: .5rem; }
 .case-tekst h2 { display: flex; align-items: center; gap: .85rem; margin-top: 2.25rem; font-size: clamp(1.35rem, 1.1rem + 1vw, 1.8rem); }
 .case-tekst h2:first-child { margin-top: 0; }
 .galerij { display: grid; gap: 1.25rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); margin-top: 2rem; }
@@ -330,6 +331,11 @@ p { margin: 0 0 1em; }
   .aanleiding:last-child:nth-child(odd) { grid-column: 1 / -1; }
   .aanleiding:last-child:nth-child(odd) p { max-inline-size: 72ch; }
 }
+/* Voorbeelden onder de momenten (v10): los van een specifiek moment */
+.voorbeelden { margin-top: 2rem; padding-top: 1rem; border-top: 2px solid var(--kleur-rood); max-inline-size: 72ch; }
+.voorbeelden .kop-label { margin: 0 0 .75rem; font-size: .8125rem; color: var(--kleur-rood-donker); }
+.voorbeelden ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: .6rem; line-height: 1.45; }
+.voorbeelden a { font-weight: 600; text-decoration-color: color-mix(in srgb, currentColor 35%, transparent); text-underline-offset: .2em; }
 .aanleidingen-cta { margin-top: 2rem; display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.5rem; }
 .aanleidingen-cta p { margin: 0; font-weight: 600; font-size: 1.15rem; }
 
@@ -340,7 +346,7 @@ p { margin: 0 0 1em; }
 .boek-meta { margin: -.25rem 0 1.25rem; font-weight: 600; color: var(--kleur-donkergrijs); }
 .boek-kop .cover-groot img { width: 100%; height: 100%; object-fit: contain; mix-blend-mode: multiply; }
 .bestel { display: grid; gap: 1rem; grid-template-columns: 1fr; margin-top: 1.5rem; }
-@media (min-width: 760px) { .bestel { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 760px) { .bestel { grid-template-columns: repeat(2, minmax(0, 1fr)); max-inline-size: 760px; } }
 .bestel-kaart { display: flex; flex-direction: column; gap: .35rem; padding: 1.25rem 1.25rem 1.1rem; background: var(--kleur-wit); border: 1px solid var(--kleur-lijn); border-top: 3px solid var(--kleur-rood); text-decoration: none; color: var(--kleur-zwart); min-height: 44px; }
 .bestel-kaart strong { font-size: 1.05rem; }
 .bestel-kaart .pijl { margin-top: auto; padding-top: .5rem; color: var(--kleur-rood-donker); font-weight: 700; }

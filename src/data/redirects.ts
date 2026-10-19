@@ -30,9 +30,9 @@ export const redirects: Redirect[] = [
   // Cases — bestaande case met nieuwe slug
   { oud: "/portfolio/cybersecure-energy-transition-vision-positioning/", nieuw: "/portfolio/cyberveilige-energietransitie/" },
   // Cases — BESLUIT Pauline (behouden → nieuwe slug; vervallen → /portfolio/)
-  { oud: "/portfolio/10-years-of-cyber-security-summer-school/", nieuw: "/portfolio/", opmerking: "Security Delta — case volgt" },
-  { oud: "/portfolio/jubileumstrategie-jubileumboek/", nieuw: "/portfolio/", opmerking: "Security Delta — case volgt" },
-  { oud: "/portfolio/smart-city-innovatie/", nieuw: "/portfolio/" },
+  { oud: "/portfolio/10-years-of-cyber-security-summer-school/", nieuw: "/portfolio/cyber-security-summer-school/" },
+  { oud: "/portfolio/jubileumstrategie-jubileumboek/", nieuw: "/portfolio/security-delta/" },
+  { oud: "/portfolio/smart-city-innovatie/", nieuw: "/portfolio/living-lab-scheveningen/", opmerking: "aanname: whitepaper Living Lab (19-10)" },
   { oud: "/portfolio/handboek-succesvol-mensgericht-transformeren/", nieuw: "/boek/" },
   { oud: "/portfolio/mensgerichte-transformatie-online-cursus/", nieuw: "/portfolio/" },
   { oud: "/portfolio/transforming-successfully-10-steps-podcast/", nieuw: "/portfolio/" },
@@ -43,10 +43,10 @@ export const redirects: Redirect[] = [
   { oud: "/portfolio/talking-transformation/", nieuw: "/portfolio/" },
   { oud: "/portfolio/strategically-aligned/", nieuw: "/portfolio/" },
 
-  // Blog — artikelen verhuizen naar /blog/[slug]/ (besloten); tot de keuze van Pauline → /blog/
-  { oud: "/het-frisse-start-effect/", nieuw: "/blog/" },
-  { oud: "/de-kracht-van-vragen-stellen/", nieuw: "/blog/" },
-  { oud: "/kairos-is-koning/", nieuw: "/blog/" },
-  { oud: "/build-your-own-gpt-is-a-smart-move/", nieuw: "/blog/", opmerking: "Engels — BESLUIT Pauline" },
-  { oud: "/staying-curious-and-adaptable/", nieuw: "/blog/", opmerking: "Engels — BESLUIT Pauline" },
+  // Blog — voorlopig geen artikelen op de nieuwe site (Pauline 19-10) → homepage
+  { oud: "/het-frisse-start-effect/", nieuw: "/" },
+  { oud: "/de-kracht-van-vragen-stellen/", nieuw: "/" },
+  { oud: "/kairos-is-koning/", nieuw: "/" },
+  { oud: "/build-your-own-gpt-is-a-smart-move/", nieuw: "/" },
+  { oud: "/staying-curious-and-adaptable/", nieuw: "/" },
 ];

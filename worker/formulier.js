@@ -55,7 +55,7 @@ export default {
 
     try {
       if (url.pathname === "/contact") {
-        if (!v.naam || !v.bericht) return fout(basis, url.pathname, "Dit veld is verplicht.");
+        if (!v.naam || !v.organisatie || !v.bericht) return fout(basis, url.pathname, "Dit veld is verplicht.");
         const voornaam = v.naam.split(/\s+/)[0];
         const n = TEKST.notificatie(v);
         await stuur(env, { to: env.NOTIFY_TO, reply_to: email, subject: n.onderwerp, text: n.tekst });
