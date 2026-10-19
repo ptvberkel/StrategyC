@@ -32,7 +32,7 @@ export const redirects: Redirect[] = [
   // Cases — BESLUIT Pauline (behouden → nieuwe slug; vervallen → /portfolio/)
   { oud: "/portfolio/10-years-of-cyber-security-summer-school/", nieuw: "/portfolio/cyber-security-summer-school/" },
   { oud: "/portfolio/jubileumstrategie-jubileumboek/", nieuw: "/portfolio/security-delta/" },
-  { oud: "/portfolio/smart-city-innovatie/", nieuw: "/portfolio/living-lab-scheveningen/", opmerking: "aanname: whitepaper Living Lab (19-10)" },
+  { oud: "/portfolio/smart-city-innovatie/", nieuw: "/portfolio/living-lab-scheveningen/", opmerking: "bevestigd 19-10: oude pagina ging over Living Lab" },
   { oud: "/portfolio/handboek-succesvol-mensgericht-transformeren/", nieuw: "/boek/" },
   { oud: "/portfolio/mensgerichte-transformatie-online-cursus/", nieuw: "/portfolio/" },
   { oud: "/portfolio/transforming-successfully-10-steps-podcast/", nieuw: "/portfolio/" },
