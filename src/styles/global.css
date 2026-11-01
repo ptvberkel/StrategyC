@@ -123,7 +123,8 @@ p { margin: 0 0 1em; }
 
 /* ---------- knoppen (optie C) ---------- */
 .knop { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; border-radius: var(--radius-pill); padding: .85rem 1.6rem; font: inherit; font-weight: 700; line-height: 1; text-decoration: none; border: 2px solid var(--kleur-zwart); background: var(--kleur-zwart); color: var(--kleur-wit); cursor: pointer; min-height: 44px; }
-.knop--secundair { background: transparent; color: var(--kleur-zwart); border-color: var(--kleur-rood); }
+/* Secundair: helemaal rood i.p.v. rode rand (Piet 01-11). Donkerrood, want wit op #db4545 haalt 4,5:1 niet (4,1:1); op #c03d37 wel (5,1:1). */
+.knop--secundair { background: var(--kleur-rood-donker); color: var(--kleur-wit); border-color: var(--kleur-rood-donker); }
 .knop--klein { padding: .6rem 1.1rem; font-size: .95rem; min-height: 36px; }
 .knoppen { display: flex; flex-wrap: wrap; gap: .75rem; align-items: flex-start; }
 /* enkele knop onder een kaartenraster of galerij: eigen lucht, botst niet met het blok erboven */
@@ -176,7 +177,7 @@ p { margin: 0 0 1em; }
 .hero-donker .hero--cirkels .intro,
 .hero-donker .hero--cirkels .secundair { color: #d6d6d6; }          /* ≥ 4,5:1 op zwart */
 .hero-donker .hero--cirkels .knop { background: var(--kleur-wit); border-color: var(--kleur-wit); color: var(--kleur-zwart); }
-.hero-donker .hero--cirkels .knop--secundair { background: transparent; color: var(--kleur-wit); border-color: var(--kleur-rood); }
+.hero-donker .hero--cirkels .knop--secundair { background: var(--kleur-rood-donker); color: var(--kleur-wit); border-color: var(--kleur-rood-donker); }
 .hero-donker .hero--cirkels :focus-visible { outline-color: var(--kleur-wit); }
 /* Geen zichtbare 'vloer' op zwart: een witte lijn snijdt de band doormidden (op mobiel staat de
    cirkelbak bovenin). De onderrand van de zwarte band is zelf de scheiding — net als op de huidige site. */
@@ -208,7 +209,7 @@ p { margin: 0 0 1em; }
   .hero--cirkels .hero-kop { order: 1; }
   .hero--cirkels .cirkels { order: 2; height: 300px; margin: .25rem 0 1.25rem; }
   .hero--cirkels .hero-tekst { order: 3; }
-  .hero--cirkels .knoppen { margin-bottom: .5rem; }
+  .hero--cirkels .knoppen { margin-bottom: 2.75rem; } /* lucht onder de onderste knop vóór de rand van de zwarte band (Piet 01-11) */
   .hero--cirkels .hero-tekst, .hero--cirkels .hero-kop { text-align: left; }
   .hero--cirkels h1 { margin-inline: 0; }
   .hero--cirkels .hero-tekst .intro { font-size: 1.125rem; line-height: 1.5; margin-inline: 0; }
@@ -374,12 +375,12 @@ p { margin: 0 0 1em; }
 @media (hover: hover) and (pointer: fine) {
   a:hover { color: var(--kleur-rood); }
   .knop:hover { background: var(--kleur-rood); border-color: var(--kleur-rood); color: var(--kleur-wit); }
-  .knop--secundair:hover { background: var(--kleur-rood); color: var(--kleur-wit); }
+  .knop--secundair:hover { background: #a3322d; border-color: #a3322d; color: var(--kleur-wit); }
   .pijl-link:hover { text-decoration: underline; }
   .filter:hover { background: var(--kleur-grijs); }
   .kaart:hover { border-color: var(--kleur-zwart); }
   .hero-donker .hero--cirkels .knop:hover { background: var(--kleur-rood); border-color: var(--kleur-rood); color: var(--kleur-wit); }
-  .hero-donker .hero--cirkels .knop--secundair:hover { background: var(--kleur-rood); border-color: var(--kleur-rood); color: var(--kleur-wit); }
+  .hero-donker .hero--cirkels .knop--secundair:hover { background: #a3322d; border-color: #a3322d; color: var(--kleur-wit); }
   .kop-donker .site-header a:hover { color: var(--kleur-rood); }
   .cirkel:hover { color: var(--kleur-wit); filter: brightness(1.06); }
   .veld input:hover, .veld textarea:hover { border-color: #b0b0b0; }

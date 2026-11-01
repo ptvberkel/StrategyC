@@ -34,11 +34,12 @@ const momenten: { kop: string; tekst: string }[] = [
   },
 ];
 
-// v10 — voorbeelden. Een onderdeel linkt alleen als de casepagina bestaat (HSD Campus: case volgt).
+// v10 — voorbeelden. Een onderdeel linkt alleen als de casepagina bestaat.
+// HSD Campus: eigen case volgt; tot die er is linkt het voorbeeld naar de Security Delta-case (Piet 01-11).
 type Deel = { tekst: string; slug?: string };
 const voorbeelden: Deel[][] = [
   [{ tekst: "Innovatiecoalitie Cyberveilige Energietransitie: elf initiatiefnemers, één verhaal en herkenbare naam", slug: "cyberveilige-energietransitie" }],
-  [{ tekst: "HSD Campus, van advies over interieurontwerp en branding in het gebouw tot marktintroductie en openingsceremonie" }],
+  [{ tekst: "HSD Campus, van advies over interieurontwerp en branding in het gebouw tot marktintroductie en openingsceremonie", slug: "security-delta" }],
   [
     { tekst: "Whitepaper over vijf jaar Living Lab Scheveningen (gemeente Den Haag)", slug: "living-lab-scheveningen" },
     { tekst: "jubileummagazine tien jaar ICSSS met ruim dertig partners", slug: "cyber-security-summer-school" },

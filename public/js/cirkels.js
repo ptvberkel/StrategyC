@@ -23,6 +23,10 @@
   // Schaal loopt mee met de breedte van de bak (die is nu paginabreed): op brede schermen grotere ballen, zodat ze niet verloren liggen.
   function schaal() { var w = pit.clientWidth; return Math.max(0.5, Math.min(1.35, w / 1000)); }
   function opbouw() {
+    // Lopende animatie eerst stoppen: anders telt de teller van de vorige opbouw door en gaan de nieuwe ballen
+    // na een paar frames al op slot, halverwege hun val (fout op mobiel, Piet 01-11).
+    if (raf) { cancelAnimationFrame(raf); raf = null; }
+    drag = null;
     W = pit.clientWidth; H = pit.clientHeight; pit.innerHTML = ""; balls = [];
     var s = schaal();
     labels.forEach(function (l, i) {
@@ -92,6 +96,18 @@
       if (b.y + b.r > H) b.y = H - b.r;
     });
   }
+  // Ligt een bal ergens op? Vloer, of een andere bal die lager ligt en hem raakt. Alleen ondersteunde ballen
+  // mogen op slot: een bal die nog in de lucht hangt valt altijd eerst door (fix 01-11).
+  function steunt(b) {
+    if (b.held) return true;
+    if (b.y + b.r >= H - 1.5) return true;
+    for (var i = 0; i < balls.length; i++) {
+      var o = balls[i]; if (o === b || o.y <= b.y) continue;
+      var dx = o.x - b.x, dy = o.y - b.y;
+      if (Math.sqrt(dx * dx + dy * dy) <= b.r + o.r + 1.5) return true;
+    }
+    return false;
+  }
   function teken() { balls.forEach(function (b) { b.el.style.transform = "translate(" + (b.x - b.r) + "px," + (b.y - b.r) + "px)"; }); }
   function loop() {
     stap(1 / 60); teken();
@@ -103,7 +119,10 @@
     // Harde grens. Op smalle schermen zit de bak zo vol dat de randcorrectie elke frame een beetje overlap
     // terugduwt; dan blijft er altijd wat snelheid over. Na zes seconden gaat alles definitief op slot,
     // tenzij de bezoeker op dat moment een bal vasthoudt.
-    if ((idle > 20 || stappen > 360) && !drag) { balls.forEach(function (b) { b.vx = b.vy = 0; }); teken(); raf = null; return; }
+    // Op slot alleen als elke bal ergens op ligt. Uiterste noodrem na 30 s: dan eerst onzichtbaar uitrekenen tot alles ligt.
+    var klaar = !drag && (idle > 20 || stappen > 360) && balls.every(steunt);
+    if (!drag && !klaar && stappen > 1800) { for (var n = 0; n < 1200 && !balls.every(steunt); n++) stap(1 / 60); klaar = true; }
+    if (klaar) { balls.forEach(function (b) { b.vx = b.vy = 0; }); teken(); raf = null; return; }
     raf = requestAnimationFrame(loop);
   }
   function start() { if (!raf) { idle = 0; stappen = 0; raf = requestAnimationFrame(loop); } }
@@ -119,10 +138,24 @@
   function los() {
     if (!drag) return;
     var b = drag.b, mx = 1400; b.held = false;
-    b.vx = Math.max(-mx, Math.min(mx, b.vx)); b.vy = Math.max(-mx, Math.min(mx, b.vy)); drag = null; start();
+    b.vx = Math.max(-mx, Math.min(mx, b.vx)); b.vy = Math.max(-mx, Math.min(mx, b.vy)); drag = null;
+    // Teller altijd opnieuw: liep de animatie nog (bal gepakt tijdens de eerste val of lang vastgehouden), dan stond
+    // de teller al voorbij de grens en bevroor de losgelaten bal meteen in de lucht (fout op mobiel, Piet 01-11).
+    idle = 0; stappen = 0; start();
   }
   window.addEventListener("pointerup", los); window.addEventListener("pointercancel", los);
-  var lastW = window.innerWidth;
-  window.addEventListener("resize", function () { if (window.innerWidth !== lastW) { lastW = window.innerWidth; opbouw(); } });
+  // Breedte van de bak verandert → opnieuw opbouwen. Alleen de hoogte (late lay-out, fonts, adresbalk) → vloer verleggen
+  // en de ballen laten na-vallen, zonder ze opnieuw te laten vallen.
+  function pasAan() {
+    var w = pit.clientWidth, h = pit.clientHeight;
+    if (!w || !h) return;
+    if (Math.abs(w - W) > 1) { opbouw(); return; }
+    if (Math.abs(h - H) > 1) { H = h; balls.forEach(function (b) { if (b.y + b.r > H) b.y = H - b.r; }); if (reduce) { for (var i = 0; i < 900; i++) stap(1 / 60); teken(); } else start(); }
+  }
+  if (window.ResizeObserver) new ResizeObserver(pasAan).observe(pit);
+  else window.addEventListener("resize", pasAan);
+  // Terug via de vorige-knop (bfcache) of terug naar een tabblad: zorg dat niets halverwege blijft hangen.
+  window.addEventListener("pageshow", function (e) { if (e.persisted && !reduce) start(); });
+  document.addEventListener("visibilitychange", function () { if (!document.hidden && !reduce && !balls.every(steunt)) start(); });
   opbouw();
 })();
