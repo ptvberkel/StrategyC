@@ -35,7 +35,7 @@
       r = Math.max(r, Math.ceil(fs * 0.56 * l.length / 2) + 8); // woord moet in de cirkel passen
       var el = document.createElement("a");
       el.href = doel(l);
-      el.setAttribute("aria-label", l === vast ? "Naar het hele portfolio" : "Portfolio: werk in " + l);
+      el.setAttribute("aria-label", l === vast ? l + ": naar het hele portfolio" : "Portfolio: werk in " + l);
       el.className = "cirkel" + (l === vast ? " cirkel--vast" : "");
       el.style.width = el.style.height = r * 2 + "px";
       el.style.fontSize = fs + "px";

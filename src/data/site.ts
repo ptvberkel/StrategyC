@@ -27,10 +27,13 @@ export const site = {
   ogImage: "/img/og-strategyc.jpg", // deelbeeld 1200×630, gemaakt met scripts/og-beeld.mjs
 
   /** Formulierendienst (structuurplan §4.6). Leeg = formulier toont een markering en post nergens heen. */
-  formulierEndpoint: "https://formulier-strategyc-test.strategyc.workers.dev", // TESTOMGEVING — bij livegang vervangen door de productie-Worker (zonder -test)
+  // Testbuild (PREVIEW=1, huurofkoopcheck.nl/StrategyC) → test-Worker; productiebuild (Cloudflare Pages) → productie-Worker.
+  formulierEndpoint: import.meta.env.PREVIEW === "1"
+    ? "https://formulier-strategyc-test.strategyc.workers.dev"
+    : "https://formulier-strategyc.strategyc.workers.dev",
   turnstileSiteKey: "0x4AAAAAAEjFmU9KaGLX-1EE", // openbaar; widget "strategyC formulieren", Cloudflare-account Piet (later Pauline)
   /** Cloudflare Web Analytics-token; leeg = script niet laden. */
-  analyticsToken: "",
+  analyticsToken: "", // [PIET] Cloudflare → Web Analytics → strategyc.nl; leeg laten in testbuilds is prima
 } as const;
 
 /** Gebruikt in JSON-LD (@id-ankers) — één Person-node, overal hetzelfde. */

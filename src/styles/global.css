@@ -109,7 +109,7 @@ p { margin: 0 0 1em; }
 .menuknop { display: none; }
 @media (max-width: 640px) {
   /* color expliciet: een <button> zonder kleur pakt op iOS Safari de systeemblauwe knoptekst. */
-  .menuknop { display: inline-flex; align-items: center; gap: .5rem; background: none; border: 1.5px solid var(--kleur-rood); border-radius: var(--radius-pill); padding: .45rem .9rem; font: inherit; font-weight: 600; color: var(--kleur-rood); cursor: pointer; }
+  .menuknop { display: inline-flex; align-items: center; gap: .5rem; background: none; border: 1.5px solid var(--kleur-rood-donker); border-radius: var(--radius-pill); padding: .45rem .9rem; font: inherit; font-weight: 600; color: var(--kleur-rood-donker); cursor: pointer; }
   .hoofdmenu { display: none; position: absolute; left: 0; right: 0; top: 100%; background: var(--kleur-wit); border-bottom: 1px solid var(--kleur-lijn); flex-direction: column; gap: 0; padding: .5rem var(--ruimte) 1rem; }
   .hoofdmenu a { padding: .75rem 0; font-size: 1.15rem; }
   .site-header.open .hoofdmenu { display: flex; }

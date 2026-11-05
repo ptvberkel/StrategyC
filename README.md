@@ -22,7 +22,7 @@ npm run build   # bouwt naar dist/ (+ sitemap.xml)
 | `src/layouts/Base.astro` | Head-set (canonical, OG, JSON-LD, CSP), header, footer, skip-link |
 | `src/pages/` | Home, portfolio + case-sjabloon, over, contact (+ bedankpagina's), blog, 404, juridisch, `[...oud].astro` = redirect-stubs |
 | `src/styles/global.css` | Tokens (palet, Barlow, rondingen), componenten |
-| `public/` | Fonts (zelf gehost), favicons, `robots.txt`, `CNAME`, scripts (`js/`), beelden (`img/`) |
+| `public/` | Fonts (zelf gehost), favicons, `robots.txt`, scripts (`js/`), beelden (`img/`) |
 | `worker/` | Formulierendienst (Cloudflare Worker + Turnstile + Resend), `wrangler.toml` |
 | `.pages.yml` | Pages CMS-configuratie (beheerscherm Pauline) |
 | `.github/workflows/deploy.yml` | Bouwen en publiceren naar GitHub Pages |
@@ -32,18 +32,17 @@ npm run build   # bouwt naar dist/ (+ sitemap.xml)
 Alles wat nog van Pauline moet komen staat zichtbaar geel gemarkeerd (`<Placeholder>`, class `ph`).
 Vóór livegang: `grep -r 'class="ph' dist/` moet leeg zijn.
 
-## Testadres → strategyc.nl (verhuizen)
+## Hosting: Cloudflare Pages (productie) en GitHub Pages (test)
 
-De site draait nu als test op `https://www.huurofkoopcheck.nl/StrategyC/`. De broncode kent dat adres niet: alle paden zijn
-absoluut vanaf de root (`/portfolio/`, `/js/…`) en `scripts/postbuild.mjs` zet er alleen bij een testbuild `/StrategyC` voor.
-Scripts (`public/js/`) rekenen relatief aan de huidige pagina. Verhuizen is daardoor alleen configuratie:
-
-1. `.github/workflows/deploy.yml`: de drie regels `PREVIEW`, `PREVIEW_BASE`, `PREVIEW_SITE` (en de `env:`-kop) weghalen.
-   De build zet dan zelf `CNAME` (strategyc.nl), opent `robots.txt` en haalt `noindex` weg.
-2. GitHub → Settings → Pages: custom domain `strategyc.nl`, *Enforce HTTPS*. DNS bij Paulines registrar: A-records naar GitHub Pages + `www` als CNAME.
-3. `src/data/site.ts`: `formulierEndpoint` naar de productie-Worker, `analyticsToken` invullen (zie *cloudflare-inrichting.md*).
-4. Worker: `npx wrangler deploy` (productie, zonder `--env test`) + secrets; `strategyc.nl` verifiëren in Resend.
-5. Controle: `grep -r 'huurofkoopcheck\|/StrategyC' dist/` moet leeg zijn, en `grep -r 'class="ph' dist/` alleen nog juridisch.
+- **Productie: Cloudflare Pages**, project `strategyc`, gekoppeld aan deze repo (branch `main`). Build `npm run build`,
+  output `dist`, Node uit `.node-version`. Geen `PREVIEW`-variabelen zetten. `scripts/postbuild.mjs` maakt dan
+  `_redirects` (echte 301's uit `src/data/redirects.ts`, stub-pagina's eruit) en `_headers` (HSTS, nosniff,
+  frame-ancestors, cache, noindex op `*.pages.dev`). Het formulier post in productie naar de productie-Worker.
+- **Test: GitHub Pages** op `https://www.huurofkoopcheck.nl/StrategyC/` via `.github/workflows/deploy.yml`
+  (`PREVIEW=1`): noindex, robots dicht, redirect-stubs, formulier naar de test-Worker. Mag blijven draaien als staging.
+- DNS van strategyc.nl staat (na de wissel) bij Cloudflare; het domein zelf blijft geregistreerd bij Hostnet.
+  Mail van pauline@strategyc.nl loopt via Microsoft 365: MX, SPF, DMARC, autodiscover en de Microsoft-CNAME's/SRV's
+  moeten in de Cloudflare-zone staan. Draaiboek: projectdocument *livegang-cloudflare.md*.
 
 ## Controles
 

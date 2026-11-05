@@ -1,6 +1,7 @@
 // Na `astro build`:
 //  - sitemap.xml op de root
-//  - productie: CNAME strategyc.nl
+//  - productie (Cloudflare Pages): _redirects met echte 301's uit src/data/redirects.ts (stub-pagina's eruit),
+//    _headers met beveiligings- en cacheheaders, noindex op *.pages.dev
 //  - PREVIEW=1: geen CNAME, robots.txt dicht, noindex (via Base.astro)
 //  - PREVIEW_BASE=/StrategyC: testversie als *project site* (https://ptvberkel.github.io/StrategyC/):
 //    alle absolute paden (/fonts/, /js/, /portfolio/ …) krijgen het basispad ervoor; redirect-stubs wijzen binnen de preview.
@@ -47,6 +48,45 @@ if (preview) {
     console.log("postbuild: PREVIEW — geen CNAME, robots.txt dicht, noindex op elke pagina");
   }
 } else {
-  writeFileSync(`${dist}/CNAME`, "strategyc.nl\n");
-  console.log("postbuild: productie — CNAME strategyc.nl, sitemap.xml");
+  // --- Redirects: echte 301's (Cloudflare Pages leest dist/_redirects) ---
+  const bron = readFileSync("src/data/redirects.ts", "utf8");
+  const regels = [...bron.matchAll(/\{\s*oud:\s*"([^"]+)",\s*nieuw:\s*"([^"]+)"/g)].map((m) => [m[1], m[2]]);
+  if (!regels.length) throw new Error("postbuild: geen redirects gevonden in src/data/redirects.ts");
+  const lijnen = [];
+  for (const [oud, nieuw] of regels) {
+    const zonder = oud.replace(/\/$/, "");
+    lijnen.push(`${oud} ${nieuw} 301`);
+    if (zonder && zonder !== oud) lijnen.push(`${zonder} ${nieuw} 301`);
+    // stub-pagina weghalen: anders kan het statische bestand de redirect in de weg zitten
+    const stub = join(dist, oud.replace(/^\//, ""));
+    if (existsSync(join(stub, "index.html"))) rmSync(join(stub, "index.html"));
+  }
+  // lege stub-mappen opruimen
+  for (const [oud] of regels) {
+    let d = join(dist, oud.replace(/^\/|\/$/g, ""));
+    while (d !== dist && existsSync(d) && readdirSync(d).length === 0) { rmSync(d, { recursive: true }); d = join(d, ".."); }
+  }
+  writeFileSync(`${dist}/_redirects`, `# Gegenereerd door scripts/postbuild.mjs uit src/data/redirects.ts — niet met de hand wijzigen\n${lijnen.join("\n")}\n`);
+
+  // --- Headers (Cloudflare Pages leest dist/_headers). CSP staat als meta in Base.astro; frame-ancestors kan alleen als header. ---
+  writeFileSync(`${dist}/_headers`, `# Gegenereerd door scripts/postbuild.mjs
+/*
+  Strict-Transport-Security: max-age=31536000
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+  X-Frame-Options: DENY
+  Content-Security-Policy: frame-ancestors 'none'
+
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/fonts/*
+  Cache-Control: public, max-age=2592000
+
+https://:project.pages.dev/*
+  X-Robots-Tag: noindex
+`);
+  if (existsSync(`${dist}/CNAME`)) rmSync(`${dist}/CNAME`);
+  console.log(`postbuild: productie (Cloudflare Pages) — ${lijnen.length} redirects in _redirects, _headers, sitemap.xml`);
 }
