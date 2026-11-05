@@ -11,7 +11,7 @@ export const site = {
   land: "NL",
   adres: "Dé Plek (Kamer 1011), Kanaalpark 157, 2321 JW Leiden", // v9 §4
   kvk: "86338501",
-  btw: "", // [PAULINE: btw-identificatienummer] — wettelijk verplicht in de footer
+  btw: "NL004232188B50", // btw-identificatienummer (Pauline, 5-11)
   email: "pauline@strategyc.nl", // v9 §4 [PAULINE: controleren]
   telefoon: "06 22 91 84 71", // v9 §4 [PAULINE: controleren]
   linkedin: "https://www.linkedin.com/in/pauline-kamphuis-a0262a/", // v9 §4 [PAULINE: controleren]
